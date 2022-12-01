@@ -16,14 +16,6 @@ Cube::Cube(int xnum, int ynum, glm::vec3 color)
 {
 	ReadObj("Cube.obj", &Position, &vertexNum, 4.0 / xnum, 0.3, 4.0 / ynum);
 
-	/*Color = new glm::vec3[vertexNum];
-
-
-
-	for (unsigned int i = 0; i < vertexNum; ++i) {
-		Color[i] = color;
-	}*/
-
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_real_distribution<> dis(0.0f, 1.0f);
