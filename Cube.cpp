@@ -1,139 +1,11 @@
 #include "Cube.h"
 #include "Shader.h"
 
-Cube::Cube()
+Cube::Cube() {}
+
+Cube::Cube(const string objFile)
 {
-	ReadObj("Cube.obj", &Position, &vertexNum, 5, 0.2, 5);
-
-	Color = new glm::vec3[vertexNum];
-
-	for (unsigned int i = 0; i < vertexNum; ++i) {
-		Color[i] = glm::vec3(0.28f, 0.54f, 0.36f);
-	}
-}
-
-Cube::Cube(int xnum, int ynum, glm::vec3 color)
-{
-	ReadObj("Cube.obj", &Position, &vertexNum, 4.0 / xnum, 0.3, 4.0 / ynum);
-
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_real_distribution<> dis(0.0f, 1.0f);
-
-	Color = new glm::vec3[vertexNum];
-
-	for (unsigned int i = 0; i < vertexNum; ++i) {
-		Color[i] = glm::vec3(dis(rd), dis(rd), dis(rd));
-	}
-}
-
-void Cube::Move(int xnum, int ynum, int direction)
-{
-	switch (direction) {
-	case 0:
-		// 상
-		for (unsigned int j = 0; j < 8; ++j)
-			Position[j].z -= (2.0 / ynum);
-
-		break;
-
-	case 1:
-		// 하
-		for (unsigned int j = 0; j < 8; ++j)
-			Position[j].z += (2.0 / ynum);
-
-		break;
-
-	case 2:
-		// 좌
-		for (unsigned int j = 0; j < 8; ++j)
-			Position[j].x -= (2.0 / xnum);
-
-		break;
-
-	case 3:
-		// 우
-		for (unsigned int j = 0; j < 8; ++j)
-			Position[j].x += (2.0 / xnum);
-
-		break;
-	}
-}
-glm::vec3 Cube::get_Position()
-{
-	return glm::vec3((Position[0].x + Position[7].x) / 2.0, 0.0, (Position[0].z + Position[1].z) / 2.0);
-}
-
-void Cube::Set_Position(int xnum, int ynum, int count)
-{
-	/*for (unsigned int i = 0; i < xnum; ++i) {
-		Position->x = 
-	}*/
-	for (unsigned int j = 0; j < 8; ++j) {
-		if (j % 2 == 0)
-			Position[j].x = -1.0 + (count % xnum) * (2.0 / xnum);
-
-		else
-			Position[j].x = -1.0 + ((count % xnum) + 1) * (2.0 / xnum);
-		
-		if (j < 4)
-			Position[j].z = -1.0 + (count / ynum) * (2.0 / xnum);
-
-		else
-			Position[j].z = -1.0 + ((count / ynum) + 1) * (2.0 / xnum);
-
-		Position[j].y += 0.005f;
-	}
-}
-
-void Cube::Move_Y_Position(GLfloat mult)
-{
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_real_distribution<> dis(0.01f, 0.1f);
-
-	GLfloat y_move = dis(rd) * mult;
-
-	if (Position[2].y >= 1.5f) {
-		Y_Move = false;
-	}
-
-	if (Position[2].y <= 0.2f) {
-		Y_Move = true;
-	}
-
-	if (Y_Move) {
-		Position[2].y += y_move;
-		Position[3].y += y_move;
-		Position[6].y += y_move;
-		Position[7].y += y_move;
-	}
-
-	else {
-		Position[2].y -= y_move;
-		Position[3].y -= y_move;
-		Position[6].y -= y_move;
-		Position[7].y -= y_move;
-	}
-}
-
-void Cube::Reset_Y_Position()
-{
-	Position[2].y = 0.2;
-	Position[3].y = 0.2;
-	Position[6].y = 0.2;
-	Position[7].y = 0.2;
-}
-
-void Cube::InitColor()
-{
-	random_device rd;
-	mt19937 gen(rd());
-	uniform_real_distribution<> dis(0.0f, 1.0f);
-
-	for (unsigned int i = 0; i < vertexNum; ++i) {
-		Color[i] = glm::vec3(dis(rd), dis(rd), dis(rd));
-	}
+	ReadObj(objFile);
 }
 
 void Cube::InitBuffer()
@@ -143,24 +15,23 @@ void Cube::InitBuffer()
 	glBindVertexArray(vao);
 
 	// vbo
-	glGenBuffers(2, vbo);
+	glGenBuffers(3, vbo);
 
 	// Position
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glBufferData(GL_ARRAY_BUFFER, _msize(Position), Position, GL_STATIC_DRAW);
-
-	// Index
-	glGenBuffers(1, &ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Index), Index, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), 0);
+	glBufferData(GL_ARRAY_BUFFER, m_outvertex.size() * sizeof(glm::vec3), &m_outvertex[0], GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(0);
 
-	// Color
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, _msize(Color), Color, GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBufferData(GL_ARRAY_BUFFER, m_outnormal.size() * sizeof(glm::vec3), &m_outnormal[0], GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
+	glBufferData(GL_ARRAY_BUFFER, m_outuv.size() * sizeof(glm::vec2), &m_outuv[0], GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+	glEnableVertexAttribArray(2);
 }
 
 void Cube::Update_Synthetic_Matrix()
@@ -175,78 +46,127 @@ void Cube::Render()
 	glBindVertexArray(vao);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	//glActiveTexture(GL_TEXTURE0);
+	//glBindTexture(GL_TEXTURE_2D, m_texture);
+	glDrawArrays(GL_TRIANGLES, 0, m_Tri_Num);
 }
 
-void ReadObj(const char* obj, glm::vec3** shape, int* vnum, GLfloat sizex, GLfloat sizey, GLfloat sizez)
+void Cube::ReadObj(const string objFile)
 {
-	FILE* objFile = fopen(obj, "r");
-	glm::vec3* Shape;
+	GLfloat sumX = 0.0f, sumY = 0.0f, sumZ = 0.0f;
+	GLfloat avgX, avgY, avgZ;
+	GLfloat scaleX, scaleY, scaleZ;
+	GLfloat minX = 0.0f, minY = 0.0f, minZ = 0.0f;
+	GLfloat maxX = 0.0f, maxY = 0.0f, maxZ = 0.0f;
 
-	//--- 1. 전체 버텍스 개수 및 삼각형 개수 세기
-	char count[100];
-	int vertexNum = 0;
-	int faceNum = 0;
+	vector<glm::vec3> temp_vertices;
+	vector<glm::vec3> temp_normals;
+	vector<glm::vec2> temp_uvs;
 
-	if (objFile == NULL) {
-		return;
+	vector<unsigned int> vertexIndices, normalIndices, uvIndices;
+
+	ifstream fin{ objFile };
+	static int i = 0;
+	if (!fin)
+	{
+		cerr << " File Open Failed" << endl;
+		exit(-1);
 	}
+	else
+	{
+		char line[512];
+		char face[512];
+		while (!fin.eof()) {
+			fin >> line;
 
-	while (!feof(objFile)) {
-		fscanf(objFile, "%s", count);
+			if (line[0] == 'v' && line[1] == '\0') {
+				glm::vec3 vertex;
+				fin >> vertex.x >> vertex.y >> vertex.z;
+				if (vertex.x < minX) minX = vertex.x;
+				if (vertex.y < minY) minY = vertex.y;
+				if (vertex.z < minZ) minZ = vertex.z;
+				if (vertex.x > maxX) maxX = vertex.x;
+				if (vertex.y > maxY) maxY = vertex.y;
+				if (vertex.z > maxZ) maxZ = vertex.z;
+				sumX += vertex.x;
+				sumY += vertex.y;
+				sumZ += vertex.z;
 
-		if (count[0] == 'v' && count[1] == '\0')
-			vertexNum += 1;
+				temp_vertices.push_back(vertex);
+			}
 
-		else if (count[0] == 'f' && count[1] == '\0')
-			faceNum += 1;
+			else if (line[0] == 'v' && line[1] == 't') {
+				glm::vec2 uv;
+				fin >> uv.x >> uv.y;
+				temp_uvs.push_back(uv);
+			}
 
-		memset(count, '\0', sizeof(count)); // 배열 초기화
-	}
+			else if (line[0] == 'v' && line[1] == 'n') {
+				glm::vec3 normal;
+				fin >> normal.x >> normal.y >> normal.z;
+				temp_normals.push_back(normal);
+			}
 
-	fseek(objFile, 0, SEEK_SET);
+			else if (line[0] == 'f' && line[1] == '\0') {
+				string vertex1, vertex2, vertex3;
+				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
 
-	//--- 2. 메모리 할당
-	glm::vec4* vertex;
-	glm::vec4* face;
+				for (int i = 0; i < 3; ++i)
+				{
+					memset(face, 0, sizeof(face));
+					fin >> face;
 
-	char bind[100];
-	int vertIndex = 0;
-	int faceIndex = 0;
+					vertexIndex[i] = atoi(strtok(face, "/"));
+					uvIndex[i] = atoi(strtok(NULL, "/"));
+					normalIndex[i] = atoi(strtok(NULL, "/"));
+				}
 
-	vertex = new glm::vec4[vertexNum];
-	face = new glm::vec4[faceNum];
-
-	//--- 3. 할당된 메모리에 각 버텍스, 페이스 정보 입력
-	while (!feof(objFile)) {
-		fscanf(objFile, "%s", bind);
-
-		if (bind[0] == 'v' && bind[1] == '\0') {
-			fscanf(objFile, "%f %f %f",
-				&vertex[vertIndex].x, &vertex[vertIndex].y,
-				&vertex[vertIndex].z);
-			vertIndex++;
+				vertexIndices.push_back(vertexIndex[0]);
+				vertexIndices.push_back(vertexIndex[1]);
+				vertexIndices.push_back(vertexIndex[2]);
+				uvIndices.push_back(uvIndex[0]);
+				uvIndices.push_back(uvIndex[1]);
+				uvIndices.push_back(uvIndex[2]);
+				normalIndices.push_back(normalIndex[0]);
+				normalIndices.push_back(normalIndex[1]);
+				normalIndices.push_back(normalIndex[2]);
+			}
 		}
 
-		else if (bind[0] == 'f' && bind[1] == '\0') {
-			fscanf(objFile, "%f %f %f",
-				&face[faceIndex].x, &face[faceIndex].y, &face[faceIndex].z);
-			faceIndex++;
-		}
+		fin.close();
 	}
 
-	fclose(objFile);
+	avgX = sumX / vertexIndices.size();
+	avgY = sumY / vertexIndices.size();
+	avgZ = sumZ / vertexIndices.size();
+	scaleX = maxX - minX;
+	scaleY = maxY - minY;
+	scaleZ = maxZ - minZ;
 
-	Shape = new glm::vec3[vertexNum];
+	glm::vec3 temp;
 
-	for (int i = 0; i < vertexNum; ++i) {
-		Shape[i].x = vertex[i].x * sizex;
-		Shape[i].y = vertex[i].y * sizey;
-		Shape[i].z = vertex[i].z * sizez;
+	for (unsigned int i = 0; i < vertexIndices.size(); ++i)
+	{
+		temp = temp_vertices[vertexIndices[i] - 1];
+		temp.x = temp.x - minX;
+		temp.y = temp.y - minY;
+		temp.z = temp.z - minZ;
+
+		temp.x = ((temp.x * 2.0f) / scaleX) - 1.0f;
+		temp.y = ((temp.y * 2.0f) / scaleY) - 1.0f;
+		temp.z = ((temp.z * 2.0f) / scaleZ) - 1.0f;
+
+		//m_outvertex.push_back(temp);
+		m_outvertex.push_back(temp_vertices[vertexIndices[i] - 1]);
+	}
+	for (unsigned int i = 0; i < uvIndices.size(); ++i) {
+		m_outuv.push_back(temp_uvs[uvIndices[i] - 1]);
+	}
+	for (unsigned int i = 0; i < normalIndices.size(); ++i) {
+		m_outnormal.push_back(temp_normals[normalIndices[i] - 1]);
 	}
 
-	*shape = Shape;
-	*vnum = vertexNum;
-
-	delete[] vertex, face, Shape;
+	m_Tri_Num = m_outvertex.size();
 }

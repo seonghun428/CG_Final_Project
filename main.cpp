@@ -1,5 +1,5 @@
-#include "header.h"
 #include "Shader.h"
+#include "zombie.h"
 
 #define WINW 800
 #define WINH 800
@@ -9,6 +9,8 @@ GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 
+Zombie* zombie = new Zombie();
+
 BOOL linearproj = false;
 
 BOOL rotate_x = false;
@@ -16,190 +18,171 @@ BOOL rotate_y = false;
 
 Shader* shader = new Shader();
 
-GLfloat lines[6][3] = {
-	{ -1.0f, 0.0f, 0.0f }
-	,{ 1.0f, 0.0f, 0.0f }
-	,{ 0.0f, -1.0f, 0.0f }
-	,{ 0.0f, 1.0f, 0.0f }
-	,{ 0.0f, 0.0f, -1.0f }
-	,{ 0.0f, 0.0f, 1.0f }
-};
+//vector<glm::vec3> m_outvertex;
+//vector<glm::vec3> m_outnormal;
+//vector<glm::vec2> m_outuv;
+//
+//GLint m_Tri_Num;
 
-GLfloat lines_color[6][3] = {
-	{ 1.0f, 0.0f, 0.0f }
-	,{ 1.0f, 0.0f, 0.0f }
-	,{ 0.0f, 1.0f, 0.0f }
-	,{ 0.0f, 1.0f, 0.0f }
-	,{ 0.0f, 0.0f, 1.0f }
-	,{ 0.0f, 0.0f, 1.0f }
-};
-
-vector<glm::vec3> m_outvertex;
-vector<glm::vec3> m_outnormal;
-vector<glm::vec2> m_outuv;
-
-GLint m_Tri_Num;
-
-void ReadObj(const char* objFile)
-{
-	GLfloat sumX = 0.0f, sumY = 0.0f, sumZ = 0.0f;
-	GLfloat avgX, avgY, avgZ;
-	GLfloat scaleX, scaleY, scaleZ;
-	GLfloat minX = 0.0f, minY = 0.0f, minZ = 0.0f;
-	GLfloat maxX = 0.0f, maxY = 0.0f, maxZ = 0.0f;
-
-	vector<glm::vec3> temp_vertices;
-	vector<glm::vec3> temp_normals;
-	vector<glm::vec2> temp_uvs;
-
-	vector<unsigned int> vertexIndices, normalIndices, uvIndices;
-
-	ifstream fin{ objFile };
-	static int i = 0;
-	if (!fin)
-	{
-		cerr << " File Open Failed" << endl;
-		exit(-1);
-	}
-	else
-	{
-		char line[512];
-		char face[512];
-		while (!fin.eof()) {
-			fin >> line;
-
-			if (line[0] == 'v' && line[1] == '\0') {
-				glm::vec3 vertex;
-				fin >> vertex.x >> vertex.y >> vertex.z;
-				if (vertex.x < minX) minX = vertex.x;
-				if (vertex.y < minY) minY = vertex.y;
-				if (vertex.z < minZ) minZ = vertex.z;
-				if (vertex.x > maxX) maxX = vertex.x;
-				if (vertex.y > maxY) maxY = vertex.y;
-				if (vertex.z > maxZ) maxZ = vertex.z;
-				sumX += vertex.x;
-				sumY += vertex.y;
-				sumZ += vertex.z;
-
-				temp_vertices.push_back(vertex);
-			}
-
-			else if (line[0] == 'v' && line[1] == 't') {
-				glm::vec2 uv;
-				fin >> uv.x >> uv.y;
-				temp_uvs.push_back(uv);
-			}
-
-			else if (line[0] == 'v' && line[1] == 'n') {
-				glm::vec3 normal;
-				fin >> normal.x >> normal.y >> normal.z;
-				temp_normals.push_back(normal);
-			}
-
-			else if (line[0] == 'f' && line[1] == '\0') {
-				string vertex1, vertex2, vertex3;
-				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
-
-				for (int i = 0; i < 3; ++i)
-				{
-					memset(face, 0, sizeof(face));
-					fin >> face;
-
-					vertexIndex[i] = atoi(strtok(face, "/"));
-					uvIndex[i] = atoi(strtok(NULL, "/"));
-					normalIndex[i] = atoi(strtok(NULL, "/"));
-				}
-
-				vertexIndices.push_back(vertexIndex[0]);
-				vertexIndices.push_back(vertexIndex[1]);
-				vertexIndices.push_back(vertexIndex[2]);
-				uvIndices.push_back(uvIndex[0]);
-				uvIndices.push_back(uvIndex[1]);
-				uvIndices.push_back(uvIndex[2]);
-				normalIndices.push_back(normalIndex[0]);
-				normalIndices.push_back(normalIndex[1]);
-				normalIndices.push_back(normalIndex[2]);
-			}
-		}
-
-		fin.close();
-	}
-
-	avgX = sumX / vertexIndices.size();
-	avgY = sumY / vertexIndices.size();
-	avgZ = sumZ / vertexIndices.size();
-	scaleX = maxX - minX;
-	scaleY = maxY - minY;
-	scaleZ = maxZ - minZ;
-
-	glm::vec3 temp;
-
-	for (unsigned int i = 0; i < vertexIndices.size(); ++i)
-	{
-		temp = temp_vertices[vertexIndices[i] - 1];
-		temp.x = temp.x - minX;
-		temp.y = temp.y - minY;
-		temp.z = temp.z - minZ;
-
-		temp.x = ((temp.x * 2.0f) / scaleX) - 1.0f;
-		temp.y = ((temp.y * 2.0f) / scaleY) - 1.0f;
-		temp.z = ((temp.z * 2.0f) / scaleZ) - 1.0f;
-
-		//m_outvertex.push_back(temp);
-		m_outvertex.push_back(temp_vertices[vertexIndices[i] - 1]);
-	}
-	for (unsigned int i = 0; i < uvIndices.size(); ++i) {
-		m_outuv.push_back(temp_uvs[uvIndices[i] - 1]);
-	}
-	for (unsigned int i = 0; i < normalIndices.size(); ++i) {
-		m_outnormal.push_back(temp_normals[normalIndices[i] - 1]);
-	}
-
-	m_Tri_Num = m_outvertex.size();
-}
+//void ReadObj(const char* objFile)
+//{
+//	GLfloat sumX = 0.0f, sumY = 0.0f, sumZ = 0.0f;
+//	GLfloat avgX, avgY, avgZ;
+//	GLfloat scaleX, scaleY, scaleZ;
+//	GLfloat minX = 0.0f, minY = 0.0f, minZ = 0.0f;
+//	GLfloat maxX = 0.0f, maxY = 0.0f, maxZ = 0.0f;
+//
+//	vector<glm::vec3> temp_vertices;
+//	vector<glm::vec3> temp_normals;
+//	vector<glm::vec2> temp_uvs;
+//
+//	vector<unsigned int> vertexIndices, normalIndices, uvIndices;
+//
+//	ifstream fin{ objFile };
+//	static int i = 0;
+//	if (!fin)
+//	{
+//		cerr << " File Open Failed" << endl;
+//		exit(-1);
+//	}
+//	else
+//	{
+//		char line[512];
+//		char face[512];
+//		while (!fin.eof()) {
+//			fin >> line;
+//
+//			if (line[0] == 'v' && line[1] == '\0') {
+//				glm::vec3 vertex;
+//				fin >> vertex.x >> vertex.y >> vertex.z;
+//				if (vertex.x < minX) minX = vertex.x;
+//				if (vertex.y < minY) minY = vertex.y;
+//				if (vertex.z < minZ) minZ = vertex.z;
+//				if (vertex.x > maxX) maxX = vertex.x;
+//				if (vertex.y > maxY) maxY = vertex.y;
+//				if (vertex.z > maxZ) maxZ = vertex.z;
+//				sumX += vertex.x;
+//				sumY += vertex.y;
+//				sumZ += vertex.z;
+//
+//				temp_vertices.push_back(vertex);
+//			}
+//
+//			else if (line[0] == 'v' && line[1] == 't') {
+//				glm::vec2 uv;
+//				fin >> uv.x >> uv.y;
+//				temp_uvs.push_back(uv);
+//			}
+//
+//			else if (line[0] == 'v' && line[1] == 'n') {
+//				glm::vec3 normal;
+//				fin >> normal.x >> normal.y >> normal.z;
+//				temp_normals.push_back(normal);
+//			}
+//
+//			else if (line[0] == 'f' && line[1] == '\0') {
+//				string vertex1, vertex2, vertex3;
+//				unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+//
+//				for (int i = 0; i < 3; ++i)
+//				{
+//					memset(face, 0, sizeof(face));
+//					fin >> face;
+//
+//					vertexIndex[i] = atoi(strtok(face, "/"));
+//					uvIndex[i] = atoi(strtok(NULL, "/"));
+//					normalIndex[i] = atoi(strtok(NULL, "/"));
+//				}
+//
+//				vertexIndices.push_back(vertexIndex[0]);
+//				vertexIndices.push_back(vertexIndex[1]);
+//				vertexIndices.push_back(vertexIndex[2]);
+//				uvIndices.push_back(uvIndex[0]);
+//				uvIndices.push_back(uvIndex[1]);
+//				uvIndices.push_back(uvIndex[2]);
+//				normalIndices.push_back(normalIndex[0]);
+//				normalIndices.push_back(normalIndex[1]);
+//				normalIndices.push_back(normalIndex[2]);
+//			}
+//		}
+//
+//		fin.close();
+//	}
+//
+//	avgX = sumX / vertexIndices.size();
+//	avgY = sumY / vertexIndices.size();
+//	avgZ = sumZ / vertexIndices.size();
+//	scaleX = maxX - minX;
+//	scaleY = maxY - minY;
+//	scaleZ = maxZ - minZ;
+//
+//	glm::vec3 temp;
+//
+//	for (unsigned int i = 0; i < vertexIndices.size(); ++i)
+//	{
+//		temp = temp_vertices[vertexIndices[i] - 1];
+//		temp.x = temp.x - minX;
+//		temp.y = temp.y - minY;
+//		temp.z = temp.z - minZ;
+//
+//		temp.x = ((temp.x * 2.0f) / scaleX) - 1.0f;
+//		temp.y = ((temp.y * 2.0f) / scaleY) - 1.0f;
+//		temp.z = ((temp.z * 2.0f) / scaleZ) - 1.0f;
+//
+//		//m_outvertex.push_back(temp);
+//		m_outvertex.push_back(temp_vertices[vertexIndices[i] - 1]);
+//	}
+//	for (unsigned int i = 0; i < uvIndices.size(); ++i) {
+//		m_outuv.push_back(temp_uvs[uvIndices[i] - 1]);
+//	}
+//	for (unsigned int i = 0; i < normalIndices.size(); ++i) {
+//		m_outnormal.push_back(temp_normals[normalIndices[i] - 1]);
+//	}
+//
+//	m_Tri_Num = m_outvertex.size();
+//}
 
 GLuint s_program;
 
-GLuint vao_line, vbo_line[2];
-GLuint vao_cube, vbo_cube[3], ebo_cube;
+//GLuint vao_cube, vbo_cube[3], ebo_cube;
 
-void InitBuffer()
-{
-	glGenVertexArrays(1, &vao_line);
-	glBindVertexArray(vao_line);
-	glGenBuffers(2, vbo_line);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_line[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(lines), lines, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_line[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(lines_color), lines_color, GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(1);
-
-	//----------------------------------------------
-
-	glGenVertexArrays(1, &vao_cube);
-	glBindVertexArray(vao_cube);
-	glGenBuffers(3, vbo_cube);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube[0]);
-	glBufferData(GL_ARRAY_BUFFER, m_outvertex.size() * sizeof(glm::vec3), &m_outvertex[0], GL_DYNAMIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
-	glEnableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube[1]);
-	glBufferData(GL_ARRAY_BUFFER, m_outnormal.size() * sizeof(glm::vec3), &m_outnormal[0], GL_DYNAMIC_DRAW);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
-	glEnableVertexAttribArray(1);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube[2]);
-	glBufferData(GL_ARRAY_BUFFER, m_outuv.size() * sizeof(glm::vec2), &m_outuv[0], GL_DYNAMIC_DRAW);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
-	glEnableVertexAttribArray(2);
-}
+//void InitBuffer()
+//{
+//	glGenVertexArrays(1, &vao_line);
+//	glBindVertexArray(vao_line);
+//	glGenBuffers(2, vbo_line);
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, vbo_line[0]);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(lines), lines, GL_STATIC_DRAW);
+//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+//	glEnableVertexAttribArray(0);
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, vbo_line[1]);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(lines_color), lines_color, GL_STATIC_DRAW);
+//	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+//	glEnableVertexAttribArray(1);
+//
+//	//----------------------------------------------
+//
+//	glGenVertexArrays(1, &vao_cube);
+//	glBindVertexArray(vao_cube);
+//	glGenBuffers(3, vbo_cube);
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube[0]);
+//	glBufferData(GL_ARRAY_BUFFER, m_outvertex.size() * sizeof(glm::vec3), &m_outvertex[0], GL_DYNAMIC_DRAW);
+//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+//	glEnableVertexAttribArray(0);
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube[1]);
+//	glBufferData(GL_ARRAY_BUFFER, m_outnormal.size() * sizeof(glm::vec3), &m_outnormal[0], GL_DYNAMIC_DRAW);
+//	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+//	glEnableVertexAttribArray(1);
+//
+//	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube[2]);
+//	glBufferData(GL_ARRAY_BUFFER, m_outuv.size() * sizeof(glm::vec2), &m_outuv[0], GL_DYNAMIC_DRAW);
+//	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+//	glEnableVertexAttribArray(2);
+//}
 
 GLenum polymode = GL_FILL;
 
@@ -220,9 +203,10 @@ GLvoid drawScene()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	ReadObj("ObjFiles/human.obj");
+	// ReadObj("ObjFiles/human.obj");
 
-	InitBuffer();
+	// InitBuffer();
+	zombie->InitBuffer();
 
 	glEnable(GL_DEPTH_TEST);
 
@@ -246,31 +230,34 @@ GLvoid drawScene()
 	unsigned int viewLocation = glGetUniformLocation(s_program, "viewTransform");
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
 
-	glm::mat4 Tx = glm::mat4(1.0f); //--- 이동 행렬 선언
-	glm::mat4 Txr = glm::mat4(1.0f); //--- 역이동 행렬 선언
-	glm::mat4 Rt = glm::mat4(1.0f); //--- 회전 행렬 선언
-	glm::mat4 Rx = glm::mat4(1.0f); //--- x축 회전 행렬 선언
-	glm::mat4 Ry = glm::mat4(1.0f); //--- y축 회전 행렬 선언
-	glm::mat4 Rz = glm::mat4(1.0f); //--- z축 회전 행렬 선언
-	glm::mat4 TR = glm::mat4(1.0f); //--- 합성 변환 행렬
+	//glm::mat4 Tx = glm::mat4(1.0f); //--- 이동 행렬 선언
+	//glm::mat4 Txr = glm::mat4(1.0f); //--- 역이동 행렬 선언
+	//glm::mat4 Rt = glm::mat4(1.0f); //--- 회전 행렬 선언
+	//glm::mat4 Rx = glm::mat4(1.0f); //--- x축 회전 행렬 선언
+	//glm::mat4 Ry = glm::mat4(1.0f); //--- y축 회전 행렬 선언
+	//glm::mat4 Rz = glm::mat4(1.0f); //--- z축 회전 행렬 선언
+	//glm::mat4 TR = glm::mat4(1.0f); //--- 합성 변환 행렬
 
-	Tx = glm::translate(Tx, glm::vec3(move_x, move_y, move_z)); //--- 이동 행렬
-	Txr = glm::translate(Txr, glm::vec3(move_x, move_y, move_z)); //--- 역이동 행렬
-	Rx = glm::rotate(Rx, glm::radians(rot_x), glm::vec3(1.0, 0.0, 0.0)); //--- x축에 대하여 회전 행렬
-	Ry = glm::rotate(Ry, glm::radians(rot_y), glm::vec3(0.0, 1.0, 0.0)); //--- y축에 대하여 회전 행렬
-	Rz = glm::rotate(Rz, glm::radians(rot_z), glm::vec3(0.0, 0.0, 1.0)); //--- z축에 대하여 회전 행렬
-	Rt = Rx * Ry * Rz;
-	TR = Txr * Rt * Tx;
+	//Tx = glm::translate(Tx, glm::vec3(move_x, move_y, move_z)); //--- 이동 행렬
+	//Txr = glm::translate(Txr, glm::vec3(move_x, move_y, move_z)); //--- 역이동 행렬
+	//Rx = glm::rotate(Rx, glm::radians(rot_x), glm::vec3(1.0, 0.0, 0.0)); //--- x축에 대하여 회전 행렬
+	//Ry = glm::rotate(Ry, glm::radians(rot_y), glm::vec3(0.0, 1.0, 0.0)); //--- y축에 대하여 회전 행렬
+	//Rz = glm::rotate(Rz, glm::radians(rot_z), glm::vec3(0.0, 0.0, 1.0)); //--- z축에 대하여 회전 행렬
+	//Rt = Rx * Ry * Rz;
+	//TR = Txr * Rt * Tx;
 
-	unsigned int modelLocation = glGetUniformLocation(s_program, "modelTransform");
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(TR));
+	//unsigned int modelLocation = glGetUniformLocation(s_program, "modelTransform");
+	//glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(TR));
 
-	glBindVertexArray(vao_cube);
-	glPolygonMode(GL_FRONT_AND_BACK, polymode);
+	//glBindVertexArray(vao_cube);
+	//glPolygonMode(GL_FRONT_AND_BACK, polymode);
 
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, m_texture);
-	glDrawArrays(GL_TRIANGLES, 0, m_Tri_Num);
+	////glActiveTexture(GL_TEXTURE0);
+	////glBindTexture(GL_TEXTURE_2D, m_texture);
+	//glDrawArrays(GL_TRIANGLES, 0, m_Tri_Num);
+
+	zombie->Update();
+	zombie->Render();
 
 	glutSwapBuffers();
 }

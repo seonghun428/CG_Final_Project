@@ -6,33 +6,13 @@ class Cube
 {
 private:
 	GLuint vao;
-	GLuint vbo[2];
-	GLuint ebo;
+	GLuint vbo[3];
 
-	glm::vec3* Position;
-	glm::vec3* Color;
+	GLint m_Tri_Num;
 
-	int Index[6][6] = {
-		// 아래
-		{ 0, 1, 4, 1, 4, 5 },
-
-		// 위
-		{ 2, 3, 6, 3, 6, 7 },
-
-		// 왼쪽
-		{ 0, 1, 2, 1, 2, 3 },
-
-		// 오른쪽
-		{ 4, 5, 6, 5, 6, 7 },
-
-		// 앞
-		{ 0, 2, 6, 0, 4, 6 },
-
-		// 뒤
-		{ 1, 3, 7, 1, 5, 7 }
-	};
-
-	int vertexNum;
+	vector<glm::vec3> m_outvertex;
+	vector<glm::vec3> m_outnormal;
+	vector<glm::vec2> m_outuv;
 
 	bool Y_Move = true;
 
@@ -40,7 +20,7 @@ private:
 
 public:
 	Cube();
-	Cube(int xnum, int ynum, glm::vec3 color);
+	Cube(const string objFile);
 
 	void InitBuffer();
 	void InitColor();
@@ -57,6 +37,6 @@ public:
 	void Update_Synthetic_Matrix();
 
 	void Render();
+	
+	void ReadObj(const string objFile);
 };
-
-void ReadObj(const char* obj, glm::vec3** shape, int* vnum, GLfloat sizex, GLfloat sizey, GLfloat sizez);
