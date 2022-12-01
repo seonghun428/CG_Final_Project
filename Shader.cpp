@@ -11,7 +11,7 @@ Shader::Shader()
 
 void Shader::Make_VertexShader()
 {
-	GLchar* vertexSource = filetobuf("CG HW vertex.glsl");
+	GLchar* vertexSource = filetobuf("vertex.glsl");
 	vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
 	glShaderSource(vertexShader, 1, (const GLchar**)&vertexSource, 0);
@@ -30,7 +30,7 @@ void Shader::Make_VertexShader()
 
 void Shader::Make_FragmentShader()
 {
-	GLchar* fragmentSource = filetobuf("CG HW fragment.glsl");
+	GLchar* fragmentSource = filetobuf("fragment.glsl");
 	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
 	glShaderSource(fragmentShader, 1, (const GLchar**)&fragmentSource, 0);
@@ -64,24 +64,20 @@ void Shader::InitShader()
 	glUseProgram(ShaderID);
 }
 
-char* filetobuf(const char* file)
+char* filetobuf(const string file)
 {
-	FILE* fptr;
-	long length;
-	char* buf;
-
-	fptr = fopen(file, "rb");
-
-	if (!fptr)
-		return NULL;
-
-	fseek(fptr, 0, SEEK_END);
-	length = ftell(fptr);
-	buf = (char*)malloc(length + 1);
-	fseek(fptr, 0, SEEK_SET);
-	fread(buf, length, 1, fptr);
-	fclose(fptr);
-	buf[length] = 0;
-
+	string code;
+	ifstream fin(file, ios::in);
+	if (fin.is_open())
+	{
+		string Line = "";
+		while (getline(fin, Line))
+			code += "\n" + Line;
+		fin.close();
+	}
+	else
+		return 0;
+	char* buf = new char[code.length() + 1];
+	strcpy(buf, code.c_str());
 	return buf;
 }

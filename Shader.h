@@ -27,4 +27,4 @@ public:
 	}
 };
 
-char* filetobuf(const char* file);
+char* filetobuf(const string file);
