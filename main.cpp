@@ -32,7 +32,7 @@ GLfloat move_x = 0.0f;
 GLfloat move_y = 0.0f;
 GLfloat move_z = 0.0f;
 
-glm::vec3 cameraPos = glm::vec3(0.0f, 5.0f, 5.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 1.0f, 10.0f);
 glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -66,7 +66,7 @@ GLvoid drawScene()
 	unsigned int viewLocation = glGetUniformLocation(s_program, "viewTransform");
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
 
-	// plane->Render();
+	plane->Render();
 
 	zombie->Move_Update();
 	zombie->Render();

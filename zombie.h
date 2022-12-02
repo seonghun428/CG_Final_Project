@@ -12,6 +12,7 @@ private:
 
 	bool leg_up = true; // øﬁπﬂ ±‚¡ÿ
 	GLfloat leg_angle = 0.0f;
+	GLfloat go_front = 0.0f;
 
 public:
 	Zombie();
