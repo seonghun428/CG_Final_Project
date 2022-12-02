@@ -49,7 +49,7 @@ void Cube::Render()
 	glUseProgram(Shader::Get_ShaderID());
 	glBindVertexArray(vao);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	//glActiveTexture(GL_TEXTURE0);
 	//glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -200,4 +200,9 @@ void Cube::Update_ZRotate_Matrix(GLfloat z_angle)
 	Rz = glm::mat4(1.0f);
 	Rz = glm::rotate(Rz, glm::radians(z_angle), glm::vec3(0.0, 0.0, 1.0));
 	Sm *= Rz;
+}
+
+void Cube::Reset_Matrix()
+{
+	Sm = glm::mat4(1.0f);
 }

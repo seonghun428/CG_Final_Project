@@ -1,12 +1,14 @@
 #include "zombie.h"
 
-Zombie::Zombie()
+Zombie::Zombie(int line)
 {
 	body = new Cube("3DObjects/zombie_body.obj");
 	arm_left = new Cube("3DObjects/zombie_arm_left.obj");
 	arm_right = new Cube("3DObjects/zombie_arm_right.obj");
 	leg_left = new Cube("3DObjects/zombie_leg_left.obj");
 	leg_right = new Cube("3DObjects/zombie_leg_right.obj");
+
+	this->line = line;
 }
 
 Zombie::~Zombie()
@@ -26,11 +28,11 @@ void Zombie::InitBuffer()
 	leg_left->InitBuffer();
 	leg_right->InitBuffer();
 
-	body->Update_Synthetic_Matrix();
-	arm_left->Update_Synthetic_Matrix();
-	arm_right->Update_Synthetic_Matrix();
-	leg_left->Update_Synthetic_Matrix();
-	leg_right->Update_Synthetic_Matrix();
+	body->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
+	arm_left->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
+	arm_right->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
+	leg_left->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
+	leg_right->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
 }
 
 void Zombie::Move_Update()

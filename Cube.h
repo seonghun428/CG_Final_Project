@@ -29,6 +29,8 @@ public:
 
 	void InitBuffer();
 
+	void Reset_Matrix();
+
 	void Update_Translate_Matrix(glm::vec3);
 	void Update_XRotate_Matrix(GLfloat);
 	void Update_YRotate_Matrix(GLfloat);
