@@ -28,11 +28,11 @@ void Zombie::InitBuffer()
 	leg_left->InitBuffer();
 	leg_right->InitBuffer();
 
-	body->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
-	arm_left->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
-	arm_right->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
-	leg_left->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
-	leg_right->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.5));
+	body->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.7));
+	arm_left->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.7));
+	arm_right->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.7));
+	leg_left->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.7));
+	leg_right->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.7));
 }
 
 void Zombie::Move_Update()

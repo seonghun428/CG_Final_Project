@@ -25,7 +25,7 @@ GLfloat move_x = 0.0f;
 GLfloat move_y = 0.0f;
 GLfloat move_z = 0.0f;
 
-glm::vec3 cameraPos = glm::vec3(0.0f, 10.0f, 0.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 20.0f, 0.0f);
 glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 0.0f, -1.0f);
 
