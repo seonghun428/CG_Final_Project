@@ -26,3 +26,25 @@ void Zombie::Render()
 	leg_left.Render();
 	leg_right.Render();
 }
+
+void Zombie::Move()
+{
+	//body.Update_Translate_Matrix();
+	//arm_left.Update_Translate_Matrix();
+	//arm_right.Update_Translate_Matrix();
+	if (leg_up)
+		leg_angle += 5.0f;
+	else
+		leg_angle -= 5.0f;
+
+	if (leg_angle >= 30.0f)
+		leg_up = false;
+	else if (leg_angle <= -30.0f)
+		leg_up = true;
+	
+	leg_left.Update_ZRotate_Matrix(leg_angle);
+	leg_right.Update_ZRotate_Matrix(-leg_angle);
+
+	//leg_left.Update_Translate_Matrix();
+	//leg_right.Update_Translate_Matrix();
+}

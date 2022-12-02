@@ -10,7 +10,12 @@ private:
 	Cube leg_left{ "3DObjects/zombie_leg_left.obj" };
 	Cube leg_right{ "3DObjects/zombie_leg_right.obj" };
 
+	bool leg_up = true; // øﬁπﬂ ±‚¡ÿ
+	GLfloat leg_angle = 0.0f;
+
 public:
+	void Move();
+
 	void InitBuffer();
 	void Update();
 	void Render();

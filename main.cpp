@@ -364,6 +364,8 @@ GLvoid Timerfunc(int value)
 	{
 		rot_y += 5.0f;
 	}
+	
+	zombie->Move();
 
 	glutPostRedisplay();
 	glutTimerFunc(100, Timerfunc, 1);

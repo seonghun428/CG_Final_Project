@@ -46,7 +46,6 @@ void Cube::Render()
 	glBindVertexArray(vao);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	//glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	//glActiveTexture(GL_TEXTURE0);
 	//glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -169,4 +168,32 @@ void Cube::ReadObj(const string objFile)
 	}
 
 	m_Tri_Num = m_outvertex.size();
+}
+
+void Cube::Update_Translate_Matrix(glm::vec3 move)
+{
+	Tm = glm::mat4(1.0f);
+	Tm = glm::translate(Tm, move);
+	Sm *= Tm;
+}
+
+void Cube::Update_XRotate_Matrix(GLfloat x_angle)
+{
+	Rx = glm::mat4(1.0f);
+	Rx = glm::rotate(Rx, glm::radians(x_angle), glm::vec3(1.0, 0.0, 0.0));
+	Sm *= Rx;
+}
+
+void Cube::Update_YRotate_Matrix(GLfloat y_angle)
+{
+	Ry = glm::mat4(1.0f);
+	Ry = glm::rotate(Ry, glm::radians(y_angle), glm::vec3(0.0, 1.0, 0.0));
+	Sm *= Ry;
+}
+
+void Cube::Update_ZRotate_Matrix(GLfloat z_angle)
+{
+	Rz = glm::mat4(1.0f);
+	Rz = glm::rotate(Rz, glm::radians(z_angle), glm::vec3(0.0, 0.0, 1.0));
+	Sm *= Rz;
 }

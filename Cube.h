@@ -16,6 +16,11 @@ private:
 
 	bool Y_Move = true;
 
+	glm::mat4 Tm = glm::mat4(1.0f);
+	glm::mat4 Rx = glm::mat4(1.0f);
+	glm::mat4 Ry = glm::mat4(1.0f);
+	glm::mat4 Rz = glm::mat4(1.0f);
+
 	glm::mat4 Sm = glm::mat4(1.0f);
 
 public:
@@ -23,16 +28,11 @@ public:
 	Cube(const string objFile);
 
 	void InitBuffer();
-	void InitColor();
 
-	void Set_Position(int xnum, int ynum, int count);
-
-	void Move_Y_Position(GLfloat mult);
-	void Reset_Y_Position();
-
-	void Move(int xnum, int ynum, int direction);
-
-	glm::vec3 get_Position();
+	void Update_Translate_Matrix(glm::vec3);
+	void Update_XRotate_Matrix(GLfloat);
+	void Update_YRotate_Matrix(GLfloat);
+	void Update_ZRotate_Matrix(GLfloat);
 
 	void Update_Synthetic_Matrix();
 
