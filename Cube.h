@@ -8,7 +8,7 @@ private:
 	GLuint vao;
 	GLuint vbo[3];
 
-	GLint m_Tri_Num;
+	GLint m_Tri_Num = 0;
 
 	vector<glm::vec3> m_outvertex;
 	vector<glm::vec3> m_outnormal;

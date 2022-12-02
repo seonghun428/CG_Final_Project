@@ -32,16 +32,20 @@ void Cube::InitBuffer()
 	glBufferData(GL_ARRAY_BUFFER, m_outuv.size() * sizeof(glm::vec2), &m_outuv[0], GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
 	glEnableVertexAttribArray(2);
+
+	Sm = glm::mat4(1.0f);
 }
 
 void Cube::Update_Synthetic_Matrix()
 {
-	unsigned int modelLocation = glGetUniformLocation(Shader::Get_ShaderID(), "modelTransform");
-	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Sm));
+	
 }
 
 void Cube::Render()
 {
+	unsigned int modelLocation = glGetUniformLocation(Shader::Get_ShaderID(), "modelTransform");
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Sm));
+
 	glUseProgram(Shader::Get_ShaderID());
 	glBindVertexArray(vao);
 
