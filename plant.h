@@ -5,7 +5,7 @@
 class Plant
 {
 public:
-	void InitBuffer();
-	void InitTexture();
-	void Render();
+	virtual void InitBuffer() = 0;
+	virtual void InitTexture() = 0;
+	virtual void Render() = 0;
 };

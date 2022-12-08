@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include "zombie.h"
+#include "peanut.h"
 
 #define WINW 800
 #define WINH 800
@@ -11,6 +12,7 @@ GLvoid Timerfunc(int);
 
 Zombie* zombie = new Zombie(1);
 Object* plane = new Object("3DObjects/plane.obj","Textures/plane.png");
+Plant* plant = new Peanut("3DObjects/peanut.obj","Textures/peanut.png");
 
 Shader* shader = new Shader();
 
@@ -36,13 +38,12 @@ GLvoid drawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	plane->InitBuffer();
-	
-
 	zombie->InitBuffer();
+	plant->InitBuffer();
 
 	glUseProgram(s_program);
 	unsigned int lightPosLocation = glGetUniformLocation(s_program, "lightPos");
-	glUniform3f(lightPosLocation, 0.0, 2.0, 0.0);
+	glUniform3f(lightPosLocation, -50.0, 100.0, 0.0);
 	unsigned int lightColorLocation = glGetUniformLocation(s_program, "lightColor");
 	glUniform3f(lightColorLocation, 1.0, 1.0, 1.0);
 	unsigned int objColorLocation = glGetUniformLocation(s_program, "objectColor");
@@ -76,6 +77,8 @@ GLvoid drawScene()
 	zombie->Move_Update();
 	zombie->Render();
 
+	plant->Render();
+
 	glutSwapBuffers();
 }
 
@@ -96,6 +99,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 
 	plane->InitTexture();
 	zombie->InitTexture();
+	plant->InitTexture();
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -146,11 +150,19 @@ GLvoid Special(int key, int x, int y)
 {
 	switch (key) {
 	case GLUT_KEY_UP:
-		cameraPos.z -= 0.1f;
+		cameraPos = glm::vec3(0.0f, 2.0f, 5.0f);
 		break;
 
 	case GLUT_KEY_DOWN:
-		cameraPos.z += 0.1f;
+		cameraPos = glm::vec3(0.0f, 2.0f, -5.0f);
+		break;
+
+	case GLUT_KEY_LEFT:
+		cameraPos = glm::vec3(-5.0f, 2.0f, 0.0f);
+		break;
+
+	case GLUT_KEY_RIGHT:
+		cameraPos = glm::vec3(5.0f, 2.0f, 0.0f);
 		break;
 	}
 
