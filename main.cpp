@@ -10,7 +10,7 @@ GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 
 Zombie* zombie = new Zombie(1);
-Cube* plane = new Cube("3DObjects/plane.obj","Textures/test.png");
+Cube* plane = new Cube("3DObjects/plane.obj","Textures/plane.png");
 
 Shader* shader = new Shader();
 
@@ -26,9 +26,9 @@ GLfloat move_x = 0.0f;
 GLfloat move_y = 0.0f;
 GLfloat move_z = 0.0f;
 
-glm::vec3 cameraPos = glm::vec3(0.0f, 20.0f, 0.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 2.0f, 5.0f);
 glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 GLvoid drawScene()
 {

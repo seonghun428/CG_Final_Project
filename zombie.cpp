@@ -2,11 +2,11 @@
 
 Zombie::Zombie(int line)
 {
-	body = new Cube("3DObjects/zombie_body.obj", "Textures/test.png");
-	arm_left = new Cube("3DObjects/zombie_arm_left.obj", "Textures/test.png");
-	arm_right = new Cube("3DObjects/zombie_arm_right.obj", "Textures/test.png");
-	leg_left = new Cube("3DObjects/zombie_leg_left.obj", "Textures/test.png");
-	leg_right = new Cube("3DObjects/zombie_leg_right.obj", "Textures/test.png");
+	body = new Cube("3DObjects/zombie_body.obj", "Textures/zombie.png");
+	arm_left = new Cube("3DObjects/zombie_arm_left.obj", "Textures/zombie.png");
+	arm_right = new Cube("3DObjects/zombie_arm_right.obj", "Textures/zombie.png");
+	leg_left = new Cube("3DObjects/zombie_leg_left.obj", "Textures/zombie.png");
+	leg_right = new Cube("3DObjects/zombie_leg_right.obj", "Textures/zombie.png");
 
 	this->line = line;
 }
