@@ -1,5 +1,7 @@
 #include "Shader.h"
-#include "zombie.h"
+#include "normal_zombie.h"
+#include "iron_zombie.h"
+#include "gold_zombie.h"
 #include "peanut.h"
 
 #define WINW 800
@@ -10,7 +12,9 @@ GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 
-Zombie* zombie = new Zombie(1);
+Zombie* zombie = new NormalZombie(1);
+Zombie* zombie2 = new IronZombie(2);
+Zombie* zombie3 = new GoldZombie(3);
 Object* plane = new Object("3DObjects/plane.obj","Textures/plane.png");
 Plant* plant = new Peanut("3DObjects/peanut.obj","Textures/peanut.png");
 
@@ -39,6 +43,8 @@ GLvoid drawScene()
 
 	plane->InitBuffer();
 	zombie->InitBuffer();
+	zombie2->InitBuffer();
+	zombie3->InitBuffer();
 	plant->InitBuffer();
 
 	glUseProgram(s_program);
@@ -77,7 +83,13 @@ GLvoid drawScene()
 	zombie->Move_Update();
 	zombie->Render();
 
-	plant->Render();
+	zombie2->Move_Update();
+	zombie2->Render();
+
+	zombie3->Move_Update();
+	zombie3->Render();
+
+	//plant->Render();
 
 	glutSwapBuffers();
 }
@@ -99,6 +111,8 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 
 	plane->InitTexture();
 	zombie->InitTexture();
+	zombie2->InitTexture();
+	zombie3->InitTexture();
 	plant->InitTexture();
 
 	glutDisplayFunc(drawScene);
@@ -172,6 +186,8 @@ GLvoid Special(int key, int x, int y)
 GLvoid Timerfunc(int value)
 {	
 	zombie->Move();
+	zombie2->Move();
+	zombie3->Move();
 
 	glutPostRedisplay();
 	glutTimerFunc(100, Timerfunc, 1);

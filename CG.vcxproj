@@ -128,6 +128,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="gold_zombie.cpp" />
+    <ClCompile Include="iron_zombie.cpp" />
+    <ClCompile Include="normal_zombie.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="peanut.cpp" />
@@ -140,6 +143,9 @@
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="gold_zombie.h" />
+    <ClInclude Include="iron_zombie.h" />
+    <ClInclude Include="normal_zombie.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="peanut.h" />

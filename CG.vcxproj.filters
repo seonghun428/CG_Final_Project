@@ -33,6 +33,15 @@
     <ClCompile Include="peanut.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="gold_zombie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="iron_zombie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="normal_zombie.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
@@ -62,6 +71,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="peanut.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="gold_zombie.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="iron_zombie.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="normal_zombie.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
