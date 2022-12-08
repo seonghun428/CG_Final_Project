@@ -1,11 +1,23 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define STB_IMAGE_IMPLEMENTATION
+
+#include "stb_image.h"
+
 #include "Cube.h"
 #include "Shader.h"
 
 Cube::Cube() {}
 
-Cube::Cube(const string objFile)
+Cube::Cube(const string objFile, const string imgfile)
 {
 	ReadObj(objFile);
+	stbi_set_flip_vertically_on_load(true);
+	data = stbi_load(imgfile.c_str(), &widthImage, &heightImage, &numberOfChannel, 0);
+}
+
+Cube::~Cube()
+{
+	
 }
 
 void Cube::InitBuffer()
@@ -36,6 +48,22 @@ void Cube::InitBuffer()
 	Sm = glm::mat4(1.0f);
 }
 
+void Cube::InitTexture()
+{
+	glGenTextures(1, &m_texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImage, heightImage, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	stbi_image_free(data);
+}
+
 void Cube::Update_Synthetic_Matrix()
 {
 	
@@ -49,10 +77,8 @@ void Cube::Render()
 	glUseProgram(Shader::Get_ShaderID());
 	glBindVertexArray(vao);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, m_texture);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glDrawArrays(GL_TRIANGLES, 0, m_Tri_Num);
 }
 

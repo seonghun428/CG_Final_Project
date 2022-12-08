@@ -10,6 +10,11 @@ private:
 
 	GLint m_Tri_Num = 0;
 
+	unsigned int m_texture;
+
+	int widthImage, heightImage, numberOfChannel;
+	unsigned char* data;
+
 	vector<glm::vec3> m_outvertex;
 	vector<glm::vec3> m_outnormal;
 	vector<glm::vec2> m_outuv;
@@ -25,9 +30,11 @@ private:
 
 public:
 	Cube();
-	Cube(const string objFile);
+	Cube(const string objFile, const string imgfile);
+	~Cube();
 
 	void InitBuffer();
+	void InitTexture();
 
 	void Reset_Matrix();
 

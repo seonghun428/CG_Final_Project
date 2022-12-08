@@ -1,5 +1,4 @@
 #include "Shader.h"
-#include "Cube.h"
 #include "zombie.h"
 
 #define WINW 800
@@ -11,11 +10,13 @@ GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 
 Zombie* zombie = new Zombie(1);
-Cube* plane = new Cube("3DObjects/plane.obj");
+Cube* plane = new Cube("3DObjects/plane.obj","Textures/test.png");
 
 Shader* shader = new Shader();
 
 GLuint s_program;
+
+GLenum polymod = GL_FILL;
 
 GLfloat rot_x = 0.0f;
 GLfloat rot_y = 0.0f;
@@ -35,11 +36,24 @@ GLvoid drawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	plane->InitBuffer();
+	
+
 	zombie->InitBuffer();
 
-	glEnable(GL_DEPTH_TEST);
-
 	glUseProgram(s_program);
+	unsigned int lightPosLocation = glGetUniformLocation(s_program, "lightPos");
+	glUniform3f(lightPosLocation, 0.0, 2.0, 0.0);
+	unsigned int lightColorLocation = glGetUniformLocation(s_program, "lightColor");
+	glUniform3f(lightColorLocation, 1.0, 1.0, 1.0);
+	unsigned int objColorLocation = glGetUniformLocation(s_program, "objectColor");
+	glUniform3f(objColorLocation, 1.0, 1.0, 1.0);
+	unsigned int viewPosLocation = glGetUniformLocation(s_program, "viewPos");
+	glUniform3f(viewPosLocation, cameraPos.x, cameraPos.y, cameraPos.z);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_CULL_FACE);
 
 	glm::mat4 projection = glm::mat4(1.0f);
 	
@@ -54,6 +68,8 @@ GLvoid drawScene()
 	view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
 	unsigned int viewLocation = glGetUniformLocation(s_program, "viewTransform");
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
+	
+	glPolygonMode(GL_FRONT_AND_BACK, polymod);
 
 	plane->Render();
 
@@ -77,6 +93,10 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glewInit();
 	shader->InitShader();
 	s_program = shader->Get_ShaderID();
+
+	plane->InitTexture();
+	zombie->InitTexture();
+
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard);
@@ -95,6 +115,12 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 GLvoid Keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
+	case 'w':
+	case 'W':
+		if (polymod == GL_FILL)	polymod = GL_LINE;
+		else polymod = GL_FILL;
+		break;
+
 	case 'x':
 	case 'X':
 		break;
@@ -120,11 +146,11 @@ GLvoid Special(int key, int x, int y)
 {
 	switch (key) {
 	case GLUT_KEY_UP:
-		cameraPos.z += 0.1f;
+		cameraPos.z -= 0.1f;
 		break;
 
 	case GLUT_KEY_DOWN:
-		cameraPos.z -= 0.1f;
+		cameraPos.z += 0.1f;
 		break;
 	}
 

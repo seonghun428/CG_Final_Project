@@ -23,6 +23,7 @@ public:
 	void Move();
 
 	void InitBuffer();
+	void InitTexture();
 	void Move_Update();
 	void Render();
 };
