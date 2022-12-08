@@ -2,7 +2,7 @@
 
 #include "header.h"
 
-class Cube
+class Object
 {
 private:
 	GLuint vao;
@@ -29,9 +29,9 @@ private:
 	glm::mat4 Sm = glm::mat4(1.0f);
 
 public:
-	Cube();
-	Cube(const string objFile, const string imgfile);
-	~Cube();
+	Object();
+	Object(const string objFile, const string imgfile);
+	~Object();
 
 	void InitBuffer();
 	void InitTexture();

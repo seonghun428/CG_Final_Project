@@ -3,24 +3,24 @@
 
 #include "stb_image.h"
 
-#include "Cube.h"
+#include "object.h"
 #include "Shader.h"
 
-Cube::Cube() {}
+Object::Object() {}
 
-Cube::Cube(const string objFile, const string imgfile)
+Object::Object(const string objFile, const string imgfile)
 {
 	ReadObj(objFile);
 	stbi_set_flip_vertically_on_load(true);
 	data = stbi_load(imgfile.c_str(), &widthImage, &heightImage, &numberOfChannel, 0);
 }
 
-Cube::~Cube()
+Object::~Object()
 {
 	
 }
 
-void Cube::InitBuffer()
+void Object::InitBuffer()
 {
 	// vao
 	glGenVertexArrays(1, &vao);
@@ -48,7 +48,7 @@ void Cube::InitBuffer()
 	Sm = glm::mat4(1.0f);
 }
 
-void Cube::InitTexture()
+void Object::InitTexture()
 {
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -64,12 +64,12 @@ void Cube::InitTexture()
 	stbi_image_free(data);
 }
 
-void Cube::Update_Synthetic_Matrix()
+void Object::Update_Synthetic_Matrix()
 {
 	
 }
 
-void Cube::Render()
+void Object::Render()
 {
 	unsigned int modelLocation = glGetUniformLocation(Shader::Get_ShaderID(), "modelTransform");
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Sm));
@@ -82,7 +82,7 @@ void Cube::Render()
 	glDrawArrays(GL_TRIANGLES, 0, m_Tri_Num);
 }
 
-void Cube::ReadObj(const string objFile)
+void Object::ReadObj(const string objFile)
 {
 	GLfloat sumX = 0.0f, sumY = 0.0f, sumZ = 0.0f;
 	GLfloat avgX, avgY, avgZ;
@@ -200,35 +200,35 @@ void Cube::ReadObj(const string objFile)
 	m_Tri_Num = m_outvertex.size();
 }
 
-void Cube::Update_Translate_Matrix(glm::vec3 move)
+void Object::Update_Translate_Matrix(glm::vec3 move)
 {
 	Tm = glm::mat4(1.0f);
 	Tm = glm::translate(Tm, move);
 	Sm *= Tm;
 }
 
-void Cube::Update_XRotate_Matrix(GLfloat x_angle)
+void Object::Update_XRotate_Matrix(GLfloat x_angle)
 {
 	Rx = glm::mat4(1.0f);
 	Rx = glm::rotate(Rx, glm::radians(x_angle), glm::vec3(1.0, 0.0, 0.0));
 	Sm *= Rx;
 }
 
-void Cube::Update_YRotate_Matrix(GLfloat y_angle)
+void Object::Update_YRotate_Matrix(GLfloat y_angle)
 {
 	Ry = glm::mat4(1.0f);
 	Ry = glm::rotate(Ry, glm::radians(y_angle), glm::vec3(0.0, 1.0, 0.0));
 	Sm *= Ry;
 }
 
-void Cube::Update_ZRotate_Matrix(GLfloat z_angle)
+void Object::Update_ZRotate_Matrix(GLfloat z_angle)
 {
 	Rz = glm::mat4(1.0f);
 	Rz = glm::rotate(Rz, glm::radians(z_angle), glm::vec3(0.0, 0.0, 1.0));
 	Sm *= Rz;
 }
 
-void Cube::Reset_Matrix()
+void Object::Reset_Matrix()
 {
 	Sm = glm::mat4(1.0f);
 }

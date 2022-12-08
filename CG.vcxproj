@@ -128,8 +128,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="object.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="plant.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="zombie.cpp" />
   </ItemGroup>
@@ -138,8 +139,9 @@
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cube.h" />
+    <ClInclude Include="object.h" />
     <ClInclude Include="header.h" />
+    <ClInclude Include="plant.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="zombie.h" />

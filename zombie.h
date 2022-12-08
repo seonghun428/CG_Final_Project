@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Cube.h"
+#include "object.h"
 
 class Zombie {
 private:
-	Cube* body;
-	Cube* arm_left;
-	Cube* arm_right;
-	Cube* leg_left;
-	Cube* leg_right;
+	Object* body;
+	Object* arm_left;
+	Object* arm_right;
+	Object* leg_left;
+	Object* leg_right;
 
 	int line;
 

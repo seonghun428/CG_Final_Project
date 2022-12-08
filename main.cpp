@@ -10,7 +10,7 @@ GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 
 Zombie* zombie = new Zombie(1);
-Cube* plane = new Cube("3DObjects/plane.obj","Textures/plane.png");
+Object* plane = new Object("3DObjects/plane.obj","Textures/plane.png");
 
 Shader* shader = new Shader();
 
