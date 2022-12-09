@@ -1,16 +1,17 @@
 #pragma once
 
-#include "header.h"
 #include "plant.h"
 #include "object.h"
 
-class Peanut : public Plant
+class P_Modapi : public Plant
 {
 private:
-	Object* body;
+	Object* hair;
+	Object* head;
+	Object* stem;
 
 public:
-	Peanut();
+	P_Modapi();
 
 	virtual void InitBuffer();
 	virtual void InitTexture();

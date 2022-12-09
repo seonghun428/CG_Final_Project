@@ -1,16 +1,15 @@
 #pragma once
 
-#include "header.h"
 #include "plant.h"
 #include "object.h"
 
-class Peanut : public Plant
+class Cherry : public Plant
 {
 private:
 	Object* body;
 
 public:
-	Peanut();
+	Cherry();
 
 	virtual void InitBuffer();
 	virtual void InitTexture();

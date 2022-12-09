@@ -3,6 +3,12 @@
 #include "iron_zombie.h"
 #include "gold_zombie.h"
 #include "peanut.h"
+#include "cherry.h"
+#include "normal_modapi.h"
+#include "slow_modapi.h"
+#include "fast_modapi.h"
+#include "penetrate_modapi.h"
+#include "sunflower.h"
 
 #define WINW 800
 #define WINH 800
@@ -12,11 +18,8 @@ GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 
-Zombie* zombie = new NormalZombie(1);
-Zombie* zombie2 = new IronZombie(2);
-Zombie* zombie3 = new GoldZombie(3);
 Object* plane = new Object("3DObjects/plane.obj","Textures/plane.png");
-Plant* plant = new Peanut("3DObjects/peanut.obj","Textures/peanut.png");
+Plant* plant = new P_Modapi();
 
 Shader* shader = new Shader();
 
@@ -42,9 +45,6 @@ GLvoid drawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	plane->InitBuffer();
-	zombie->InitBuffer();
-	zombie2->InitBuffer();
-	zombie3->InitBuffer();
 	plant->InitBuffer();
 
 	glUseProgram(s_program);
@@ -80,16 +80,7 @@ GLvoid drawScene()
 
 	plane->Render();
 
-	zombie->Move_Update();
-	zombie->Render();
-
-	zombie2->Move_Update();
-	zombie2->Render();
-
-	zombie3->Move_Update();
-	zombie3->Render();
-
-	//plant->Render();
+	plant->Render();
 
 	glutSwapBuffers();
 }
@@ -110,9 +101,6 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	s_program = shader->Get_ShaderID();
 
 	plane->InitTexture();
-	zombie->InitTexture();
-	zombie2->InitTexture();
-	zombie3->InitTexture();
 	plant->InitTexture();
 
 	glutDisplayFunc(drawScene);
@@ -185,9 +173,7 @@ GLvoid Special(int key, int x, int y)
 
 GLvoid Timerfunc(int value)
 {	
-	zombie->Move();
-	zombie2->Move();
-	zombie3->Move();
+
 
 	glutPostRedisplay();
 	glutTimerFunc(100, Timerfunc, 1);

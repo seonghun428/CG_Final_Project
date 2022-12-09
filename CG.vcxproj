@@ -128,14 +128,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cherry.cpp" />
+    <ClCompile Include="fast_modapi.cpp" />
     <ClCompile Include="gold_zombie.cpp" />
     <ClCompile Include="iron_zombie.cpp" />
+    <ClCompile Include="normal_modapi.cpp" />
     <ClCompile Include="normal_zombie.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="peanut.cpp" />
+    <ClCompile Include="penetrate_modapi.cpp" />
     <ClCompile Include="plant.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="slow_modapi.cpp" />
+    <ClCompile Include="sunflower.cpp" />
     <ClCompile Include="zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,15 +149,21 @@
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cherry.h" />
+    <ClInclude Include="fast_modapi.h" />
     <ClInclude Include="gold_zombie.h" />
     <ClInclude Include="iron_zombie.h" />
+    <ClInclude Include="normal_modapi.h" />
     <ClInclude Include="normal_zombie.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="peanut.h" />
+    <ClInclude Include="penetrate_modapi.h" />
     <ClInclude Include="plant.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="slow_modapi.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="sunflower.h" />
     <ClInclude Include="zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

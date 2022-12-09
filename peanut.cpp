@@ -1,10 +1,8 @@
 #include "peanut.h"
 
-Peanut::Peanut() {}
-
-Peanut::Peanut(const string objfile, const string imgfile)
+Peanut::Peanut()
 {
-	body = new Object(objfile, imgfile);
+	body = new Object("3DObjects/peanut.obj", "Textures/peanut.png");
 }
 
 void Peanut::InitBuffer()
