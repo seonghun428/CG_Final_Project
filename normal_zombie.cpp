@@ -61,6 +61,17 @@ void NormalZombie::Move_Update()
 	leg_right->Update_Translate_Matrix(glm::vec3(0.0, -0.6, 0.0));
 }
 
+void NormalZombie::Attack_Update()
+{
+	arm_left->Update_Translate_Matrix(glm::vec3(0.0, 1.1, 0.0));
+	arm_left->Update_ZRotate_Matrix(arm_angle);
+	arm_left->Update_Translate_Matrix(glm::vec3(0.0, -1.1, 0.0));
+
+	arm_right->Update_Translate_Matrix(glm::vec3(0.0, 1.1, 0.0));
+	arm_right->Update_ZRotate_Matrix(arm_angle);
+	arm_right->Update_Translate_Matrix(glm::vec3(0.0, -1.1, 0.0));
+}
+
 void NormalZombie::Render()
 {
 	body->Render();
@@ -83,4 +94,17 @@ void NormalZombie::Move()
 		leg_up = true;
 
 	go_front -= 0.02f;
+}
+
+void NormalZombie::Attack()
+{
+	if (arm_up)
+		arm_angle += 10.0f;
+	else
+		arm_angle -= 10.0f;
+
+	if (arm_angle >= 10.0f)
+		arm_up = false;
+	else if (arm_angle <= -80.0f)
+		arm_up = true;
 }

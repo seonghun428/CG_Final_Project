@@ -21,7 +21,6 @@ GLvoid Timerfunc(int);
 vector<Model *> objects;
 
 Object* plane = new Object("3DObjects/plane.obj","Textures/plane.png");
-Model* plant = new Cherry();
 Model* zom1 = new NormalZombie(1);
 Model* zom2 = new IronZombie(2);
 Model* zom3 = new GoldZombie(3);
@@ -92,6 +91,8 @@ GLvoid drawScene()
 
 	for (Model* object : objects)
 	{
+		//object->Move_Update();
+		object->Attack_Update();
 		object->Render();
 	}
 
@@ -115,7 +116,6 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 
 	plane->InitTexture();
 
-	objects.push_back(plant);
 	objects.push_back(zom1);
 	objects.push_back(zom2);
 	objects.push_back(zom3);
@@ -197,7 +197,11 @@ GLvoid Special(int key, int x, int y)
 
 GLvoid Timerfunc(int value)
 {	
-
+	for (Model* object : objects)
+	{
+		//object->Move();
+		object->Attack();
+	}
 
 	glutPostRedisplay();
 	glutTimerFunc(100, Timerfunc, 1);
