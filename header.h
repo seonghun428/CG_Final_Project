@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <list>
 #include <random>
 #include <windows.h>
 #include <gl/glew.h>

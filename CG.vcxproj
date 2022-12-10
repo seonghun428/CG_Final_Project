@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bean.cpp" />
     <ClCompile Include="cherry.cpp" />
     <ClCompile Include="fast_modapi.cpp" />
     <ClCompile Include="gold_zombie.cpp" />
@@ -150,6 +151,7 @@
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bean.h" />
     <ClInclude Include="cherry.h" />
     <ClInclude Include="fast_modapi.h" />
     <ClInclude Include="gold_zombie.h" />

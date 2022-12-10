@@ -1,4 +1,5 @@
 #include "normal_modapi.h"
+#include "bean.h"
 
 Modapi::Modapi()
 {
@@ -22,4 +23,13 @@ void Modapi::Render()
 {
 	head->Render();
 	stem->Render();
+}
+
+extern list<Model*> objects;
+
+void Modapi::Attack()
+{
+	Model* bean = new Bean();
+	bean->InitTexture();
+	objects.push_back(bean);
 }
