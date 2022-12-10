@@ -132,6 +132,7 @@
     <ClCompile Include="fast_modapi.cpp" />
     <ClCompile Include="gold_zombie.cpp" />
     <ClCompile Include="iron_zombie.cpp" />
+    <ClCompile Include="model.cpp" />
     <ClCompile Include="normal_modapi.cpp" />
     <ClCompile Include="normal_zombie.cpp" />
     <ClCompile Include="object.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="fast_modapi.h" />
     <ClInclude Include="gold_zombie.h" />
     <ClInclude Include="iron_zombie.h" />
+    <ClInclude Include="model.h" />
     <ClInclude Include="normal_modapi.h" />
     <ClInclude Include="normal_zombie.h" />
     <ClInclude Include="object.h" />

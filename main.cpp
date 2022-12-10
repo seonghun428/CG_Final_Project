@@ -18,8 +18,13 @@ GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 
+vector<Model *> objects;
+
 Object* plane = new Object("3DObjects/plane.obj","Textures/plane.png");
-Plant* plant = new P_Modapi();
+Model* plant = new F_Modapi();
+Model* zom1 = new NormalZombie(1);
+Model* zom2 = new IronZombie(2);
+Model* zom3 = new GoldZombie(3);
 
 Shader* shader = new Shader();
 
@@ -35,17 +40,20 @@ GLfloat move_x = 0.0f;
 GLfloat move_y = 0.0f;
 GLfloat move_z = 0.0f;
 
-glm::vec3 cameraPos = glm::vec3(0.0f, 2.0f, 5.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 5.0f);
 glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 GLvoid drawScene()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	plane->InitBuffer();
-	plant->InitBuffer();
+	for (Model* object : objects)
+	{
+		object->InitBuffer();
+	}
 
 	glUseProgram(s_program);
 	unsigned int lightPosLocation = glGetUniformLocation(s_program, "lightPos");
@@ -64,8 +72,10 @@ GLvoid drawScene()
 
 	glm::mat4 projection = glm::mat4(1.0f);
 	
-	projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f);
-	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));
+	//projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f);
+	//projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));
+
+	projection = glm::ortho(-10.0,10.0,-10.0,10.0,-10.0,10.0);
 
 	unsigned int projectionLocation = glGetUniformLocation(s_program, "projectionTransform");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
@@ -80,7 +90,10 @@ GLvoid drawScene()
 
 	plane->Render();
 
-	plant->Render();
+	for (Model* object : objects)
+	{
+		object->Render();
+	}
 
 	glutSwapBuffers();
 }
@@ -101,7 +114,18 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	s_program = shader->Get_ShaderID();
 
 	plane->InitTexture();
-	plant->InitTexture();
+
+	objects.push_back(plant);
+	objects.push_back(zom1);
+	objects.push_back(zom2);
+	objects.push_back(zom3);
+
+	for (Model* object : objects)
+	{
+		object->InitTexture();
+	}
+
+	//plant->InitTexture();
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -152,19 +176,19 @@ GLvoid Special(int key, int x, int y)
 {
 	switch (key) {
 	case GLUT_KEY_UP:
-		cameraPos = glm::vec3(0.0f, 2.0f, 5.0f);
+		cameraPos = glm::vec3(0.0f, 0.0f, 5.0f);
 		break;
 
 	case GLUT_KEY_DOWN:
-		cameraPos = glm::vec3(0.0f, 2.0f, -5.0f);
+		cameraPos = glm::vec3(0.0f, 0.0f, -5.0f);
 		break;
 
 	case GLUT_KEY_LEFT:
-		cameraPos = glm::vec3(-5.0f, 2.0f, 0.0f);
+		cameraPos = glm::vec3(-10.0f, 0.0f, 0.0f);
 		break;
 
 	case GLUT_KEY_RIGHT:
-		cameraPos = glm::vec3(5.0f, 2.0f, 0.0f);
+		cameraPos = glm::vec3(10.0f, 0.0f, 0.0f);
 		break;
 	}
 

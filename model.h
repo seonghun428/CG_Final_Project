@@ -1,9 +1,8 @@
 #pragma once
 
 #include "header.h"
-#include "model.h"
 
-class Plant : public Model
+class Model
 {
 public:
 	virtual void InitBuffer() = 0;

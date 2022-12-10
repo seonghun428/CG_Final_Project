@@ -1,8 +1,10 @@
 #pragma once
 
 #include "object.h"
+#include "model.h"
 
-class Zombie {
+class Zombie : public Model
+{
 public:
 	virtual void Move() = 0;
 
