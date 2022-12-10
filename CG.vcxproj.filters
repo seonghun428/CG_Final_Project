@@ -66,6 +66,15 @@
     <ClCompile Include="bean.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="world.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="plane.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
@@ -128,6 +137,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="bean.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="world.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="plane.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

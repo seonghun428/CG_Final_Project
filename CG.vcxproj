@@ -140,10 +140,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="peanut.cpp" />
     <ClCompile Include="penetrate_modapi.cpp" />
+    <ClCompile Include="plane.cpp" />
     <ClCompile Include="plant.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="slow_modapi.cpp" />
     <ClCompile Include="sunflower.cpp" />
+    <ClCompile Include="world.cpp" />
     <ClCompile Include="zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -163,11 +166,14 @@
     <ClInclude Include="header.h" />
     <ClInclude Include="peanut.h" />
     <ClInclude Include="penetrate_modapi.h" />
+    <ClInclude Include="plane.h" />
     <ClInclude Include="plant.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="slow_modapi.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="sunflower.h" />
+    <ClInclude Include="world.h" />
     <ClInclude Include="zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

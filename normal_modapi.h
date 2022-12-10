@@ -2,6 +2,9 @@
 
 #include "plant.h"
 #include "object.h"
+#include "scene.h"
+
+extern Scene scene;
 
 class Modapi : public Plant
 {

@@ -25,11 +25,9 @@ void Modapi::Render()
 	stem->Render();
 }
 
-extern list<Model*> objects;
-
 void Modapi::Attack()
 {
-	Model* bean = new Bean();
+	Model* bean = new Bean(0,0);
 	bean->InitTexture();
-	objects.push_back(bean);
+	scene.world.add_object(bean);
 }
