@@ -57,9 +57,12 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 
 GLvoid Keyboard(unsigned char key, int x, int y)
 {
+	if (key == 27)
+		exit(0);
+
 	ssin.Input(key);
 
-	glutPostRedisplay(); //--- 배경색이 바뀔 때마다 출력 콜백 함수를 호출하여 화면을 refresh 한다
+	glutPostRedisplay();
 }
 
 GLvoid Special(int key, int x, int y)

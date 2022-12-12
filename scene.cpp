@@ -78,11 +78,6 @@ void CScene::Input(unsigned char key)
 	case 's':
 	case 'S':
 		break;
-
-	case 'q':
-	case 'Q':
-		exit(0);
-		break;
 	}
 }
 
