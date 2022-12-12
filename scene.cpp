@@ -17,7 +17,7 @@ void CScene::Init_Select()
 void CScene::Init_Main()
 {
 	plane = new Plane();
-	cherry = new P_Modapi();
+	cherry = new F_Modapi();
 	zombie = new GoldZombie(1);
 
 	shader.InitShader();

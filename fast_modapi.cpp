@@ -58,4 +58,8 @@ void F_Modapi::Attack()
 	bean->InitTexture();
 	extern CScene scene;
 	scene.world.add_object(bean);
+
+	Model* bean2 = new Bean(0, 0, "Textures/modapi.png");
+	bean2->InitTexture();
+	scene.world.add_object(bean2);
 }

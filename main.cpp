@@ -48,7 +48,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(Special);
 	glutTimerFunc(100, Timerfunc, 1);
-	glutTimerFunc(500, Timer2, 2);
+	glutTimerFunc(1000, Timer2, 2);
 	glutMainLoop();
 
 	return 0;
@@ -89,5 +89,5 @@ GLvoid Timer2(int value)
 	scene.Update2();
 
 	glutPostRedisplay();
-	glutTimerFunc(500, Timer2, 2);
+	glutTimerFunc(1000, Timer2, 2);
 }
