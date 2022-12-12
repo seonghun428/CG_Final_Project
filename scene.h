@@ -1,20 +1,23 @@
 #pragma once
 
 #include "Shader.h"
-#include "normal_zombie.h"
+
+#include "zombie.h"
 #include "iron_zombie.h"
 #include "gold_zombie.h"
 #include "peanut.h"
 #include "cherry.h"
+#include "modapi.h"
 #include "slow_modapi.h"
 #include "fast_modapi.h"
 #include "penetrate_modapi.h"
 #include "sunflower.h"
 #include "bean.h"
 #include "plane.h"
+
 #include "world.h"
 
-class Scene
+class CScene
 {
 private:
 	Shader shader;
@@ -23,9 +26,11 @@ private:
 	Model* cherry;
 	Model* zombie;
 
+	GLenum polymod = GL_FILL;
+
 public:
-	Scene();
-	~Scene();
+	CScene();
+	~CScene();
 
 	World world;
 
@@ -35,4 +40,7 @@ public:
 	void Init_End();
 
 	void Render();
+
+	void Input(unsigned char key);
+	void Input_s(int key);
 };

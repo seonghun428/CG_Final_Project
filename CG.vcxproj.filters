@@ -24,9 +24,6 @@
     <ClCompile Include="Shader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="zombie.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="plant.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -39,7 +36,7 @@
     <ClCompile Include="iron_zombie.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="normal_zombie.cpp">
+    <ClCompile Include="zombie.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="cherry.cpp">
@@ -51,7 +48,7 @@
     <ClCompile Include="fast_modapi.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="normal_modapi.cpp">
+    <ClCompile Include="modapi.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="penetrate_modapi.cpp">
@@ -94,9 +91,6 @@
     <ClInclude Include="Shader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="zombie.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -112,7 +106,7 @@
     <ClInclude Include="iron_zombie.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="normal_zombie.h">
+    <ClInclude Include="zombie.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="cherry.h">
@@ -130,7 +124,7 @@
     <ClInclude Include="fast_modapi.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="normal_modapi.h">
+    <ClInclude Include="modapi.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="model.h">

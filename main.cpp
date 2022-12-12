@@ -8,8 +8,7 @@ GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 
-Scene scene;
-GLenum polymod = GL_FILL;
+CScene ssin;
 
 GLvoid drawScene()
 {
@@ -21,9 +20,7 @@ GLvoid drawScene()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_CULL_FACE);
 
-	glPolygonMode(GL_FRONT_AND_BACK, polymod);
-
-	scene.Render();
+	ssin.Render();
 
 	glutSwapBuffers();
 }
@@ -41,7 +38,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glewExperimental = GL_TRUE;
 	glewInit();
 	
-	scene.Init_Main();
+	ssin.Init_Main();
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -60,53 +57,14 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 
 GLvoid Keyboard(unsigned char key, int x, int y)
 {
-	switch (key) {
-	case 'w':
-	case 'W':
-		if (polymod == GL_FILL)	polymod = GL_LINE;
-		else polymod = GL_FILL;
-		break;
-
-	case 'x':
-	case 'X':
-		break;
-
-	case 'y':
-	case 'Y':
-		break;
-
-	case 's':
-	case 'S':
-		break;
-
-	case 'q':
-	case 'Q':
-		exit(0);
-		break;
-	}
+	ssin.Input(key);
 
 	glutPostRedisplay(); //--- 배경색이 바뀔 때마다 출력 콜백 함수를 호출하여 화면을 refresh 한다
 }
 
 GLvoid Special(int key, int x, int y)
 {
-	/*switch (key) {
-	case GLUT_KEY_UP:
-		cameraPos = glm::vec3(0.0f, 0.0f, 5.0f);
-		break;
-
-	case GLUT_KEY_DOWN:
-		cameraPos = glm::vec3(0.0f, 0.0f, -5.0f);
-		break;
-
-	case GLUT_KEY_LEFT:
-		cameraPos = glm::vec3(-10.0f, 0.0f, 0.0f);
-		break;
-
-	case GLUT_KEY_RIGHT:
-		cameraPos = glm::vec3(10.0f, 0.0f, 0.0f);
-		break;
-	}*/
+	ssin.Input_s(key);
 
 	glutPostRedisplay();
 }

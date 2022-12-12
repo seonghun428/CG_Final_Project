@@ -1,16 +1,36 @@
 #pragma once
 
-#include "object.h"
 #include "model.h"
 
 class Zombie : public Model
 {
+protected:
+	Object* body;
+	Object* arm_left;
+	Object* arm_right;
+	Object* leg_left;
+	Object* leg_right;
+
+	int line;
+
+	bool leg_up = true; // øﬁπﬂ ±‚¡ÿ
+	bool arm_up = true;
+	GLfloat leg_angle = 0.0f;
+	GLfloat arm_angle = 0.0f;
+	GLfloat go_front = 0.0f;
+
 public:
-	virtual void Move() = 0;
-	virtual void Attack() = 0;
-	virtual void InitBuffer() = 0;
-	virtual void InitTexture() = 0;
-	virtual void Move_Update() = 0;
-	virtual void Attack_Update() = 0;
-	virtual void Render() = 0;
+	Zombie();
+	Zombie(int line);
+	~Zombie();
+
+	void Update();
+	
+	virtual void Move();
+	virtual void Attack();
+	virtual void Move_Update();
+	virtual void Attack_Update();
+
+	virtual glm::vec3 Get_Max();
+	virtual glm::vec3 Get_Min();
 };

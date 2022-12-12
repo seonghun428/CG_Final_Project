@@ -134,8 +134,8 @@
     <ClCompile Include="gold_zombie.cpp" />
     <ClCompile Include="iron_zombie.cpp" />
     <ClCompile Include="model.cpp" />
-    <ClCompile Include="normal_modapi.cpp" />
-    <ClCompile Include="normal_zombie.cpp" />
+    <ClCompile Include="modapi.cpp" />
+    <ClCompile Include="zombie.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="peanut.cpp" />
@@ -147,7 +147,6 @@
     <ClCompile Include="slow_modapi.cpp" />
     <ClCompile Include="sunflower.cpp" />
     <ClCompile Include="world.cpp" />
-    <ClCompile Include="zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />
@@ -160,8 +159,8 @@
     <ClInclude Include="gold_zombie.h" />
     <ClInclude Include="iron_zombie.h" />
     <ClInclude Include="model.h" />
-    <ClInclude Include="normal_modapi.h" />
-    <ClInclude Include="normal_zombie.h" />
+    <ClInclude Include="modapi.h" />
+    <ClInclude Include="zombie.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="peanut.h" />
@@ -174,7 +173,6 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="sunflower.h" />
     <ClInclude Include="world.h" />
-    <ClInclude Include="zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,8 +19,6 @@ private:
 	vector<glm::vec3> m_outnormal;
 	vector<glm::vec2> m_outuv;
 
-	bool Y_Move = true;
-
 	glm::mat4 Tm = glm::mat4(1.0f);
 	glm::mat4 Rx = glm::mat4(1.0f);
 	glm::mat4 Ry = glm::mat4(1.0f);

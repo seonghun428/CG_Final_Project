@@ -1,5 +1,6 @@
-#include "normal_modapi.h"
+#include "modapi.h"
 #include "bean.h"
+#include "scene.h"
 
 Modapi::Modapi()
 {
@@ -7,25 +8,12 @@ Modapi::Modapi()
 	stem = new Object("3DObjects/stem.obj", "Textures/stem.png");
 	elements.push_back(head);
 	elements.push_back(stem);
-
 }
 
-void Modapi::InitBuffer()
+Modapi::~Modapi()
 {
-	head->InitBuffer();
-	stem->InitBuffer();
-}
-
-void Modapi::InitTexture()
-{
-	head->InitTexture();
-	stem->InitTexture();
-}
-
-void Modapi::Render()
-{
-	head->Render();
-	stem->Render();
+	delete head;
+	delete stem;
 }
 
 glm::vec3 Modapi::Get_Max()
@@ -65,5 +53,6 @@ void Modapi::Attack()
 {
 	Model* bean = new Bean(0,0);
 	bean->InitTexture();
-	scene.world.add_object(bean);
+	extern CScene ssin;
+	ssin.world.add_object(bean);
 }

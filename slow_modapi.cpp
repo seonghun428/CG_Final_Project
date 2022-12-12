@@ -10,23 +10,9 @@ S_Modapi::S_Modapi()
 	elements.push_back(stem);
 }
 
-void S_Modapi::InitBuffer()
+S_Modapi::~S_Modapi()
 {
-	hair->InitBuffer();
-	head->InitBuffer();
-	stem->InitBuffer();
-}
-
-void S_Modapi::InitTexture()
-{
-	hair->InitTexture();
-	head->InitTexture();
-	stem->InitTexture();
-}
-
-void S_Modapi::Render()
-{
-	hair->Render();
-	head->Render();
-	stem->Render();
+	delete hair;
+	delete head;
+	delete stem;
 }
