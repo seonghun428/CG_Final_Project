@@ -76,6 +76,7 @@ glm::vec3 Zombie::Get_Max()
 			MAX.z = element->Get_Max_O().z;
 	}
 
+	MAX.x += go_front + 8.0;
 
 	return MAX;
 }
@@ -92,6 +93,8 @@ glm::vec3 Zombie::Get_Min()
 		if (MIN.z > element->Get_Min_O().z)
 			MIN.z = element->Get_Min_O().z;
 	}
+
+	MIN.x += go_front + 8.0;
 
 	return MIN;
 }

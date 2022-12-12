@@ -55,13 +55,16 @@ void CScene::Init_Main()
 	world.add_object(mower5);
 
 	plane = new Plane();
-	cherry = new Cherry();
-	zombie = new GoldZombie(1);
+	cherry = new Modapi();
+	zombie = new Zombie(3);
 
 	shader.InitShader();
 	world.add_object(plane);
 	world.add_object(cherry);
 	world.add_object(zombie);
+
+	//world.add_collision_group("cherry:zombie", cherry, zombie);
+	world.add_tuple(zombie);
 
 	for (auto& object : world.all_object())
 	{
@@ -147,6 +150,19 @@ void CScene::Update()
 
 		if (object == dynamic_cast<Zombie*>(object))
 			object->Attack();
+
+	}
+
+	for (auto& group : world.all_collision_group())
+	{
+		if (collide(get<0>(group.second), get<1>(group.second)))
+		{
+			cout << "¼º°øÀû" << endl;
+			get<0>(group.second)->Get_Collide(get<1>(group.second), group.first);
+			get<1>(group.second)->Get_Collide(get<0>(group.second), group.first);
+		}
+		else
+			cout << "pass" << endl;
 	}
 }
 
@@ -201,4 +217,14 @@ void CScene::Input_s(int key)
 		world.setting(glm::vec3(10.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));
 		break;
 	}
+}
+
+bool CScene::collide(Model* a, Model* b)
+{
+	if (a == nullptr || b == nullptr) return false;
+	if (a->Get_Max().x < b->Get_Min().x || a->Get_Min().x > b->Get_Max().x) return false;
+	if (a->Get_Max().y < b->Get_Min().y || a->Get_Min().y > b->Get_Max().y) return false;
+	if (a->Get_Max().z < b->Get_Min().z || a->Get_Min().z > b->Get_Max().z) return false;
+
+	return true;
 }

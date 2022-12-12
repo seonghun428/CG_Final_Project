@@ -14,7 +14,7 @@ public:
 	virtual void Move_Update() = 0;
 	virtual void Attack_Update() = 0;
 
-	// virtual void Update() = 0;
+	virtual void Get_Collide(Model* other, string group) = 0;
 
 	virtual void InitBuffer();
 	void InitTexture();

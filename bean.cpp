@@ -25,10 +25,14 @@ void Bean::Move_Update()
 
 glm::vec3 Bean::Get_Max()
 {
-	return body->Get_Max_O();
+	glm::vec3 MAX = body->Get_Max_O();
+	MAX.x += go_front;
+	return MAX;
 }
 
 glm::vec3 Bean::Get_Min()
 {
-	return body->Get_Min_O();
+	glm::vec3 MIN = body->Get_Min_O();
+	MIN.x += go_front;
+	return MIN;
 }

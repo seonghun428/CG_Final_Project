@@ -70,4 +70,6 @@ public:
 
 	void Input(unsigned char key);
 	void Input_s(int key);
+
+	bool collide(Model* a, Model* b);
 };

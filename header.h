@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <map>
 #include <random>
 #include <windows.h>
 #include <gl/glew.h>

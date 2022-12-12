@@ -24,4 +24,5 @@ public:
 
 	virtual glm::vec3 Get_Max() { return body->Get_Max_O(); }
 	virtual glm::vec3 Get_Min() { return body->Get_Min_O(); }
+	virtual void Get_Collide(Model* other, string group) {}
 };
