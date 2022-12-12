@@ -22,11 +22,16 @@ class CScene
 private:
 	Shader shader;
 
+	Object* display;
+
 	Model* plane;
 	Model* cherry;
 	Model* zombie;
 
 	GLenum polymod = GL_FILL;
+
+	glm::mat4 projection = glm::mat4(1.0f);
+	unsigned int projectionLocation;
 
 public:
 	CScene();

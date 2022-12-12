@@ -6,7 +6,18 @@ CScene::~CScene() {}
 
 void CScene::Init_Begin()
 {
-	
+	shader.InitShader();
+
+	display = new Object("3DObjects/cube.obj","Textures/fast_modapi.png");
+	display->InitTexture();
+
+	projection = glm::mat4(1.0f);
+	projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+
+	projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+
+	world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 5.0, 10.0));
 }
 
 void CScene::Init_Select()
@@ -30,13 +41,12 @@ void CScene::Init_Main()
 		object->InitTexture();
 	}
 
-	glm::mat4 projection = glm::mat4(1.0f);
-	//projection = glm::ortho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
+	projection = glm::mat4(1.0f);
 
 	projection = glm::perspective(glm::radians(45.0f),1.0f,0.1f,50.0f);
 	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));
 
-	unsigned int projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+	projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
 	world.setting(glm::vec3(0.0f, 10.0f, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));
@@ -50,17 +60,18 @@ void CScene::Init_End()
 
 void CScene::Render()
 {
-	glUseProgram(shader.Get_ShaderID());
-
 	glPolygonMode(GL_FRONT_AND_BACK, polymod);
 
-	for (auto& object : world.all_object())
+	display->InitBuffer();
+	display->Render();
+
+	/*for (auto& object : world.all_object())
 	{
 		object->InitBuffer();
 		object->Move_Update();
 		object->Attack_Update();
 		object->Render();
-	}
+	}*/
 }
 
 void CScene::Update()

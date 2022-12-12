@@ -15,7 +15,7 @@ GLvoid Timer2(int);
 
 GLvoid drawScene()
 {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glEnable(GL_DEPTH_TEST);
@@ -41,7 +41,8 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glewExperimental = GL_TRUE;
 	glewInit();
 	
-	scene.Init_Main();
+	// scene.Init_Main();
+	scene.Init_Begin();
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -78,7 +79,7 @@ GLvoid Special(int key, int x, int y)
 
 GLvoid Timerfunc(int value)
 {
-	scene.Update();
+	//scene.Update();
 
 	glutPostRedisplay();
 	glutTimerFunc(100, Timerfunc, 1);
@@ -86,7 +87,7 @@ GLvoid Timerfunc(int value)
 
 GLvoid Timer2(int value)
 {
-	scene.Update2();
+	//scene.Update2();
 
 	glutPostRedisplay();
 	glutTimerFunc(1000, Timer2, 2);
