@@ -54,7 +54,7 @@ glm::vec3 P_Modapi::Get_Min()
 
 void P_Modapi::Attack()
 {
-	Model* bean = new Bean(0, 0, "Textures/penetrate_stem.png");
+	Model* bean = new Bean(0, 0, "Textures/penetrate_leaf.png");
 	bean->InitTexture();
 	extern CScene scene;
 	scene.world.add_object(bean);
