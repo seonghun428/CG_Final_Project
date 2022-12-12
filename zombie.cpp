@@ -27,11 +27,12 @@ Zombie::~Zombie()
 	delete leg_right;
 }
 
-void Zombie::Update()
+void Zombie::InitBuffer()
 {
 	for (auto& element : elements)
 	{
-		element->Update_Translate_Matrix(glm::vec3(4.0, 0.0, (line - 3) * 1.7));
+		element->InitBuffer();
+		element->Update_Translate_Matrix(glm::vec3(8.0, 0.0, (line - 3) * 1.7));
 	}
 }
 

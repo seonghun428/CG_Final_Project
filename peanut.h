@@ -11,10 +11,7 @@ private:
 
 public:
 	Peanut();
-
-	virtual void InitBuffer();
-	virtual void InitTexture();
-	virtual void Render();
+	~Peanut();
 
 	virtual void Move() {}
 	virtual void Attack() {}

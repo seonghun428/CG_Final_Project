@@ -1,9 +1,9 @@
 #pragma once
 
-#include "model.h"
+#include "plant.h"
 
-class Modapi :public Model {
-protected:
+class Modapi :public Plant {
+private:
 	Object* head;
 	Object* stem;
 

@@ -11,6 +11,7 @@ GLvoid Reshape(int w, int h);
 GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
+GLvoid Timer2(int);
 
 GLvoid drawScene()
 {
@@ -47,6 +48,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(Special);
 	glutTimerFunc(100, Timerfunc, 1);
+	glutTimerFunc(500, Timer2, 2);
 	glutMainLoop();
 
 	return 0;
@@ -76,8 +78,16 @@ GLvoid Special(int key, int x, int y)
 
 GLvoid Timerfunc(int value)
 {
-	
+	scene.Update();
 
 	glutPostRedisplay();
 	glutTimerFunc(100, Timerfunc, 1);
+}
+
+GLvoid Timer2(int value)
+{
+	scene.Update2();
+
+	glutPostRedisplay();
+	glutTimerFunc(500, Timer2, 2);
 }

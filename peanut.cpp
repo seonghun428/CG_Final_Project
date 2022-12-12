@@ -6,21 +6,9 @@ Peanut::Peanut()
 	elements.push_back(body);
 }
 
-void Peanut::InitBuffer()
+Peanut::~Peanut()
 {
-	body->InitBuffer();
-
-	body->Update_YRotate_Matrix(90.0f);
-}
-
-void Peanut::InitTexture()
-{
-	body->InitTexture();
-}
-
-void Peanut::Render()
-{
-	body->Render();
+	delete body;
 }
 
 glm::vec3 Peanut::Get_Max()

@@ -10,10 +10,7 @@ private:
 
 public:
 	Cherry();
-
-	virtual void InitBuffer();
-	virtual void InitTexture();
-	virtual void Render();
+	~Cherry();
 
 	virtual void Move() {}
 	virtual void Attack() {}

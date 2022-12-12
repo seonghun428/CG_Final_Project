@@ -1,9 +1,8 @@
 #pragma once
 
-#include "model.h"
-#include "object.h"
+#include "plant.h"
 
-class Bean : public Model
+class Bean : public Plant
 {
 private:
 	Object* body;
@@ -11,16 +10,13 @@ private:
 	GLfloat go_front = 0.0f;
 
 public:
-	Bean(int mx, int my);
+	Bean(int mx, int my, string imgfile);
 	~Bean();
 
 	virtual void Move();
 	virtual void Attack() {}
-	virtual void InitBuffer();
-	virtual void InitTexture();
 	virtual void Move_Update();
 	virtual void Attack_Update() {}
-	virtual void Render();
 
 	virtual glm::vec3 Get_Max();
 	virtual glm::vec3 Get_Min();

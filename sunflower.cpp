@@ -8,22 +8,10 @@ Sunflower::Sunflower()
 	elements.push_back(stem);
 }
 
-void Sunflower::InitBuffer()
+Sunflower::~Sunflower()
 {
-	head->InitBuffer();
-	stem->InitBuffer();
-}
-
-void Sunflower::InitTexture()
-{
-	head->InitTexture();
-	stem->InitTexture();
-}
-
-void Sunflower::Render()
-{
-	head->Render();
-	stem->Render();
+	delete head;
+	delete stem;
 }
 
 glm::vec3 Sunflower::Get_Max()

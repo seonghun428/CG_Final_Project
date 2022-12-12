@@ -6,20 +6,11 @@ Cherry::Cherry()
 	elements.push_back(body);
 }
 
-void Cherry::InitBuffer()
+Cherry::~Cherry()
 {
-	body->InitBuffer();
+	delete body;
 }
 
-void Cherry::InitTexture()
-{
-	body->InitTexture();
-}
-
-void Cherry::Render()
-{
-	body->Render();
-}
 
 glm::vec3 Cherry::Get_Max()
 {

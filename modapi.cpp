@@ -51,7 +51,7 @@ glm::vec3 Modapi::Get_Min()
 
 void Modapi::Attack()
 {
-	Model* bean = new Bean(0,0);
+	Model* bean = new Bean(0,0,"Textures/modapi.png");
 	bean->InitTexture();
 	extern CScene scene;
 	scene.world.add_object(bean);

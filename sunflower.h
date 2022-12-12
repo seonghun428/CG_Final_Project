@@ -11,10 +11,7 @@ private:
 
 public:
 	Sunflower();
-
-	virtual void InitBuffer();
-	virtual void InitTexture();
-	virtual void Render();
+	~Sunflower();
 
 	virtual void Move() {}
 	virtual void Attack() {}

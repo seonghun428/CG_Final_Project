@@ -40,6 +40,8 @@ public:
 	void Init_End();
 
 	void Render();
+	void Update();
+	void Update2();
 
 	void Input(unsigned char key);
 	void Input_s(int key);

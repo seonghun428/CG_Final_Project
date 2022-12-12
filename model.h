@@ -14,7 +14,9 @@ public:
 	virtual void Move_Update() = 0;
 	virtual void Attack_Update() = 0;
 
-	void InitBuffer();
+	// virtual void Update() = 0;
+
+	virtual void InitBuffer();
 	void InitTexture();
 	void Render();
 

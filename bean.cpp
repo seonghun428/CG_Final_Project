@@ -1,8 +1,8 @@
 #include "bean.h"
 
-Bean::Bean(int mx, int my)
+Bean::Bean(int mx, int my, string imgfile)
 {
-	body = new Object("3DObjects/bean.obj", "Textures/gold.png");
+	body = new Object("3DObjects/bean.obj", imgfile);
 	elements.push_back(body);
 	x = mx;
 	y = my;
@@ -11,21 +11,6 @@ Bean::Bean(int mx, int my)
 Bean::~Bean()
 {
 	delete body;
-}
-
-void Bean::InitBuffer()
-{
-	body->InitBuffer();
-}
-
-void Bean::InitTexture()
-{
-	body->InitTexture();
-}
-
-void Bean::Render()
-{
-	body->Render();
 }
 
 void Bean::Move()

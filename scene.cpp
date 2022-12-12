@@ -17,8 +17,8 @@ void CScene::Init_Select()
 void CScene::Init_Main()
 {
 	plane = new Plane();
-	cherry = new Cherry();
-	zombie = new GoldZombie(2);
+	cherry = new P_Modapi();
+	zombie = new GoldZombie(1);
 
 	shader.InitShader();
 	world.add_object(plane);
@@ -31,12 +31,15 @@ void CScene::Init_Main()
 	}
 
 	glm::mat4 projection = glm::mat4(1.0f);
-	projection = glm::ortho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
+	//projection = glm::ortho(-10.0, 10.0, -10.0, 10.0, -10.0, 10.0);
+
+	projection = glm::perspective(glm::radians(45.0f),1.0f,0.1f,50.0f);
+	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));
 
 	unsigned int projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-	world.setting(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));
+	world.setting(glm::vec3(0.0f, 10.0f, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));
 
 }
 
@@ -54,7 +57,29 @@ void CScene::Render()
 	for (auto& object : world.all_object())
 	{
 		object->InitBuffer();
+		object->Move_Update();
+		object->Attack_Update();
 		object->Render();
+	}
+}
+
+void CScene::Update()
+{
+	for (auto& object : world.all_object())
+	{
+		object->Move();
+
+		if (object == dynamic_cast<Zombie*>(object))
+			object->Attack();
+	}
+}
+
+void CScene::Update2()
+{
+	for (auto& object : world.all_object())
+	{
+		if (object == dynamic_cast<Plant*>(object))
+			object->Attack();
 	}
 }
 
