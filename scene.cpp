@@ -8,8 +8,13 @@ void CScene::Init_Begin()
 {
 	shader.InitShader();
 
-	display = new Object("3DObjects/cube.obj","Textures/fast_modapi.png");
-	display->InitTexture();
+	display = new Display();
+	world.add_object(display);
+
+	for (auto& object : world.all_object())
+	{
+		object->InitTexture();
+	}
 
 	projection = glm::mat4(1.0f);
 	projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
@@ -62,16 +67,13 @@ void CScene::Render()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, polymod);
 
-	display->InitBuffer();
-	display->Render();
-
-	/*for (auto& object : world.all_object())
+	for (auto& object : world.all_object())
 	{
 		object->InitBuffer();
 		object->Move_Update();
 		object->Attack_Update();
 		object->Render();
-	}*/
+	}
 }
 
 void CScene::Update()

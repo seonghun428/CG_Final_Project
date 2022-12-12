@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="bean.h" />
     <ClInclude Include="cherry.h" />
+    <ClInclude Include="display.h" />
     <ClInclude Include="fast_modapi.h" />
     <ClInclude Include="gold_zombie.h" />
     <ClInclude Include="iron_zombie.h" />

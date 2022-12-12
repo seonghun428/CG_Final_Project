@@ -79,7 +79,7 @@ GLvoid Special(int key, int x, int y)
 
 GLvoid Timerfunc(int value)
 {
-	//scene.Update();
+	scene.Update();
 
 	glutPostRedisplay();
 	glutTimerFunc(100, Timerfunc, 1);
@@ -87,7 +87,7 @@ GLvoid Timerfunc(int value)
 
 GLvoid Timer2(int value)
 {
-	//scene.Update2();
+	scene.Update2();
 
 	glutPostRedisplay();
 	glutTimerFunc(1000, Timer2, 2);

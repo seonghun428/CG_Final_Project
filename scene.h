@@ -14,6 +14,7 @@
 #include "sunflower.h"
 #include "bean.h"
 #include "plane.h"
+#include "display.h"
 
 #include "world.h"
 
@@ -22,7 +23,7 @@ class CScene
 private:
 	Shader shader;
 
-	Object* display;
+	Model* display;
 
 	Model* plane;
 	Model* cherry;
