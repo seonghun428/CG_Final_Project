@@ -6,9 +6,13 @@ CScene::~CScene() {}
 
 void CScene::Init_Begin()
 {
+	state = BEGIN;
+
+	world.clear();
+
 	shader.InitShader();
 
-	display = new Display();
+	display = new Display("Textures/main.png");
 	world.add_object(display);
 
 	for (auto& object : world.all_object())
@@ -32,8 +36,26 @@ void CScene::Init_Select()
 
 void CScene::Init_Main()
 {
+	state = MAIN;
+
+	world.clear();
+
+	back_wall = new Wall(0);
+	front_wall = new Wall(1);
+
+	mower1 = new Mower(1);
+	mower2 = new Mower(2);
+	mower3 = new Mower(3);
+	mower4 = new Mower(4);
+	mower5 = new Mower(5);
+	world.add_object(mower1);
+	world.add_object(mower2);
+	world.add_object(mower3);
+	world.add_object(mower4);
+	world.add_object(mower5);
+
 	plane = new Plane();
-	cherry = new F_Modapi();
+	cherry = new Cherry();
 	zombie = new GoldZombie(1);
 
 	shader.InitShader();
@@ -58,9 +80,50 @@ void CScene::Init_Main()
 
 }
 
-void CScene::Init_End()
+void CScene::Init_Win()
 {
+	state = WIN;
 
+	world.clear();
+
+	display = new Display("Textures/win.png");
+	world.add_object(display);
+
+	for (auto& object : world.all_object())
+	{
+		object->InitTexture();
+	}
+
+	projection = glm::mat4(1.0f);
+	projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+
+	projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+
+	world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 5.0, 10.0));
+}
+
+void CScene::Init_Lose()
+{
+	state = LOSE;
+
+	world.clear();
+
+	display = new Display("Textures/lose.png");
+	world.add_object(display);
+
+	for (auto& object : world.all_object())
+	{
+		object->InitTexture();
+	}
+
+	projection = glm::mat4(1.0f);
+	projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+
+	projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+
+	world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 5.0, 10.0));
 }
 
 void CScene::Render()

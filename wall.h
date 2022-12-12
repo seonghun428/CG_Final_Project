@@ -2,17 +2,18 @@
 
 #include "model.h"
 
-class Display : public Model
+class Wall : public Model
 {
 private:
 	Object* body;
 
 public:
-	Display(string imgfile) {
-		body = new Object("3DObjects/cube.obj", imgfile);
+	Wall(int a) {
+		if (a == 0) body = new Object("3DObjects/back_wall.obj", "Textures/gold.png");
+		else if (a == 1) body = new Object("3DObjects/front_wall.obj", "Textures/gold.png");
 		elements.push_back(body);
 	}
-	~Display() { delete body; }
+	~Wall() { delete body; }
 
 	virtual void Move() {}
 	virtual void Attack() {}

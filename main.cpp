@@ -65,6 +65,9 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	if (key == ESCAPE)
 		exit(0);
 
+	if (scene.Get_state() == BEGIN && key == 13)
+		scene.Init_Main();
+
 	scene.Input(key);
 
 	glutPostRedisplay();

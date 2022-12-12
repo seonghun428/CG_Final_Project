@@ -72,6 +72,9 @@
     <ClCompile Include="plane.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="mower.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertex.glsl">
@@ -143,6 +146,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="display.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mower.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="wall.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
