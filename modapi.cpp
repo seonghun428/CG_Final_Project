@@ -53,6 +53,6 @@ void Modapi::Attack()
 {
 	Model* bean = new Bean(0,0);
 	bean->InitTexture();
-	extern CScene ssin;
-	ssin.world.add_object(bean);
+	extern CScene scene;
+	scene.world.add_object(bean);
 }

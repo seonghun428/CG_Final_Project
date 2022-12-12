@@ -3,12 +3,14 @@
 #define WINW 800
 #define WINH 800
 
+#define ESCAPE 27
+
+CScene scene;
+
 GLvoid Reshape(int w, int h);
 GLvoid Keyboard(unsigned char key, int x, int y);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
-
-CScene ssin;
 
 GLvoid drawScene()
 {
@@ -20,7 +22,7 @@ GLvoid drawScene()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_CULL_FACE);
 
-	ssin.Render();
+	scene.Render();
 
 	glutSwapBuffers();
 }
@@ -38,7 +40,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glewExperimental = GL_TRUE;
 	glewInit();
 	
-	ssin.Init_Main();
+	scene.Init_Main();
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -57,17 +59,17 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 
 GLvoid Keyboard(unsigned char key, int x, int y)
 {
-	if (key == 27)
+	if (key == ESCAPE)
 		exit(0);
 
-	ssin.Input(key);
+	scene.Input(key);
 
 	glutPostRedisplay();
 }
 
 GLvoid Special(int key, int x, int y)
 {
-	ssin.Input_s(key);
+	scene.Input_s(key);
 
 	glutPostRedisplay();
 }
