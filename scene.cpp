@@ -63,7 +63,7 @@ void CScene::Init_Main()
 	world.add_object(cherry);
 	world.add_object(zombie);
 
-	//world.add_collision_group("cherry:zombie", cherry, zombie);
+	world.add_collision_group("modapi:zombie", cherry, zombie);
 	world.add_tuple(zombie);
 
 	for (auto& object : world.all_object())
@@ -150,19 +150,21 @@ void CScene::Update()
 
 		if (object == dynamic_cast<Zombie*>(object))
 			object->Attack();
-
 	}
 
 	for (auto& group : world.all_collision_group())
 	{
-		if (collide(get<0>(group.second), get<1>(group.second)))
+		for (auto& a : get<0>(group.second))
 		{
-			cout << "¼º°øÀû" << endl;
-			get<0>(group.second)->Get_Collide(get<1>(group.second), group.first);
-			get<1>(group.second)->Get_Collide(get<0>(group.second), group.first);
+			for (auto& b : get<1>(group.second))
+			{
+				if (collide(a, b))
+				{
+					a->Get_Collide(b, group.first);
+					b->Get_Collide(a, group.first);
+				}
+			}
 		}
-		else
-			cout << "pass" << endl;
 	}
 }
 

@@ -1,4 +1,5 @@
 #include "bean.h"
+#include "scene.h"
 
 Bean::Bean(int mx, int my, string imgfile)
 {
@@ -35,4 +36,13 @@ glm::vec3 Bean::Get_Min()
 	glm::vec3 MIN = body->Get_Min_O();
 	MIN.x += go_front;
 	return MIN;
+}
+
+void Bean::Get_Collide(Model* other, string group)
+{
+	if (group == "bean:zombie")
+	{
+		extern CScene scene;
+		scene.world.remove_object(this);
+	}
 }

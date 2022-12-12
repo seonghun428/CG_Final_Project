@@ -55,8 +55,7 @@ void Modapi::Attack()
 	bean->InitTexture();
 	extern CScene scene;
 	scene.world.add_object(bean);
-
 	scene.world.add_tuple(bean);
-
-	scene.world.add_collision_group("bean:zombie", scene.world.get_group());
+	tuple<list<Model*>, list<Model*>> group = scene.world.get_group();	
+	scene.world.add_collision_group("bean:zombie", group);
 }
