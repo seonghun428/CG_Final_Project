@@ -7,6 +7,11 @@ NormalZombie::NormalZombie(int line)
 	arm_right = new Object("3DObjects/zombie_arm_right.obj", "Textures/zombie.png");
 	leg_left = new Object("3DObjects/zombie_leg_left.obj", "Textures/zombie.png");
 	leg_right = new Object("3DObjects/zombie_leg_right.obj", "Textures/zombie.png");
+	elements.push_back(body);
+	elements.push_back(arm_left);
+	elements.push_back(arm_right);
+	elements.push_back(leg_left);
+	elements.push_back(leg_right);
 
 	this->line = line;
 }
@@ -79,6 +84,39 @@ void NormalZombie::Render()
 	arm_right->Render();
 	leg_right->Render();
 	leg_left->Render();
+}
+
+glm::vec3 NormalZombie::Get_Max()
+{
+	glm::vec3 MAX = body->Get_Max_O();
+
+	for (auto& element : elements) {
+		if (MAX.x < element->Get_Max_O().x)
+			MAX.x = element->Get_Max_O().x;
+		if (MAX.y < element->Get_Max_O().y)
+			MAX.y = element->Get_Max_O().y;
+		if (MAX.z < element->Get_Max_O().z)
+			MAX.z = element->Get_Max_O().z;
+	}
+
+
+	return MAX;
+}
+
+glm::vec3 NormalZombie::Get_Min()
+{
+	glm::vec3 MIN = body->Get_Min_O();
+
+	for (auto& element : elements) {
+		if (MIN.x > element->Get_Min_O().x)
+			MIN.x = element->Get_Min_O().x;
+		if (MIN.y > element->Get_Min_O().y)
+			MIN.y = element->Get_Min_O().y;
+		if (MIN.z > element->Get_Min_O().z)
+			MIN.z = element->Get_Min_O().z;
+	}
+
+	return MIN;
 }
 
 void NormalZombie::Move()

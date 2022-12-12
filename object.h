@@ -28,6 +28,9 @@ private:
 
 	glm::mat4 Sm = glm::mat4(1.0f);
 
+	glm::vec3 Max = glm::vec3(0.0f);
+	glm::vec3 Min = glm::vec3(0.0f);
+
 public:
 	Object();
 	Object(const string objFile, const string imgfile);
@@ -46,6 +49,9 @@ public:
 	void Update_Synthetic_Matrix();
 
 	void Render();
+
+	glm::vec3 Get_Max_O() { return Max; }
+	glm::vec3 Get_Min_O() { return Min; }
 	
 	void ReadObj(const string objFile);
 };

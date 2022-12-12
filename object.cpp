@@ -198,6 +198,9 @@ void Object::ReadObj(const string objFile)
 	}
 
 	m_Tri_Num = m_outvertex.size();
+
+	Max = glm::vec3(maxX, maxY, maxZ);
+	Min = glm::vec3(minX, minY, minZ);
 }
 
 void Object::Update_Translate_Matrix(glm::vec3 move)

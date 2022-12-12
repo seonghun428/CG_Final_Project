@@ -30,4 +30,7 @@ public:
 	virtual void Move_Update();
 	virtual void Attack_Update();
 	virtual void Render();
+
+	virtual glm::vec3 Get_Max();
+	virtual glm::vec3 Get_Min();
 };

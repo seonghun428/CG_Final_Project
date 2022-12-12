@@ -7,6 +7,8 @@ class World
 {
 private:
 	list<Model*> objects;
+	// 충돌 그룹
+	// map<string, tuple<Model*, Model*> collision_group;
 
 public:
 	list<Model*> all_object() { return objects; }
