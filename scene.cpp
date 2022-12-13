@@ -41,32 +41,30 @@ void CScene::Init_Main()
 	back_wall = new Wall(0);
 	front_wall = new Wall(1);
 
-	world.add_object(back_wall);
-	world.add_object(front_wall);
-
-	// mower1 = new Mower(1);
-	// mower2 = new Mower(2);
-	// mower3 = new Mower(3);
-	// mower4 = new Mower(4);
-	// mower5 = new Mower(5);
-	// world.add_object(mower1);
-	// world.add_object(mower2);
-	// world.add_object(mower3);
-	// world.add_object(mower4);
-	// world.add_object(mower5);
+	mower1 = new Mower(1);
+	mower2 = new Mower(2);
+	mower3 = new Mower(3);
+	mower4 = new Mower(4);
+	mower5 = new Mower(5);
+	world.add_object(mower1);
+	world.add_object(mower2);
+	world.add_object(mower3);
+	world.add_object(mower4);
+	world.add_object(mower5);
 
 	plane = new Plane();
-	//cherry = new Cherry();
-	zombie = new Zombie(3);
+	cherry = new Modapi();
+	//zombie = new Zombie(1);
 
 	shader.InitShader();
 	world.add_object(plane);
-	//world.add_object(cherry);
-	world.add_object(zombie);
+	world.add_object(cherry);
+	//world.add_object(zombie);
 
 	//world.add_collision_group("modapi:zombie", cherry, zombie);
-	world.add_collision_group("wall:zombie", back_wall, zombie);
+	//world.add_collision_group("wall:zombie", back_wall, zombie);
 	//world.add_tuple(zombie);
+	world.add_tuple2(front_wall);
 
 	for (auto& object : world.all_object())
 	{
@@ -81,7 +79,7 @@ void CScene::Init_Main()
 	projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-	world.setting(glm::vec3(0.0f, 10.0f, 15.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));
+	world.setting(glm::vec3(0.0f, 10.0f, 25.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));
 
 }
 
@@ -138,12 +136,34 @@ void CScene::Update()
 		if (object == dynamic_cast<Zombie*>(object))
 			object->Attack();
 	}
+}
 
-	for (auto& group : world.all_collision_group())
+void CScene::Update2()
+{
+	for (auto& object : world.all_object())
 	{
-		for (auto& a : get<0>(group.second))
+		if (object == dynamic_cast<Plant*>(object))
+			object->Attack();
+	}
+
+	for (auto group : world.all_collision_group())
+	{
+		cout << "string: " << group.first << endl;
+		for (auto a : get<0>(group.second))
 		{
-			for (auto& b : get<1>(group.second))
+			cout << "left: " << a << endl;
+		}
+		for (auto b : get<1>(group.second))
+		{
+			cout << "right: " << b << endl;
+		}
+	}
+
+	for (auto group : world.all_collision_group())
+	{
+		for (auto a : get<0>(group.second))
+		{
+			for (auto b : get<1>(group.second))
 			{
 				if (collide(a, b))
 				{
@@ -155,18 +175,10 @@ void CScene::Update()
 					}
 					a->Get_Collide(b, group.first);
 					b->Get_Collide(a, group.first);
+					return;
 				}
 			}
 		}
-	}
-}
-
-void CScene::Update2()
-{
-	for (auto& object : world.all_object())
-	{
-		if (object == dynamic_cast<Plant*>(object))
-			object->Attack();
 	}
 }
 

@@ -18,28 +18,38 @@ void World::setting(glm::vec3 cpos, glm::vec3 dir, glm::vec3 up, glm::vec3 lpos)
 	glUniform3f(viewPosLocation, cpos.x, cpos.y, cpos.z);
 }
 
+void World::clear()
+{
+	objects.clear();
+	collision_group.clear();
+
+	temp.clear();
+	temp2.clear();
+}
+
 void World::remove_object(Model* o)
 {
 	objects.remove(o);
+	remove_collision_object(o);
+	delete o;
+}
 
-	for (auto& a : collision_group)
+void World::remove_collision_object(Model* o)
+{
+	temp.remove(o);
+	temp2.remove(o);
+
+	for (auto& pairs : collision_group)
 	{
-		for (auto& b : get<0>(a.second))
+		for (auto& a : get<0>(pairs.second))
 		{
-			if (o == b)
-			{
-				collision_group.erase(a.first);
-				return;
-			}
+			if (o == a) get<0>(pairs.second).remove(o);
+			return;
 		}
-
-		for (auto& b : get<1>(a.second))
+		for (auto& a : get<1>(pairs.second))
 		{
-			if (o == b)
-			{
-				collision_group.erase(a.first);
-				return;
-			}
+			if (o == a) get<1>(pairs.second).remove(o);
+			return;
 		}
 	}
 }
@@ -57,12 +67,17 @@ void World::add_tuple(Model* o)
 		get<1>(group) = temp;
 }
 
-void World::add_tuple(list<Model*> o)
-{
-	if (get<0>(group).empty())
-		get<0>(group) = o;
+void World::add_tuple2(Model* o)
+{ 
+	temp2.push_back(o);
+
+	if (get<0>(group2).empty())
+	{
+		get<0>(group2) = temp2;
+		temp2.clear();
+	}
 	else
-		get<1>(group) = o;
+		get<1>(group2) = temp2;
 }
 
 void World::add_collision_group(string group, Model* a, Model* b)
@@ -84,5 +99,7 @@ void World::add_collision_group(string group, tuple<list<Model*>,list<Model*>> a
 
 map<string, tuple<list<Model*>, list<Model*>>> World::all_collision_group()
 {
-	return collision_group;
+	map<string, tuple<list<Model*>, list<Model*>>> temp;
+	temp.insert(collision_group.begin(), collision_group.end());
+	return temp;
 }

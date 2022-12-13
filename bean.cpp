@@ -12,6 +12,9 @@ Bean::Bean(int mx, int my, string imgfile)
 Bean::~Bean()
 {
 	delete body;
+	elements.clear();
+	body = nullptr;
+	cout << "die" << endl;
 }
 
 void Bean::Move()
@@ -26,6 +29,7 @@ void Bean::Move_Update()
 
 glm::vec3 Bean::Get_Max()
 {
+	if (body == nullptr) return glm::vec3(-10000.0, -10000.0, -10000.0);
 	glm::vec3 MAX = body->Get_Max_O();
 	MAX.x += go_front;
 	return MAX;
@@ -33,6 +37,7 @@ glm::vec3 Bean::Get_Max()
 
 glm::vec3 Bean::Get_Min()
 {
+	if (body == nullptr) return glm::vec3(-10000.0, -10000.0, -10000.0);
 	glm::vec3 MIN = body->Get_Min_O();
 	MIN.x += go_front;
 	return MIN;
@@ -40,7 +45,7 @@ glm::vec3 Bean::Get_Min()
 
 void Bean::Get_Collide(Model* other, string group)
 {
-	if (group == "bean:zombie")
+	if (group == "bean:zombie" || group == "bean:wall")
 	{
 		extern CScene scene;
 		scene.world.remove_object(this);

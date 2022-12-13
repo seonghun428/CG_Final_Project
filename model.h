@@ -9,6 +9,9 @@ protected:
 	vector<Object*> elements;
 
 public:
+	Model() {}
+	virtual ~Model() { cout << "sibl" << endl; }
+
 	virtual void Move() = 0;
 	virtual void Attack() = 0;
 	virtual void Move_Update() = 0;

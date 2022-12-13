@@ -9,21 +9,25 @@ private:
 	list<Model*> objects;
 	map<string, tuple<list<Model*>, list<Model*>>> collision_group;
 	tuple<list<Model*>, list<Model*>> group;
+	tuple<list<Model*>, list<Model*>> group2;
 	list<Model*> temp;
+	list<Model*> temp2;
 
 public:
 	list<Model*> all_object() { return objects; }
 	void add_object(Model* o) { objects.push_back(o); }
 	void remove_object(Model* o);
-	void clear() { objects.clear(); collision_group.clear(); }
+	void clear();
 
 	void add_collision_group(string group, Model* a, Model* b);
 	void add_collision_group(string group, tuple<list<Model*>, list<Model*>> a);
+	void remove_collision_object(Model* o);
 
 	void add_tuple(Model* o);
-	void add_tuple(list<Model*> o);
+	void add_tuple2(Model* o);
 
 	tuple<list<Model*>, list<Model*>> get_group() { return group; }
+	tuple<list<Model*>, list<Model*>> get_group2() { return group2; }
 
 	map < string, tuple<list<Model*>, list<Model*>>> all_collision_group();
 

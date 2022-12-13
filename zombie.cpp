@@ -113,7 +113,7 @@ void Zombie::Move()
 	else if (leg_angle <= -40.0f)
 		leg_up = true;
 
-	go_front -= 0.2f;
+	go_front -= 0.02f;
 }
 
 void Zombie::Attack()
@@ -128,3 +128,5 @@ void Zombie::Attack()
 	else if (arm_angle <= -80.0f)
 		arm_up = true;
 }
+
+void Zombie::Get_Collide(Model* other, string group) {}

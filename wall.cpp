@@ -30,9 +30,5 @@ glm::vec3 Wall::Get_Min()
 
 void Wall::Get_Collide(Model* other, string group)
 {
-	/*if (group == "wall:zombie")
-	{
-		extern CScene scene;
-		scene.Init_Lose();
-	}*/
+	
 }
