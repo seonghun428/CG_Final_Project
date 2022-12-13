@@ -14,7 +14,6 @@ Bean::~Bean()
 	delete body;
 	elements.clear();
 	body = nullptr;
-	cout << "die" << endl;
 }
 
 void Bean::Move()

@@ -8,9 +8,11 @@ class Model
 protected:
 	vector<Object*> elements;
 
+	int hp = 0;
+
 public:
 	Model() {}
-	virtual ~Model() { cout << "sibl" << endl; }
+	virtual ~Model() {}
 
 	virtual void Move() = 0;
 	virtual void Attack() = 0;
@@ -20,8 +22,8 @@ public:
 	virtual void Get_Collide(Model* other, string group) = 0;
 
 	virtual void InitBuffer();
-	void InitTexture();
-	void Render();
+	virtual void InitTexture();
+	virtual void Render();
 
 	virtual glm::vec3 Get_Max() = 0;
 	virtual glm::vec3 Get_Min() = 0;

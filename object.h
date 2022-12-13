@@ -19,6 +19,21 @@ private:
 	vector<glm::vec3> m_outnormal;
 	vector<glm::vec2> m_outuv;
 
+	GLfloat minX = 10000.0f, minY = 10000.0f, minZ = 10000.0f;
+	GLfloat maxX = -10000.0f, maxY = -10000.0f, maxZ = -10000.0f;
+
+	glm::vec3 vertex;
+	glm::vec2 uv;
+	glm::vec3 normal;
+
+	vector<glm::vec3> temp_vertices;
+	vector<glm::vec3> temp_normals;
+	vector<glm::vec2> temp_uvs;
+
+	unsigned int vertexIndex[3], uvIndex[3], normalIndex[3];
+
+	vector<unsigned int> vertexIndices, normalIndices, uvIndices;
+
 	glm::mat4 Tm = glm::mat4(1.0f);
 	glm::mat4 Rx = glm::mat4(1.0f);
 	glm::mat4 Ry = glm::mat4(1.0f);
@@ -30,9 +45,7 @@ private:
 	glm::vec3 Min = glm::vec3(0.0f);
 
 public:
-	Object();
 	Object(const string objFile, const string imgfile);
-	~Object();
 
 	void InitBuffer();
 	void InitTexture();
@@ -43,8 +56,6 @@ public:
 	void Update_XRotate_Matrix(GLfloat);
 	void Update_YRotate_Matrix(GLfloat);
 	void Update_ZRotate_Matrix(GLfloat);
-
-	void Update_Synthetic_Matrix();
 
 	void Render();
 

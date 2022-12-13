@@ -8,6 +8,6 @@ private:
 	Object* head;
 
 public:
-	IronZombie(int line);
+	IronZombie(int line, int num);
 	~IronZombie();
 };

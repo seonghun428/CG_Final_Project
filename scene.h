@@ -31,18 +31,19 @@ private:
 	Model* display1 = new Display("Textures/main.png");
 	Model* display2 = new Display("Textures/win.png");
 	Model* display3 = new Display("Textures/lose.png");
+	Model* display4 = new Display("Textures/gold.png");
 
-	Model* back_wall;
-	Model* front_wall;
-	Model* mower1;
-	Model* mower2;
-	Model* mower3;
-	Model* mower4;
-	Model* mower5;
+	Model* back_wall = new Wall(0);
+	Model* front_wall = new Wall(1);
+	Model* mower1 = new Mower(1);
+	Model* mower2 = new Mower(2);
+	Model* mower3 = new Mower(3);
+	Model* mower4 = new Mower(4);
+	Model* mower5 = new Mower(5);
 
-	Model* plane;
-	Model* cherry;
-	Model* zombie;
+	Model* plane = new Plane();
+	//Model* cherry;
+	//Model* zombie;
 
 	GLenum polymod = GL_FILL;
 

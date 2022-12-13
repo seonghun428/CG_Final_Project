@@ -12,6 +12,7 @@ protected:
 	Object* leg_right;
 
 	int line;
+	int num;
 
 	bool leg_up = true; // øﬁπﬂ ±‚¡ÿ
 	bool arm_up = true;
@@ -21,7 +22,7 @@ protected:
 
 public:
 	Zombie();
-	Zombie(int line);
+	Zombie(int line, int num);
 	~Zombie();
 	
 	virtual void Move();

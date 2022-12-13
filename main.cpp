@@ -4,6 +4,7 @@
 #define WINH 800
 
 #define ESCAPE 27
+#define ENTER 13
 
 CScene scene;
 
@@ -15,17 +16,7 @@ GLvoid Timer2(int);
 
 GLvoid drawScene()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_CULL_FACE);
-
 	scene.Render();
-
-	glutSwapBuffers();
 }
 
 int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
@@ -66,13 +57,13 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	if (key == ESCAPE)
 		exit(0);
 
-	if (scene.Get_state() == BEGIN && key == 13)
+	if (scene.Get_state() == BEGIN && key == ENTER)
 		scene.Init_Main();
 
-	else if (scene.Get_state() == MAIN && key == 13)
+	else if (scene.Get_state() == MAIN && key == ENTER)
 		scene.Init_Lose();
 
-	else if (scene.Get_state() == LOSE && key == 13)
+	else if (scene.Get_state() == LOSE && key == ENTER)
 		scene.Init_Begin();
 
 	scene.Input(key);
@@ -92,7 +83,7 @@ GLvoid Timerfunc(int value)
 	scene.Update();
 
 	glutPostRedisplay();
-	glutTimerFunc(100, Timerfunc, 1);
+	glutTimerFunc(50, Timerfunc, 1);
 }
 
 GLvoid Timer2(int value)
@@ -100,5 +91,5 @@ GLvoid Timer2(int value)
 	scene.Update2();
 
 	glutPostRedisplay();
-	glutTimerFunc(1000, Timer2, 2);
+	glutTimerFunc(100, Timer2, 2);
 }

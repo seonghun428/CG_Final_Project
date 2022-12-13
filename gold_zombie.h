@@ -8,6 +8,6 @@ private:
 	Object* head;
 
 public:
-	GoldZombie(int line);
+	GoldZombie(int line, int num);
 	~GoldZombie();
 };

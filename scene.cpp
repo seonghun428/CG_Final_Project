@@ -8,6 +8,15 @@ void CScene::Init_Textures()
 	display1->InitTexture();
 	display2->InitTexture();
 	display3->InitTexture();
+	display4->InitTexture();
+	back_wall->InitTexture();
+	front_wall->InitTexture();
+	mower1->InitTexture();
+	mower2->InitTexture();
+	mower3->InitTexture();
+	mower4->InitTexture();
+	mower5->InitTexture();
+	plane->InitTexture();
 }
 
 void CScene::Init_Begin()
@@ -24,7 +33,7 @@ void CScene::Init_Begin()
 	projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-	world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 5.0, 10.0));
+	world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(-300.0, -400.0, 500.0));
 }
 
 void CScene::Init_Select()
@@ -38,49 +47,41 @@ void CScene::Init_Main()
 
 	world.clear();
 
-	back_wall = new Wall(0);
-	front_wall = new Wall(1);
+	//cherry = new Cherry();
 
-	mower1 = new Mower(1);
-	mower2 = new Mower(2);
-	mower3 = new Mower(3);
-	mower4 = new Mower(4);
-	mower5 = new Mower(5);
-	world.add_object(mower1);
-	world.add_object(mower2);
-	world.add_object(mower3);
-	world.add_object(mower4);
-	world.add_object(mower5);
+	/*for (int i = 0; i < 5; ++i)
+	{
+		for (int j = 0; j < 20; ++j)
+		{
+			Model* zombie = new Zombie(i + 1, j + 1);
+			world.add_object(zombie);
+		}
+	}*/
 
-	plane = new Plane();
-	cherry = new Modapi();
-	//zombie = new Zombie(1);
+	//world.add_object(cherry);
 
-	shader.InitShader();
-	world.add_object(plane);
-	world.add_object(cherry);
 	//world.add_object(zombie);
 
-	//world.add_collision_group("modapi:zombie", cherry, zombie);
+	//world.add_collision_group("cherry:zombie", cherry, zombie);
+	//world.add_collision_group("modapi:zombie", modapi, zombie);
 	//world.add_collision_group("wall:zombie", back_wall, zombie);
 	//world.add_tuple(zombie);
-	world.add_tuple2(front_wall);
+	//world.add_tuple2(front_wall);
 
-	for (auto& object : world.all_object())
+	/*for (auto& object : world.all_object())
 	{
 		object->InitTexture();
-	}
+	}*/
 
-	projection = glm::mat4(1.0f);
+	// world.add_object(plane);
 
-	projection = glm::perspective(glm::radians(45.0f),1.0f,0.1f,50.0f);
-	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));
+	// world.add_object(mower1);
+	// world.add_object(mower2);
+	// world.add_object(mower3);
+	// world.add_object(mower4);
+	// world.add_object(mower5);
 
-	projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
-	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
-
-	world.setting(glm::vec3(0.0f, 10.0f, 25.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));
-
+	//world.add_collision_group("mower:zombie", mower1, zombie);
 }
 
 void CScene::Init_Win()
@@ -112,11 +113,41 @@ void CScene::Init_Lose()
 	projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-	world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 5.0, 10.0));
+	world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 0.0, 500.0));
 }
 
 void CScene::Render()
 {
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_CULL_FACE);
+
+	glViewport(0, 0, 800, 800);
+
+	if (state == MAIN)
+	{
+		projection = glm::mat4(1.0f);
+
+		/*projection = glm::perspective(glm::radians(45.0f),1.0f,0.1f,50.0f);
+		projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));
+
+		projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+
+		world.setting(glm::vec3(0.0f, 10.0f, 25.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));*/
+
+		projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
+
+		projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+
+		world.setting(glm::vec3(0.0f, 9.9f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0, 100.0, 0.0));
+	}
+
 	glPolygonMode(GL_FRONT_AND_BACK, polymod);
 	for (auto& object : world.all_object())
 	{
@@ -125,6 +156,26 @@ void CScene::Render()
 		object->Attack_Update();
 		object->Render();
 	}
+
+	if (state == MAIN)
+	{
+		glViewport(0, -600, 800, 800);
+
+		projection = glm::mat4(1.0f);
+		projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+
+		projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+
+		world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 5.0, 10.0));
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		
+		display4->InitBuffer();
+		display4->Render();		
+	}
+	
+	glutSwapBuffers();
 }
 
 void CScene::Update()

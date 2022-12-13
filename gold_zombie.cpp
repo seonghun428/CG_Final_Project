@@ -1,6 +1,6 @@
 #include "gold_zombie.h"
 
-GoldZombie::GoldZombie(int line)
+GoldZombie::GoldZombie(int line, int num)
 {
 	head = new Object("3DObjects/zombie_head.obj", "Textures/gold.png");
 	body = new Object("3DObjects/zombie_body.obj", "Textures/zombie.png");
@@ -16,6 +16,7 @@ GoldZombie::GoldZombie(int line)
 	elements.push_back(leg_right);
 
 	this->line = line;
+	this->num = num;
 }
 
 GoldZombie::~GoldZombie()

@@ -2,7 +2,7 @@
 
 Zombie::Zombie() {}
 
-Zombie::Zombie(int line)
+Zombie::Zombie(int line, int num)
 {
 	body = new Object("3DObjects/zombie_body.obj", "Textures/zombie.png");
 	arm_left = new Object("3DObjects/zombie_arm_left.obj", "Textures/zombie.png");
@@ -16,6 +16,7 @@ Zombie::Zombie(int line)
 	elements.push_back(leg_right);
 
 	this->line = line;
+	this->num = num;
 }
 
 Zombie::~Zombie()
@@ -32,7 +33,7 @@ void Zombie::InitBuffer()
 	for (auto& element : elements)
 	{
 		element->InitBuffer();
-		element->Update_Translate_Matrix(glm::vec3(8.0, 0.0, (line - 3) * 1.7));
+		element->Update_Translate_Matrix(glm::vec3(num * 10.0, 0.0, (line - 3) * 1.9));
 	}
 }
 
@@ -76,8 +77,8 @@ glm::vec3 Zombie::Get_Max()
 			MAX.z = element->Get_Max_O().z;
 	}
 
-	MAX.x += go_front + 8.0;
-	MAX.z += (line - 3) * 1.7;
+	MAX.x += go_front + num * 10.0f;
+	MAX.z += (line - 3) * 1.9f;
 
 	return MAX;
 }
@@ -95,8 +96,8 @@ glm::vec3 Zombie::Get_Min()
 			MIN.z = element->Get_Min_O().z;
 	}
 
-	MIN.x += go_front + 8.0;
-	MIN.z += (line - 3) * 1.7;
+	MIN.x += go_front + num * 10.0f;
+	MIN.z += (line - 3) * 1.9f;
 
 	return MIN;
 }
@@ -113,7 +114,7 @@ void Zombie::Move()
 	else if (leg_angle <= -40.0f)
 		leg_up = true;
 
-	go_front -= 0.02f;
+	go_front -= 0.2f;
 }
 
 void Zombie::Attack()

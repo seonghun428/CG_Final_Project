@@ -1,6 +1,6 @@
 #include "iron_zombie.h"
 
-IronZombie::IronZombie(int line)
+IronZombie::IronZombie(int line, int num)
 {
 	head = new Object("3DObjects/zombie_head.obj", "Textures/iron.png");
 	body = new Object("3DObjects/zombie_body.obj", "Textures/zombie.png");
@@ -16,6 +16,7 @@ IronZombie::IronZombie(int line)
 	elements.push_back(leg_right);
 
 	this->line = line;
+	this->num = num;
 }
 
 IronZombie::~IronZombie()
