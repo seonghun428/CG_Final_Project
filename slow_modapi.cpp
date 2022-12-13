@@ -56,8 +56,12 @@ glm::vec3 S_Modapi::Get_Min()
 
 void S_Modapi::Attack()
 {
-	Model* bean = new Bean(0, 0, "Textures/slow_modapi.png");
+	Model* bean = new Bean(this->x, this->y, "Textures/slow_modapi.png");
 	bean->InitTexture();
 	extern CScene scene;
+
 	scene.world.add_object(bean);
+	scene.world.add_tuple2(bean);
+	tuple<list<Model*>, list<Model*>> group2 = scene.world.get_group2();
+	scene.world.add_collision_group("bean:wall", group2);
 }

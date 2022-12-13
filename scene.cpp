@@ -47,8 +47,6 @@ void CScene::Init_Main()
 
 	world.clear();
 
-	//cherry = new Cherry();
-
 	/*for (int i = 0; i < 5; ++i)
 	{
 		for (int j = 0; j < 20; ++j)
@@ -58,15 +56,13 @@ void CScene::Init_Main()
 		}
 	}*/
 
-	//world.add_object(cherry);
-
 	//world.add_object(zombie);
 
 	//world.add_collision_group("cherry:zombie", cherry, zombie);
 	//world.add_collision_group("modapi:zombie", modapi, zombie);
 	//world.add_collision_group("wall:zombie", back_wall, zombie);
 	//world.add_tuple(zombie);
-	//world.add_tuple2(front_wall);
+	world.add_tuple2(front_wall);
 
 	/*for (auto& object : world.all_object())
 	{
@@ -118,7 +114,7 @@ void CScene::Init_Lose()
 
 void CScene::Render()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.0f, 0.8f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glEnable(GL_DEPTH_TEST);

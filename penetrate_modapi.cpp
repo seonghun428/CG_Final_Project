@@ -56,8 +56,12 @@ glm::vec3 P_Modapi::Get_Min()
 
 void P_Modapi::Attack()
 {
-	Model* bean = new Bean(0, 0, "Textures/penetrate_leaf.png");
+	Model* bean = new Bean(this->x, this->y, "Textures/penetrate_leaf.png");
 	bean->InitTexture();
 	extern CScene scene;
+
 	scene.world.add_object(bean);
+	scene.world.add_tuple2(bean);
+	tuple<list<Model*>, list<Model*>> group2 = scene.world.get_group2();
+	scene.world.add_collision_group("bean:wall", group2);
 }

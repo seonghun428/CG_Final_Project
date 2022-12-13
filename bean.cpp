@@ -16,6 +16,15 @@ Bean::~Bean()
 	body = nullptr;
 }
 
+void Bean::InitBuffer()
+{
+	for (auto& element : elements)
+	{
+		element->InitBuffer();
+		element->Update_Translate_Matrix(glm::vec3((x - 4) * 1.85 - 0.7, 0.0, (y - 3) * 1.9));
+	}
+}
+
 void Bean::Move()
 {
 	go_front += 0.1f;
@@ -30,7 +39,8 @@ glm::vec3 Bean::Get_Max()
 {
 	if (body == nullptr) return glm::vec3(-10000.0, -10000.0, -10000.0);
 	glm::vec3 MAX = body->Get_Max_O();
-	MAX.x += go_front;
+	MAX.x += go_front + (x - 4) * 1.85 - 0.7f;
+	MAX.z += (y - 3) * 1.9;
 	return MAX;
 }
 
@@ -38,7 +48,8 @@ glm::vec3 Bean::Get_Min()
 {
 	if (body == nullptr) return glm::vec3(-10000.0, -10000.0, -10000.0);
 	glm::vec3 MIN = body->Get_Min_O();
-	MIN.x += go_front;
+	MIN.x += go_front + (x - 4) * 1.85 - 0.7f;
+	MIN.z += (y - 3) * 1.9;
 	return MIN;
 }
 
