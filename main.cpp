@@ -10,6 +10,7 @@ CScene scene;
 
 GLvoid Reshape(int w, int h);
 GLvoid Keyboard(unsigned char key, int x, int y);
+GLvoid Mouse(int, int, int, int);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 GLvoid Timer2(int);
@@ -39,6 +40,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
 	glutKeyboardFunc(Keyboard);
+	glutMouseFunc(Mouse);
 	glutSpecialFunc(Special);
 	glutTimerFunc(100, Timerfunc, 1);
 	glutTimerFunc(1000, Timer2, 2);
@@ -74,6 +76,13 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 GLvoid Special(int key, int x, int y)
 {
 	scene.Input_s(key);
+
+	glutPostRedisplay();
+}
+
+GLvoid Mouse(int button, int state, int mx, int my)
+{
+	scene.mouse(button, state, mx, my);
 
 	glutPostRedisplay();
 }

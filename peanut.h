@@ -10,7 +10,7 @@ private:
 	Object* body;
 
 public:
-	Peanut();
+	Peanut(int x, int y);
 	~Peanut();
 
 	virtual void Move() {}

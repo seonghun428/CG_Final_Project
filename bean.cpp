@@ -5,8 +5,8 @@ Bean::Bean(int mx, int my, string imgfile)
 {
 	body = new Object("3DObjects/bean.obj", imgfile);
 	elements.push_back(body);
-	x = mx;
-	y = my;
+	this->x = mx;
+	this->y = my;
 }
 
 Bean::~Bean()

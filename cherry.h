@@ -9,7 +9,7 @@ private:
 	Object* body;
 
 public:
-	Cherry();
+	Cherry(int x, int y);
 	~Cherry();
 
 	virtual void Move() {}

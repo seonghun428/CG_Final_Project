@@ -10,7 +10,7 @@ private:
 	Object* stem;
 
 public:
-	F_Modapi();
+	F_Modapi(int x, int y);
 	~F_Modapi();
 
 	virtual void Attack();

@@ -10,7 +10,7 @@ private:
 	Object* stem;
 
 public:
-	Sunflower();
+	Sunflower(int x, int y);
 	~Sunflower();
 
 	virtual void Move() {}

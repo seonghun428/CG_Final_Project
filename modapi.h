@@ -8,7 +8,7 @@ private:
 	Object* stem;
 
 public:
-	Modapi();
+	Modapi(int x, int y);
 	~Modapi();
 
 	virtual void Attack();

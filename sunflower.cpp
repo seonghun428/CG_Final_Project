@@ -1,11 +1,13 @@
 #include "sunflower.h"
 
-Sunflower::Sunflower()
+Sunflower::Sunflower(int x, int y)
 {
 	head = new Object("3DObjects/flower.obj", "Textures/flower.png");
 	stem = new Object("3DObjects/stem.obj", "Textures/stem.png");
 	elements.push_back(head);
 	elements.push_back(stem);
+	this->x = x;
+	this->y = y;
 }
 
 Sunflower::~Sunflower()

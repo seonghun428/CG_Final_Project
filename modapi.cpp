@@ -2,12 +2,14 @@
 #include "bean.h"
 #include "scene.h"
 
-Modapi::Modapi()
+Modapi::Modapi(int x, int y)
 {
 	head = new Object("3DObjects/modapi.obj", "Textures/modapi.png");
 	stem = new Object("3DObjects/stem.obj", "Textures/stem.png");
 	elements.push_back(head);
 	elements.push_back(stem);
+	this->x = x;
+	this->y = y;
 }
 
 Modapi::~Modapi()
@@ -51,7 +53,7 @@ glm::vec3 Modapi::Get_Min()
 
 void Modapi::Attack()
 {
-	Model* bean = new Bean(0,0,"Textures/modapi.png");
+	Model* bean = new Bean(this->x,this->y,"Textures/modapi.png");
 	bean->InitTexture();
 	extern CScene scene;
 

@@ -1,9 +1,11 @@
 #include "cherry.h"
 
-Cherry::Cherry()
+Cherry::Cherry(int x, int y)
 {
 	body = new Object("3DObjects/cherry.obj", "Textures/cherry.png");
 	elements.push_back(body);
+	this->x = x;
+	this->y = y;
 }
 
 Cherry::~Cherry()

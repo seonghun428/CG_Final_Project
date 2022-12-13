@@ -31,7 +31,7 @@ private:
 	Model* display1 = new Display("Textures/main.png");
 	Model* display2 = new Display("Textures/win.png");
 	Model* display3 = new Display("Textures/lose.png");
-	Model* display4 = new Display("Textures/gold.png");
+	Model* display4 = new Display("Textures/ui.png");
 
 	Model* back_wall = new Wall(0);
 	Model* front_wall = new Wall(1);
@@ -42,12 +42,13 @@ private:
 	Model* mower5 = new Mower(5);
 
 	Model* plane = new Plane();
-	//Model* cherry;
-	//Model* zombie;
 
 	GLenum polymod = GL_FILL;
 
 	int state;
+
+	bool select_mode = false;
+	int selected_plant = 0;
 
 	glm::mat4 projection = glm::mat4(1.0f);
 	unsigned int projectionLocation;
@@ -75,6 +76,7 @@ public:
 
 	void Input(unsigned char key);
 	void Input_s(int key);
+	void mouse(int button, int state, int mx, int my);
 
 	bool collide(Model* a, Model* b);
 };

@@ -132,20 +132,25 @@ void CScene::Render()
 	{
 		projection = glm::mat4(1.0f);
 
-		/*projection = glm::perspective(glm::radians(45.0f),1.0f,0.1f,50.0f);
-		projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));
+		if (select_mode)
+		{
+			projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
 
-		projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
-		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+			projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+			glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-		world.setting(glm::vec3(0.0f, 10.0f, 25.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));*/
+			world.setting(glm::vec3(0.0f, 9.9f, 3.0f), glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0, 100.0, 0.0));
+		}
+		else
+		{
+			projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 50.0f);
+			projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0));
 
-		projection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
+			projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
+			glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-		projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
-		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
-
-		world.setting(glm::vec3(0.0f, 9.9f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0, 100.0, 0.0));
+			world.setting(glm::vec3(0.0f, 7.0f, 20.0f), glm::vec3(0.0f, -4.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(-20.0, 100.0, 0.0));
+		}
 	}
 
 	glPolygonMode(GL_FRONT_AND_BACK, polymod);
@@ -274,6 +279,119 @@ void CScene::Input_s(int key)
 	case GLUT_KEY_RIGHT:
 		world.setting(glm::vec3(10.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0, 100.0, 0.0));
 		break;
+	}
+}
+
+void CScene::mouse(int button, int state, int mx, int my)
+{
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		cout << "x: " << mx << "y: " << my << endl;
+		if (this->state == MAIN)
+		{
+			if (select_mode)
+			{
+				for (int i = 0; i < 5; ++i)
+				{
+					for (int j = 0; j < 9; ++j)
+					{
+						if (mx >= j * 75 + 100 && mx < (j + 1) * 75 + 100)
+						{
+							if (my >= i * 80 + 80 && my < (i + 1) * 80 + 80)
+							{
+								if (selected_plant == 1)
+								{
+									Model * sunflower = new Sunflower(j + 1, i + 1);
+									sunflower->InitTexture();
+									world.add_object(sunflower);
+								}
+								else if (selected_plant == 2)
+								{
+									Model* modapi = new Modapi(j + 1, i + 1);
+									modapi->InitTexture();
+									world.add_object(modapi);
+								}
+								else if (selected_plant == 3)
+								{
+									Model* s_modapi = new S_Modapi(j + 1, i + 1);
+									s_modapi->InitTexture();
+									world.add_object(s_modapi);
+								}
+								else if (selected_plant == 4)
+								{
+									Model* f_modapi = new F_Modapi(j + 1, i + 1);
+									f_modapi->InitTexture();
+									world.add_object(f_modapi);
+								}
+								else if (selected_plant == 5)
+								{
+									Model* p_modapi = new P_Modapi(j + 1, i + 1);
+									p_modapi->InitTexture();
+									world.add_object(p_modapi);
+								}
+								else if (selected_plant == 6)
+								{
+									Model* peanut = new Peanut(j + 1, i + 1);
+									peanut->InitTexture();
+									world.add_object(peanut);
+								}
+								else if (selected_plant == 7)
+								{
+									Model* cherry = new Cherry(j + 1, i + 1);
+									cherry->InitTexture();
+									world.add_object(cherry);
+								}
+
+								select_mode = false;
+								selected_plant = 0;
+								break;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				if (my >= 615 && my < 785)
+				{
+					if (mx >= 10 && mx < 100)
+					{
+						selected_plant = 1;
+						select_mode = true;
+					}
+					else if (mx >= 120 && mx < 210)
+					{
+						selected_plant = 2;
+						select_mode = true;
+					}
+					else if (mx >= 230 && mx < 325)
+					{
+						selected_plant = 3;
+						select_mode = true;
+					}
+					else if (mx >= 345 && mx < 435)
+					{
+						selected_plant = 4;
+						select_mode = true;
+					}
+					else if (mx >= 460 && mx < 550)
+					{
+						selected_plant = 5;
+						select_mode = true;
+					}
+					else if (mx >= 580 && mx < 670)
+					{
+						selected_plant = 6;
+						select_mode = true;
+					}
+					else if (mx >= 695 && mx < 785)
+					{
+						selected_plant = 7;
+						select_mode = true;
+					}
+				}
+			}
+		}
 	}
 }
 

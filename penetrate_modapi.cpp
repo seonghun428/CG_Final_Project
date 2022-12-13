@@ -2,7 +2,7 @@
 #include "bean.h"
 #include "scene.h"
 
-P_Modapi::P_Modapi()
+P_Modapi::P_Modapi(int x, int y)
 {
 	hair = new Object("3DObjects/leaf_3.obj", "Textures/penetrate_leaf.png");
 	head = new Object("3DObjects/modapi.obj", "Textures/penetrate_modapi.png");
@@ -10,6 +10,8 @@ P_Modapi::P_Modapi()
 	elements.push_back(hair);
 	elements.push_back(head);
 	elements.push_back(stem);
+	this->x = x;
+	this->y = y;
 }
 
 P_Modapi::~P_Modapi()

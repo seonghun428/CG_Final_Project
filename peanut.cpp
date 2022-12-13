@@ -1,9 +1,11 @@
 #include "peanut.h"
 
-Peanut::Peanut()
+Peanut::Peanut(int x, int y)
 {
 	body = new Object("3DObjects/peanut.obj", "Textures/peanut.png");
 	elements.push_back(body);
+	this->x = x;
+	this->y = y;
 }
 
 Peanut::~Peanut()

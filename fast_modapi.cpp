@@ -2,7 +2,7 @@
 #include "bean.h"
 #include "scene.h"
 
-F_Modapi::F_Modapi()
+F_Modapi::F_Modapi(int x, int y)
 {
 	hair = new Object("3DObjects/leaf_2.obj", "Textures/leaf.png");
 	head = new Object("3DObjects/modapi.obj", "Textures/fast_modapi.png");
@@ -10,6 +10,8 @@ F_Modapi::F_Modapi()
 	elements.push_back(hair);
 	elements.push_back(head);
 	elements.push_back(stem);
+	this->x = x;
+	this->y = y;
 }
 
 F_Modapi::~F_Modapi()
