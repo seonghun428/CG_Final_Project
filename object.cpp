@@ -68,6 +68,9 @@ void Object::Render()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 	glDrawArrays(GL_TRIANGLES, 0, m_Tri_Num);
+
+	glDeleteVertexArrays(1, &vao);
+	glDeleteBuffers(3, vbo);
 }
 
 void Object::ReadObj(const string objFile)

@@ -10,7 +10,6 @@ private:
 	int line;
 
 public:
-	Mower();
 	Mower(int line);
 	~Mower();
 

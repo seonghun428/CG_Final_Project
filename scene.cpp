@@ -73,13 +73,13 @@ void CScene::Init_Main()
 		object->InitTexture();
 	}*/
 
-	// world.add_object(plane);
+	world.add_object(plane);
 
-	// world.add_object(mower1);
-	// world.add_object(mower2);
-	// world.add_object(mower3);
-	// world.add_object(mower4);
-	// world.add_object(mower5);
+	world.add_object(mower1);
+	world.add_object(mower2);
+	world.add_object(mower3);
+	world.add_object(mower4);
+	world.add_object(mower5);
 
 	//world.add_collision_group("mower:zombie", mower1, zombie);
 }
