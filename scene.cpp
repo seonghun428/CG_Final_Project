@@ -3,6 +3,12 @@
 CScene::CScene() {}
 CScene::~CScene() {}
 
+void CScene::Init_Textures()
+{
+	display1->InitTexture();
+	display2->InitTexture();
+	display3->InitTexture();
+}
 
 void CScene::Init_Begin()
 {
@@ -10,15 +16,7 @@ void CScene::Init_Begin()
 
 	world.clear();
 
-	shader.InitShader();
-
-	display = new Display("Textures/main.png");
-	world.add_object(display);
-
-	for (auto& object : world.all_object())
-	{
-		object->InitTexture();
-	}
+	world.add_object(display1);
 
 	projection = glm::mat4(1.0f);
 	projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
@@ -43,28 +41,32 @@ void CScene::Init_Main()
 	back_wall = new Wall(0);
 	front_wall = new Wall(1);
 
-	mower1 = new Mower(1);
-	mower2 = new Mower(2);
-	mower3 = new Mower(3);
-	mower4 = new Mower(4);
-	mower5 = new Mower(5);
-	world.add_object(mower1);
-	world.add_object(mower2);
-	world.add_object(mower3);
-	world.add_object(mower4);
-	world.add_object(mower5);
+	world.add_object(back_wall);
+	world.add_object(front_wall);
+
+	// mower1 = new Mower(1);
+	// mower2 = new Mower(2);
+	// mower3 = new Mower(3);
+	// mower4 = new Mower(4);
+	// mower5 = new Mower(5);
+	// world.add_object(mower1);
+	// world.add_object(mower2);
+	// world.add_object(mower3);
+	// world.add_object(mower4);
+	// world.add_object(mower5);
 
 	plane = new Plane();
-	cherry = new Modapi();
+	//cherry = new Cherry();
 	zombie = new Zombie(3);
 
 	shader.InitShader();
 	world.add_object(plane);
-	world.add_object(cherry);
+	//world.add_object(cherry);
 	world.add_object(zombie);
 
-	world.add_collision_group("modapi:zombie", cherry, zombie);
-	world.add_tuple(zombie);
+	//world.add_collision_group("modapi:zombie", cherry, zombie);
+	world.add_collision_group("wall:zombie", back_wall, zombie);
+	//world.add_tuple(zombie);
 
 	for (auto& object : world.all_object())
 	{
@@ -89,13 +91,7 @@ void CScene::Init_Win()
 
 	world.clear();
 
-	display = new Display("Textures/win.png");
-	world.add_object(display);
-
-	for (auto& object : world.all_object())
-	{
-		object->InitTexture();
-	}
+	world.add_object(display2);
 
 	projection = glm::mat4(1.0f);
 	projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
@@ -108,17 +104,9 @@ void CScene::Init_Win()
 
 void CScene::Init_Lose()
 {
-	state = LOSE;
-
 	world.clear();
-
-	display = new Display("Textures/lose.png");
-	world.add_object(display);
-
-	for (auto& object : world.all_object())
-	{
-		object->InitTexture();
-	}
+	state = LOSE;
+	world.add_object(display3);
 
 	projection = glm::mat4(1.0f);
 	projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
@@ -132,7 +120,6 @@ void CScene::Init_Lose()
 void CScene::Render()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, polymod);
-
 	for (auto& object : world.all_object())
 	{
 		object->InitBuffer();
@@ -160,6 +147,12 @@ void CScene::Update()
 			{
 				if (collide(a, b))
 				{
+					if (group.first == "wall:zombie")
+					{
+						cout << "Init_Lose()" << endl;
+						Init_Lose();
+						return;
+					}
 					a->Get_Collide(b, group.first);
 					b->Get_Collide(a, group.first);
 				}

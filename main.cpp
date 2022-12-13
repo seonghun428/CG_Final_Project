@@ -41,8 +41,9 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glewExperimental = GL_TRUE;
 	glewInit();
 	
-	// scene.Init_Main();
-	scene.Init_Begin();
+	scene.shader.InitShader();
+	scene.Init_Textures();
+	scene.Init_Lose();
 
 	glutDisplayFunc(drawScene);
 	glutReshapeFunc(Reshape);
@@ -67,6 +68,9 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 
 	if (scene.Get_state() == BEGIN && key == 13)
 		scene.Init_Main();
+
+	if (scene.Get_state() == LOSE && key == 13)
+		scene.Init_Begin();
 
 	scene.Input(key);
 

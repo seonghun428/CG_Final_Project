@@ -28,9 +28,10 @@
 class CScene
 {
 private:
-	Shader shader;
+	Model* display1 = new Display("Textures/main.png");
+	Model* display2 = new Display("Textures/win.png");
+	Model* display3 = new Display("Textures/lose.png");
 
-	Model* display;
 	Model* back_wall;
 	Model* front_wall;
 	Model* mower1;
@@ -55,9 +56,12 @@ public:
 	~CScene();
 
 	World world;
+	Shader shader;
 
 	int Get_state() { return state; }
 	
+	void Init_Textures();
+
 	void Init_Begin();
 	void Init_Select();
 	void Init_Main();

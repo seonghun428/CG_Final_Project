@@ -77,6 +77,7 @@ glm::vec3 Zombie::Get_Max()
 	}
 
 	MAX.x += go_front + 8.0;
+	MAX.z += (line - 3) * 1.7;
 
 	return MAX;
 }
@@ -95,6 +96,7 @@ glm::vec3 Zombie::Get_Min()
 	}
 
 	MIN.x += go_front + 8.0;
+	MIN.z += (line - 3) * 1.7;
 
 	return MIN;
 }
@@ -111,7 +113,7 @@ void Zombie::Move()
 	else if (leg_angle <= -40.0f)
 		leg_up = true;
 
-	go_front -= 0.02f;
+	go_front -= 0.2f;
 }
 
 void Zombie::Attack()

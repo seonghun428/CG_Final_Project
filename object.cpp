@@ -87,8 +87,8 @@ void Object::ReadObj(const string objFile)
 	GLfloat sumX = 0.0f, sumY = 0.0f, sumZ = 0.0f;
 	GLfloat avgX, avgY, avgZ;
 	GLfloat scaleX, scaleY, scaleZ;
-	GLfloat minX = 0.0f, minY = 0.0f, minZ = 0.0f;
-	GLfloat maxX = 0.0f, maxY = 0.0f, maxZ = 0.0f;
+	GLfloat minX = 10000.0f, minY = 10000.0f, minZ = 10000.0f;
+	GLfloat maxX = -10000.0f, maxY = -10000.0f, maxZ = -10000.0f;
 
 	vector<glm::vec3> temp_vertices;
 	vector<glm::vec3> temp_normals;
@@ -178,14 +178,14 @@ void Object::ReadObj(const string objFile)
 
 	for (unsigned int i = 0; i < vertexIndices.size(); ++i)
 	{
-		temp = temp_vertices[vertexIndices[i] - 1];
+		/*temp = temp_vertices[vertexIndices[i] - 1];
 		temp.x = temp.x - minX;
 		temp.y = temp.y - minY;
 		temp.z = temp.z - minZ;
 
 		temp.x = ((temp.x * 2.0f) / scaleX) - 1.0f;
 		temp.y = ((temp.y * 2.0f) / scaleY) - 1.0f;
-		temp.z = ((temp.z * 2.0f) / scaleZ) - 1.0f;
+		temp.z = ((temp.z * 2.0f) / scaleZ) - 1.0f;*/
 
 		//m_outvertex.push_back(temp);
 		m_outvertex.push_back(temp_vertices[vertexIndices[i] - 1]);

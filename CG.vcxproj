@@ -136,6 +136,7 @@
     <ClCompile Include="model.cpp" />
     <ClCompile Include="modapi.cpp" />
     <ClCompile Include="mower.cpp" />
+    <ClCompile Include="wall.cpp" />
     <ClCompile Include="zombie.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="main.cpp" />
