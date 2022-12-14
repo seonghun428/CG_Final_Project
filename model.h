@@ -8,7 +8,7 @@ class Model
 protected:
 	vector<Object*> elements;
 
-	int hp = 1;
+	int hp = 10;
 
 	int bean_state = 0;
 
@@ -32,5 +32,8 @@ public:
 	virtual glm::vec3 Get_Max() = 0;
 	virtual glm::vec3 Get_Min() = 0;
 
+	virtual int Get_Hp() { return hp; }
+
 	virtual bool Attacking() { return false; }
+	virtual bool Get_Crash() { return false; }
 };

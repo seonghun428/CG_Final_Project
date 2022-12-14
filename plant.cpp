@@ -1,4 +1,5 @@
 #include "plant.h"
+#include "scene.h"
 
 void Plant::InitBuffer()
 {
@@ -11,9 +12,18 @@ void Plant::InitBuffer()
 
 void Plant::Get_Collide(Model* other, string group)
 {
-	if (group == "plant:zombie")
+	if (hp > 0)
 	{
-		if (other->Attacking())
-			hp -= 1;
+		if (group == "plant:zombie")
+		{
+			if (other->Attacking())
+				hp -= 1;
+		}
+		if (hp == 0)
+		{
+			extern CScene scene;
+			scene.world.remove_object(this);
+			return;
+		}
 	}
 }

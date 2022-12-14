@@ -64,6 +64,7 @@ void F_Modapi::Attack()
 	extern CScene scene;
 
 	scene.world.add_object(bean);
+	scene.world.add_tuple(bean);
 	scene.world.add_tuple2(bean);
 
 	Model* bean2 = new Bean(this->x, this->y, "Textures/modapi.png");
@@ -71,7 +72,11 @@ void F_Modapi::Attack()
 	bean->set_state(1);
 
 	scene.world.add_object(bean2);
+	scene.world.add_tuple(bean2);
 	scene.world.add_tuple2(bean2);
+
+	tuple<list<Model*>, list<Model*>> group = scene.world.get_group();
 	tuple<list<Model*>, list<Model*>> group2 = scene.world.get_group2();
+	scene.world.add_collision_group("bean:zombie", group);
 	scene.world.add_collision_group("bean:wall", group2);
 }

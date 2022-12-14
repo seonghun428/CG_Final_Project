@@ -17,6 +17,7 @@ IronZombie::IronZombie(int line, int num)
 
 	this->line = line;
 	this->num = num;
+	this->hp = 5;
 }
 
 IronZombie::~IronZombie()

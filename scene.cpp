@@ -93,6 +93,7 @@ void CScene::Init_Main()
 	world.add_object(mowers);
 
 	world.add_collision_group("mower:zombie", make_tuple(mowers, zombies));
+	world.add_collision_group("mower:wall", front_wall, mowers);
 }
 
 void CScene::Init_Win()
@@ -196,36 +197,6 @@ void CScene::Render()
 
 void CScene::Update()
 {
-	for (auto& object : world.all_object())
-	{
-		object->Move();
-
-		if (object == dynamic_cast<Zombie*>(object))
-			object->Attack();
-	}
-}
-
-void CScene::Update2()
-{
-	for (auto& object : world.all_object())
-	{
-		if (object == dynamic_cast<Plant*>(object))
-			object->Attack();
-	}
-
-	/*for (auto group : world.all_collision_group())
-	{
-		cout << "string: " << group.first << endl;
-		for (auto a : get<0>(group.second))
-		{
-			cout << "left: " << a << endl;
-		}
-		for (auto b : get<1>(group.second))
-		{
-			cout << "right: " << b << endl;
-		}
-	}*/
-
 	for (auto group : world.all_collision_group())
 	{
 		for (auto a : get<0>(group.second))
@@ -234,7 +205,6 @@ void CScene::Update2()
 			{
 				if (collide(a, b))
 				{
-					cout << "string: " << group.first << endl;
 					if (group.first == "wall:zombie")
 					{
 						Init_Lose();
@@ -245,6 +215,26 @@ void CScene::Update2()
 				}
 			}
 		}
+	}
+}
+
+void CScene::Update2()
+{
+	for (auto& object : world.all_object())
+	{
+		object->Move();
+
+		if (object == dynamic_cast<Zombie*>(object))
+			object->Attack();
+	}
+}
+
+void CScene::Update3()
+{
+	for (auto& object : world.all_object())
+	{
+		if (object == dynamic_cast<Plant*>(object))
+			object->Attack();
 	}
 }
 
@@ -296,7 +286,6 @@ void CScene::mouse(int button, int state, int mx, int my)
 {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		cout << "x: " << mx << "y: " << my << endl;
 		if (this->state == MAIN)
 		{
 			if (select_mode)
@@ -355,7 +344,6 @@ void CScene::mouse(int button, int state, int mx, int my)
 								{
 									Model* cherry = new Cherry(j + 1, i + 1);
 									cherry->InitTexture();
-									plants.push_back(cherry);
 									world.add_object(cherry);
 								}
 

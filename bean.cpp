@@ -58,7 +58,10 @@ void Bean::Get_Collide(Model* other, string group)
 {
 	if (group == "bean:zombie" || group == "bean:wall")
 	{
-		hp -= 1;
+		extern CScene scene;
+		scene.world.remove_object(this);
+		crash = false;
+		return;
 	}
 }
 

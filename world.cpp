@@ -31,7 +31,7 @@ void World::remove_object(Model* o)
 {
 	objects.remove(o);
 	remove_collision_object(o);
-	//delete o;
+	// delete o;
 }
 
 void World::remove_collision_object(Model* o)

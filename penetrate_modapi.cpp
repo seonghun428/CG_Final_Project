@@ -64,7 +64,10 @@ void P_Modapi::Attack()
 	extern CScene scene;
 
 	scene.world.add_object(bean);
+	scene.world.add_tuple(bean);
 	scene.world.add_tuple2(bean);
+	tuple<list<Model*>, list<Model*>> group = scene.world.get_group();
 	tuple<list<Model*>, list<Model*>> group2 = scene.world.get_group2();
+	scene.world.add_collision_group("bean:zombie", group);
 	scene.world.add_collision_group("bean:wall", group2);
 }

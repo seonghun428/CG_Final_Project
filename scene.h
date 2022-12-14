@@ -79,6 +79,7 @@ public:
 	void Render();
 	void Update();
 	void Update2();
+	void Update3();
 
 	void Input(unsigned char key);
 	void Input_s(int key);

@@ -8,6 +8,7 @@ private:
 	Object* body;
 	int x, y;
 	GLfloat go_front = 0.0f;
+	bool crash = true;
 
 public:
 	Bean(int mx, int my, string imgfile);
@@ -25,4 +26,6 @@ public:
 	virtual glm::vec3 Get_Min();
 
 	virtual void Get_Collide(Model* other, string group);
+
+	virtual bool Get_Crash() { return crash; }
 };
