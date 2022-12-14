@@ -31,7 +31,7 @@ void World::remove_object(Model* o)
 {
 	objects.remove(o);
 	remove_collision_object(o);
-	delete o;
+	//delete o;
 }
 
 void World::remove_collision_object(Model* o)
@@ -58,13 +58,12 @@ void World::add_tuple(Model* o)
 {
 	temp.push_back(o);
 
-	if (get<0>(group).empty())
-	{
-		get<0>(group) = temp;
-		temp.clear();
-	}
-	else
-		get<1>(group) = temp;
+	get<1>(group) = temp;
+}
+
+void World::add_tuple(list<Model*> l)
+{
+	get<0>(group) = l;
 }
 
 void World::add_tuple2(Model* o)
@@ -88,6 +87,14 @@ void World::add_collision_group(string group, Model* a, Model* b)
 	temp2.push_back(b);
 
 	collision_group.insert(make_pair(group, make_tuple(temp, temp2)));
+}
+
+void World::add_collision_group(string group, Model* a, list<Model*> b)
+{
+	list<Model*> temp;
+	temp.push_back(a);
+
+	collision_group.insert(make_pair(group, make_tuple(temp, b)));
 }
 
 void World::add_collision_group(string group, tuple<list<Model*>,list<Model*>> a)

@@ -24,10 +24,16 @@ void Mower::InitBuffer()
 
 glm::vec3 Mower::Get_Max()
 {
-	return body->Get_Max_O();
+	glm::vec3 MAX = body->Get_Max_O();
+	MAX.x -= 8.5f;
+	MAX.z += (line - 3) * 1.9;
+	return MAX;
 }
 
 glm::vec3 Mower::Get_Min()
 {
-	return body->Get_Min_O();
+	glm::vec3 MIN = body->Get_Min_O();
+	MIN.x -= 8.5f;
+	MIN.z += (line - 3) * 1.9;
+	return MIN;
 }

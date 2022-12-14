@@ -8,6 +8,7 @@ Sunflower::Sunflower(int x, int y)
 	elements.push_back(stem);
 	this->x = x;
 	this->y = y;
+	this->cost = 5;
 }
 
 Sunflower::~Sunflower()
@@ -28,8 +29,8 @@ glm::vec3 Sunflower::Get_Max()
 		if (MAX.z < element->Get_Max_O().z)
 			MAX.z = element->Get_Max_O().z;
 	}
-
-
+	MAX.x += (x - 4) * 1.85 - 0.7f;
+	MAX.z += (y - 3) * 1.9;
 	return MAX;
 }
 
@@ -45,6 +46,7 @@ glm::vec3 Sunflower::Get_Min()
 		if (MIN.z > element->Get_Min_O().z)
 			MIN.z = element->Get_Min_O().z;
 	}
-
+	MIN.x += (x - 4) * 1.85 - 0.7f;
+	MIN.z += (y - 3) * 1.9;
 	return MIN;
 }

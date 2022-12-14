@@ -43,9 +43,15 @@ private:
 
 	Model* plane = new Plane();
 
+	list<Model*> mowers;
+	list<Model*> plants;
+	list<Model*> zombies;
+
 	GLenum polymod = GL_FILL;
 
 	int state;
+
+	int cur_cost;
 
 	bool select_mode = false;
 	int selected_plant = 0;

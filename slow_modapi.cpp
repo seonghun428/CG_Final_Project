@@ -12,6 +12,7 @@ S_Modapi::S_Modapi(int x, int y)
 	elements.push_back(stem);
 	this->x = x;
 	this->y = y;
+	this->cost = 10;
 }
 
 S_Modapi::~S_Modapi()
@@ -34,7 +35,8 @@ glm::vec3 S_Modapi::Get_Max()
 			MAX.z = element->Get_Max_O().z;
 	}
 
-
+	MAX.x += (x - 4) * 1.85 - 0.7f;
+	MAX.z += (y - 3) * 1.9;
 	return MAX;
 }
 
@@ -51,6 +53,8 @@ glm::vec3 S_Modapi::Get_Min()
 			MIN.z = element->Get_Min_O().z;
 	}
 
+	MIN.x += (x - 4) * 1.85 - 0.7f;
+	MIN.z += (y - 3) * 1.9;
 	return MIN;
 }
 
@@ -58,6 +62,7 @@ void S_Modapi::Attack()
 {
 	Model* bean = new Bean(this->x, this->y, "Textures/slow_modapi.png");
 	bean->InitTexture();
+	bean->set_state(2);
 	extern CScene scene;
 
 	scene.world.add_object(bean);

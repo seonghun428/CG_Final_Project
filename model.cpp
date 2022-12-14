@@ -1,4 +1,5 @@
 #include "model.h"
+#include "scene.h"
 
 void Model::InitBuffer()
 {

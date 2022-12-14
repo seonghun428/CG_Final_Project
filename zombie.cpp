@@ -1,4 +1,5 @@
 #include "zombie.h"
+#include "scene.h"
 
 Zombie::Zombie() {}
 
@@ -33,7 +34,7 @@ void Zombie::InitBuffer()
 	for (auto& element : elements)
 	{
 		element->InitBuffer();
-		element->Update_Translate_Matrix(glm::vec3(num * 10.0, 0.0, (line - 3) * 1.9));
+		element->Update_Translate_Matrix(glm::vec3(num * 3.0 + 7.0, 0.0, (line - 3) * 1.9));
 	}
 }
 
@@ -77,7 +78,7 @@ glm::vec3 Zombie::Get_Max()
 			MAX.z = element->Get_Max_O().z;
 	}
 
-	MAX.x += go_front + num * 10.0f;
+	MAX.x += go_front + num * 3.0 + 7.0f;
 	MAX.z += (line - 3) * 1.9f;
 
 	return MAX;
@@ -96,7 +97,7 @@ glm::vec3 Zombie::Get_Min()
 			MIN.z = element->Get_Min_O().z;
 	}
 
-	MIN.x += go_front + num * 10.0f;
+	MIN.x += go_front + num * 3.0 + 7.0f;
 	MIN.z += (line - 3) * 1.9f;
 
 	return MIN;
@@ -114,7 +115,10 @@ void Zombie::Move()
 	else if (leg_angle <= -40.0f)
 		leg_up = true;
 
-	go_front -= 0.2f;
+	if (slowed)
+		go_front -= 0.011f;
+	else
+		go_front -= 0.02f;
 }
 
 void Zombie::Attack()
@@ -130,4 +134,32 @@ void Zombie::Attack()
 		arm_up = true;
 }
 
-void Zombie::Get_Collide(Model* other, string group) {}
+void Zombie::Get_Collide(Model* other, string group)
+{
+	if (group == "bean:zombie")
+	{
+		hp -= 1;
+		if (other->get_state() == 2)
+		{
+			slowed = true;
+		}
+	}
+	else if (group == "mower:zombie")
+	{
+		hp = 0;
+	}
+
+	if (hp == 0)
+	{
+		extern CScene scene;
+		scene.world.remove_object(this);
+		return;
+	}
+}
+
+bool Zombie::Attacking()
+{
+	if (arm_angle == 10.0f)
+		return true;
+	return false;
+}

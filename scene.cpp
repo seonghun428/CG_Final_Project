@@ -46,38 +46,53 @@ void CScene::Init_Main()
 	state = MAIN;
 
 	world.clear();
+	zombies.clear();
+	mowers.clear();
+	plants.clear();
 
-	/*for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		for (int j = 0; j < 20; ++j)
 		{
-			Model* zombie = new Zombie(i + 1, j + 1);
-			world.add_object(zombie);
+			if (j >= 0 && j < 6)
+			{
+				Model* zombie = new Zombie(i + 1, j + 1);
+				zombie->InitTexture();
+				zombies.push_back(zombie);
+			}
+			else if (j >= 6 && j < 13)
+			{
+				Model* zombie = new IronZombie(i + 1, j + 1);
+				zombie->InitTexture();
+				zombies.push_back(zombie);
+			}
+			else if (j >= 13 && j < 20)
+			{
+				Model* zombie = new GoldZombie(i + 1, j + 1);
+				zombie->InitTexture();
+				zombies.push_back(zombie);
+			}
 		}
-	}*/
+	}
+	
+	world.add_object(zombies);
 
-	//world.add_object(zombie);
-
-	//world.add_collision_group("cherry:zombie", cherry, zombie);
-	//world.add_collision_group("modapi:zombie", modapi, zombie);
-	//world.add_collision_group("wall:zombie", back_wall, zombie);
-	//world.add_tuple(zombie);
+	world.add_collision_group("wall:zombie", back_wall, zombies);
+	
+	world.add_tuple(zombies);
 	world.add_tuple2(front_wall);
-
-	/*for (auto& object : world.all_object())
-	{
-		object->InitTexture();
-	}*/
 
 	world.add_object(plane);
 
-	world.add_object(mower1);
-	world.add_object(mower2);
-	world.add_object(mower3);
-	world.add_object(mower4);
-	world.add_object(mower5);
+	mowers.push_back(mower1);
+	mowers.push_back(mower2);
+	mowers.push_back(mower3);
+	mowers.push_back(mower4);
+	mowers.push_back(mower5);
 
-	//world.add_collision_group("mower:zombie", mower1, zombie);
+	world.add_object(mowers);
+
+	world.add_collision_group("mower:zombie", make_tuple(mowers, zombies));
 }
 
 void CScene::Init_Win()
@@ -198,7 +213,7 @@ void CScene::Update2()
 			object->Attack();
 	}
 
-	for (auto group : world.all_collision_group())
+	/*for (auto group : world.all_collision_group())
 	{
 		cout << "string: " << group.first << endl;
 		for (auto a : get<0>(group.second))
@@ -209,7 +224,7 @@ void CScene::Update2()
 		{
 			cout << "right: " << b << endl;
 		}
-	}
+	}*/
 
 	for (auto group : world.all_collision_group())
 	{
@@ -219,15 +234,14 @@ void CScene::Update2()
 			{
 				if (collide(a, b))
 				{
+					cout << "string: " << group.first << endl;
 					if (group.first == "wall:zombie")
 					{
-						cout << "Init_Lose()" << endl;
 						Init_Lose();
 						return;
 					}
 					a->Get_Collide(b, group.first);
 					b->Get_Collide(a, group.first);
-					return;
 				}
 			}
 		}
@@ -299,50 +313,59 @@ void CScene::mouse(int button, int state, int mx, int my)
 								{
 									Model * sunflower = new Sunflower(j + 1, i + 1);
 									sunflower->InitTexture();
+									plants.push_back(sunflower);
 									world.add_object(sunflower);
 								}
 								else if (selected_plant == 2)
 								{
 									Model* modapi = new Modapi(j + 1, i + 1);
 									modapi->InitTexture();
+									plants.push_back(modapi);
 									world.add_object(modapi);
 								}
 								else if (selected_plant == 3)
 								{
 									Model* s_modapi = new S_Modapi(j + 1, i + 1);
 									s_modapi->InitTexture();
+									plants.push_back(s_modapi);
 									world.add_object(s_modapi);
 								}
 								else if (selected_plant == 4)
 								{
 									Model* f_modapi = new F_Modapi(j + 1, i + 1);
 									f_modapi->InitTexture();
+									plants.push_back(f_modapi);
 									world.add_object(f_modapi);
 								}
 								else if (selected_plant == 5)
 								{
 									Model* p_modapi = new P_Modapi(j + 1, i + 1);
 									p_modapi->InitTexture();
+									plants.push_back(p_modapi);
 									world.add_object(p_modapi);
 								}
 								else if (selected_plant == 6)
 								{
 									Model* peanut = new Peanut(j + 1, i + 1);
 									peanut->InitTexture();
+									plants.push_back(peanut);
 									world.add_object(peanut);
 								}
 								else if (selected_plant == 7)
 								{
 									Model* cherry = new Cherry(j + 1, i + 1);
 									cherry->InitTexture();
+									plants.push_back(cherry);
 									world.add_object(cherry);
 								}
+
+								world.add_collision_group("plant:zombie", make_tuple(plants, zombies));
 
 								select_mode = false;
 								selected_plant = 0;
 								break;
 							}
-						}
+						}						
 					}
 				}
 			}
