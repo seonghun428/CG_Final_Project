@@ -69,9 +69,6 @@
     <ClCompile Include="world.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="plane.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="mower.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>

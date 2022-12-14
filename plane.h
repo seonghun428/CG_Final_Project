@@ -1,18 +1,25 @@
 #pragma once
 
-#include "object.h"
 #include "model.h"
 
 class Plane : public Model
 {
 private:
 	Object* body;
+	Object* ground;
 
 public:
-	Plane() { body = new Object("3DObjects/plane.obj", "Textures/plane2.png");
-			  elements.push_back(body); }
+	Plane() {
+		body = new Object("3DObjects/plane.obj", "Textures/plane2.png");
+		ground = new Object("3DObjects/ground.obj", "Textures/ground.png");
+		elements.push_back(body);
+		elements.push_back(ground);
+	}
 
-	~Plane() { delete body; }
+	~Plane() {
+		delete body;
+		delete ground;
+	}
 
 	virtual void Move() {}
 	virtual void Attack() {}
