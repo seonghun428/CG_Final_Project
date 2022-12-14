@@ -56,11 +56,31 @@ glm::vec3 Bean::Get_Min()
 
 void Bean::Get_Collide(Model* other, string group)
 {
-	if (group == "bean:zombie" || group == "bean:wall")
+	if (group == "bean:zombie")
+	{
+		if(cnt == 0)
+		{
+			if (bean_state != 3)
+			{
+				extern CScene scene;
+				scene.world.remove_object(this);
+			}
+			crash = false;
+
+			if (other->Get_Max().x - Get_Min().x <= 0.1f)
+			{
+				crash = true;
+			}
+		}
+		return;
+	}
+
+	if (group == "bean:wall")
 	{
 		extern CScene scene;
 		scene.world.remove_object(this);
 		crash = false;
+		cnt = 1;
 		return;
 	}
 }

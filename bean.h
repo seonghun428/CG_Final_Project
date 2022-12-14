@@ -9,6 +9,7 @@ private:
 	int x, y;
 	GLfloat go_front = 0.0f;
 	bool crash = true;
+	int cnt = 0;
 
 public:
 	Bean(int mx, int my, string imgfile);

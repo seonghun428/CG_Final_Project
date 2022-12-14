@@ -40,6 +40,7 @@ void Cherry::Move()
 	{
 		extern CScene scene;
 		scene.world.remove_object(this);
+		crash = false;
 		return;
 	}
 }

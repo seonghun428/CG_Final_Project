@@ -49,6 +49,7 @@ private:
 	list<Model*> mowers;
 	list<Model*> plants;
 	list<Model*> zombies;
+	list<Model*> cherries;
 
 	glm::vec3 lightpos = glm::vec3(-21.0, 0.0, 0.0);
 
