@@ -157,5 +157,8 @@
     <ClInclude Include="wall.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="sun.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

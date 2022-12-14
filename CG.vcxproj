@@ -164,6 +164,7 @@
     <ClInclude Include="model.h" />
     <ClInclude Include="modapi.h" />
     <ClInclude Include="mower.h" />
+    <ClInclude Include="sun.h" />
     <ClInclude Include="wall.h" />
     <ClInclude Include="zombie.h" />
     <ClInclude Include="object.h" />
