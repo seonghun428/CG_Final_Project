@@ -38,6 +38,7 @@ private:
 	glm::mat4 Rx = glm::mat4(1.0f);
 	glm::mat4 Ry = glm::mat4(1.0f);
 	glm::mat4 Rz = glm::mat4(1.0f);
+	glm::mat4 Sc = glm::mat4(1.0f);
 
 	glm::mat4 Sm = glm::mat4(1.0f);
 
@@ -56,6 +57,7 @@ public:
 	void Update_XRotate_Matrix(GLfloat);
 	void Update_YRotate_Matrix(GLfloat);
 	void Update_ZRotate_Matrix(GLfloat);
+	void Update_Scale_Matrix(glm::vec3);
 
 	void Render();
 

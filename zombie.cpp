@@ -177,6 +177,11 @@ void Zombie::Get_Collide(Model* other, string group)
 				attack = false;
 			}
 		}
+		else if (group == "cherry:zombie")
+		{
+			if (other->Get_Crash())
+				hp = 0;
+		}
 
 		if (hp == 0)
 		{

@@ -345,6 +345,7 @@ void CScene::mouse(int button, int state, int mx, int my)
 									Model* cherry = new Cherry(j + 1, i + 1);
 									cherry->InitTexture();
 									world.add_object(cherry);
+									world.add_collision_group("cherry:zombie", cherry, zombies);
 								}
 
 								world.add_collision_group("plant:zombie", make_tuple(plants, zombies));

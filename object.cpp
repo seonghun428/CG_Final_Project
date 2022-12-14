@@ -188,6 +188,13 @@ void Object::Update_ZRotate_Matrix(GLfloat z_angle)
 	Sm *= Rz;
 }
 
+void Object::Update_Scale_Matrix(glm::vec3 scale)
+{
+	Sc = glm::mat4(1.0f);
+	Sc = glm::scale(Sc, scale);
+	Sm *= Sc;
+}
+
 void Object::Reset_Matrix()
 {
 	Sm = glm::mat4(1.0f);
