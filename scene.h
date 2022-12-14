@@ -90,5 +90,7 @@ public:
 	void Input_s(int key);
 	void mouse(int button, int state, int mx, int my);
 
+	void Add_Cost() { cur_cost += 3; }
+
 	bool collide(Model* a, Model* b);
 };

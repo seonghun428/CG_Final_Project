@@ -1,4 +1,5 @@
 #include "sunflower.h"
+#include "scene.h"
 
 Sunflower::Sunflower(int x, int y)
 {
@@ -25,6 +26,12 @@ void Sunflower::Move()
 void Sunflower::Move_Update()
 {
 	head->Update_YRotate_Matrix(rot);
+}
+
+void Sunflower::Attack()
+{
+	extern CScene scene;
+	scene.Add_Cost();
 }
 
 glm::vec3 Sunflower::Get_Max()

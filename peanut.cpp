@@ -7,6 +7,7 @@ Peanut::Peanut(int x, int y)
 	this->x = x;
 	this->y = y;
 	this->cost = 10;
+	this->hp = 7;
 }
 
 Peanut::~Peanut()

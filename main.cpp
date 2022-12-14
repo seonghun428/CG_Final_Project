@@ -64,9 +64,6 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 	if (scene.Get_state() == BEGIN && key == ENTER)
 		scene.Init_Main();
 
-	else if (scene.Get_state() == MAIN && key == ENTER)
-		scene.Init_Lose();
-
 	else if (scene.Get_state() == WIN && key == ENTER)
 		scene.Init_Begin();
 

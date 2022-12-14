@@ -46,7 +46,13 @@ void CScene::Init_Main()
 	mowers.clear();
 	plants.clear();
 
-	for (int i = 0; i < 5; ++i)
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<int> line(1, 5);
+	uniform_int_distribution<int> kind(1, 3);
+	uniform_int_distribution<int> x(1, 30);
+
+	/*for (int i = 0; i < 100; ++i)
 	{
 		for (int j = 0; j < 20; ++j)
 		{
@@ -68,6 +74,26 @@ void CScene::Init_Main()
 				zombie->InitTexture();
 				zombies.push_back(zombie);
 			}
+		}
+	}*/
+
+	for (int i = 0; i < 100; ++i) {
+		if (kind(rd) == 1) {
+			Model* zombie = new Zombie(line(rd), x(rd));
+			zombie->InitTexture();
+			zombies.push_back(zombie);
+		}
+
+		else if(kind(rd) == 2) {
+			Model* zombie = new IronZombie(line(rd), x(rd));
+			zombie->InitTexture();
+			zombies.push_back(zombie);
+		}
+
+		else if(kind(rd) == 3) {
+			Model* zombie = new GoldZombie(line(rd), x(rd));
+			zombie->InitTexture();
+			zombies.push_back(zombie);
 		}
 	}
 	
@@ -92,6 +118,8 @@ void CScene::Init_Main()
 	world.add_collision_group("mower:wall", front_wall, mowers);
 
 	world.add_object(sun);
+
+	cur_cost = 15;
 }
 
 void CScene::Init_Win()
@@ -174,6 +202,15 @@ void CScene::Render()
 
 	if (state == MAIN)
 	{
+		glViewport(550, 600, 200, 200);
+
+		const string str1 = "COST: ";
+		string str2 = to_string(cur_cost);
+		string str = str1 + str2;
+
+		glRasterPos2f(0.0f, 0.0f);
+		glutBitmapString(GLUT_BITMAP_HELVETICA_18, (unsigned char*)str.c_str());
+
 		glViewport(0, -600, 800, 800);
 
 		projection = glm::mat4(1.0f);
@@ -310,52 +347,95 @@ void CScene::mouse(int button, int state, int mx, int my)
 							{
 								if (selected_plant == 1)
 								{
-									Model * sunflower = new Sunflower(j + 1, i + 1);
-									sunflower->InitTexture();
-									plants.push_back(sunflower);
-									world.add_object(sunflower);
+
+									Model* sunflower = new Sunflower(j + 1, i + 1);
+									if (cur_cost >= sunflower->Get_Cost()) {
+										sunflower->InitTexture();
+										plants.push_back(sunflower);
+										world.add_object(sunflower);
+										cur_cost -= sunflower->Get_Cost();
+									}
+
+									else
+										delete sunflower;
 								}
 								else if (selected_plant == 2)
 								{
 									Model* modapi = new Modapi(j + 1, i + 1);
-									modapi->InitTexture();
-									plants.push_back(modapi);
-									world.add_object(modapi);
+									if (cur_cost >= modapi->Get_Cost()) {
+										modapi->InitTexture();
+										plants.push_back(modapi);
+										world.add_object(modapi);
+										cur_cost -= modapi->Get_Cost();
+									}
+
+									else
+										delete modapi;
 								}
 								else if (selected_plant == 3)
 								{
 									Model* s_modapi = new S_Modapi(j + 1, i + 1);
-									s_modapi->InitTexture();
-									plants.push_back(s_modapi);
-									world.add_object(s_modapi);
+									if (cur_cost >= s_modapi->Get_Cost()) {
+										s_modapi->InitTexture();
+										plants.push_back(s_modapi);
+										world.add_object(s_modapi);
+										cur_cost -= s_modapi->Get_Cost();
+									}
+
+									else
+										delete s_modapi;
 								}
 								else if (selected_plant == 4)
 								{
 									Model* f_modapi = new F_Modapi(j + 1, i + 1);
-									f_modapi->InitTexture();
-									plants.push_back(f_modapi);
-									world.add_object(f_modapi);
+									if (cur_cost >= f_modapi->Get_Cost()) {
+										f_modapi->InitTexture();
+										plants.push_back(f_modapi);
+										world.add_object(f_modapi);
+										cur_cost -= f_modapi->Get_Cost();
+									}
+
+									else
+										delete f_modapi;
 								}
 								else if (selected_plant == 5)
 								{
 									Model* p_modapi = new P_Modapi(j + 1, i + 1);
-									p_modapi->InitTexture();
-									plants.push_back(p_modapi);
-									world.add_object(p_modapi);
+									if (cur_cost >= p_modapi->Get_Cost()) {
+										p_modapi->InitTexture();
+										plants.push_back(p_modapi);
+										world.add_object(p_modapi);
+										cur_cost -= p_modapi->Get_Cost();
+									}
+
+									else
+										delete p_modapi;
 								}
 								else if (selected_plant == 6)
 								{
 									Model* peanut = new Peanut(j + 1, i + 1);
-									peanut->InitTexture();
-									plants.push_back(peanut);
-									world.add_object(peanut);
+									if (cur_cost >= peanut->Get_Cost()) {
+										peanut->InitTexture();
+										plants.push_back(peanut);
+										world.add_object(peanut);
+										cur_cost -= peanut->Get_Cost();
+									}
+
+									else
+										delete peanut;
 								}
 								else if (selected_plant == 7)
 								{
 									Model* cherry = new Cherry(j + 1, i + 1);
-									cherry->InitTexture();
-									cherries.push_back(cherry);
-									world.add_object(cherry);									
+									if (cur_cost >= cherry->Get_Cost()) {
+										cherry->InitTexture();
+										cherries.push_back(cherry);
+										world.add_object(cherry);
+										cur_cost -= cherry->Get_Cost();
+									}
+
+									else
+										delete cherry;
 								}
 
 								world.add_collision_group("plant:zombie", make_tuple(plants, zombies));

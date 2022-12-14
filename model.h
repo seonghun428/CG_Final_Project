@@ -8,7 +8,7 @@ class Model
 protected:
 	vector<Object*> elements;
 
-	int hp = 10;
+	int hp = 5;
 
 	int bean_state = 0;
 
@@ -39,4 +39,6 @@ public:
 
 	virtual GLfloat Get_z_rot() { return 0; }
 	virtual void Set_z_rot(GLfloat) {}
+
+	virtual int Get_Cost() { return 0; }
 };

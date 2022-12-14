@@ -19,4 +19,6 @@ public:
 	virtual glm::vec3 Get_Max() = 0;
 	virtual glm::vec3 Get_Min() = 0;
 	virtual void Get_Collide(Model* other, string group);
+
+	virtual int Get_Cost() { return cost; }
 };

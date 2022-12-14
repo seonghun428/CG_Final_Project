@@ -16,7 +16,7 @@ public:
 	~Sunflower();
 
 	virtual void Move();
-	virtual void Attack() {}
+	virtual void Attack();
 	virtual void Move_Update();
 	virtual void Attack_Update() {}
 
