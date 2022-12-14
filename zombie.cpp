@@ -1,4 +1,5 @@
 #include "zombie.h"
+#include "scene.h"
 
 Zombie::Zombie() {}
 
@@ -17,6 +18,7 @@ Zombie::Zombie(int line, int num)
 
 	this->line = line;
 	this->num = num;
+	this->hp = 3;
 }
 
 Zombie::~Zombie()
@@ -33,7 +35,7 @@ void Zombie::InitBuffer()
 	for (auto& element : elements)
 	{
 		element->InitBuffer();
-		element->Update_Translate_Matrix(glm::vec3(num * 10.0, 0.0, (line - 3) * 1.9));
+		element->Update_Translate_Matrix(glm::vec3(num * 3.0 + 7.0, 0.0, (line - 3) * 1.9));
 	}
 }
 
@@ -77,7 +79,7 @@ glm::vec3 Zombie::Get_Max()
 			MAX.z = element->Get_Max_O().z;
 	}
 
-	MAX.x += go_front + num * 10.0f;
+	MAX.x += go_front + num * 3.0 + 7.0f;
 	MAX.z += (line - 3) * 1.9f;
 
 	return MAX;
@@ -96,7 +98,7 @@ glm::vec3 Zombie::Get_Min()
 			MIN.z = element->Get_Min_O().z;
 	}
 
-	MIN.x += go_front + num * 10.0f;
+	MIN.x += go_front + num * 3.0 + 7.0f;
 	MIN.z += (line - 3) * 1.9f;
 
 	return MIN;
@@ -104,30 +106,90 @@ glm::vec3 Zombie::Get_Min()
 
 void Zombie::Move()
 {
-	if (leg_up)
-		leg_angle += 5.0f;
+	if(!attack)
+	{
+		if (leg_up)
+			leg_angle += 5.0f;
+		else
+			leg_angle -= 5.0f;
+
+		if (leg_angle >= 40.0f)
+			leg_up = false;
+		else if (leg_angle <= -40.0f)
+			leg_up = true;
+
+		if (slowed)
+			go_front -= 0.011f;
+		else
+			go_front -= 0.02f;
+	}
 	else
-		leg_angle -= 5.0f;
-
-	if (leg_angle >= 40.0f)
-		leg_up = false;
-	else if (leg_angle <= -40.0f)
-		leg_up = true;
-
-	go_front -= 0.2f;
+	{
+		leg_angle = 0.0f;
+	}
 }
 
 void Zombie::Attack()
 {
-	if (arm_up)
-		arm_angle += 10.0f;
-	else
-		arm_angle -= 10.0f;
+	if(attack)
+	{
+		if (arm_up)
+			arm_angle += 10.0f;
+		else
+			arm_angle -= 10.0f;
 
-	if (arm_angle >= 10.0f)
-		arm_up = false;
-	else if (arm_angle <= -80.0f)
-		arm_up = true;
+		if (arm_angle >= 10.0f)
+			arm_up = false;
+		else if (arm_angle <= -80.0f)
+			arm_up = true;
+	}
+	else
+	{
+		arm_angle = 0.0f;
+	}
 }
 
-void Zombie::Get_Collide(Model* other, string group) {}
+void Zombie::Get_Collide(Model* other, string group)
+{
+	if (hp > 0)
+	{
+		if (group == "bean:zombie")
+		{
+			if (other->Get_Crash())
+			{
+				hp -= 1;
+				if (other->get_state() == 2)
+				{
+					slowed = true;
+				}
+			}
+		}
+		else if (group == "mower:zombie")
+		{
+			if (other->Get_Crash())
+				hp = 0;
+		}
+		else if (group == "plant:zombie")
+		{
+			attack = true;
+			if (other->Get_Hp() == 0)
+			{
+				attack = false;
+			}
+		}
+
+		if (hp == 0)
+		{
+			extern CScene scene;
+			scene.world.remove_object(this);
+			return;
+		}
+	}
+}
+
+bool Zombie::Attacking()
+{
+	if (arm_angle == 10.0f)
+		return true;
+	return false;
+}

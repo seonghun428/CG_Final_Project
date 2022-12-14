@@ -8,7 +8,9 @@ class Model
 protected:
 	vector<Object*> elements;
 
-	int hp = 0;
+	int hp = 10;
+
+	int bean_state = 0;
 
 public:
 	Model() {}
@@ -19,7 +21,9 @@ public:
 	virtual void Move_Update() = 0;
 	virtual void Attack_Update() = 0;
 
-	virtual void Get_Collide(Model* other, string group) = 0;
+	virtual void Get_Collide(Model* other, string group) {}
+	virtual void set_state(int) {}
+	virtual int get_state() { return bean_state; }
 
 	virtual void InitBuffer();
 	virtual void InitTexture();
@@ -27,4 +31,9 @@ public:
 
 	virtual glm::vec3 Get_Max() = 0;
 	virtual glm::vec3 Get_Min() = 0;
+
+	virtual int Get_Hp() { return hp; }
+
+	virtual bool Attacking() { return false; }
+	virtual bool Get_Crash() { return false; }
 };

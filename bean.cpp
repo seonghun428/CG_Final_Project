@@ -7,6 +7,7 @@ Bean::Bean(int mx, int my, string imgfile)
 	elements.push_back(body);
 	this->x = mx;
 	this->y = my;
+	this->hp = 1;
 }
 
 Bean::~Bean()
@@ -59,5 +60,12 @@ void Bean::Get_Collide(Model* other, string group)
 	{
 		extern CScene scene;
 		scene.world.remove_object(this);
+		crash = false;
+		return;
 	}
+}
+
+void Bean::set_state(int state)
+{
+	this->bean_state = state;
 }

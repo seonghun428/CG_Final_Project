@@ -14,6 +14,7 @@ GLvoid Mouse(int, int, int, int);
 GLvoid Special(int, int, int);
 GLvoid Timerfunc(int);
 GLvoid Timer2(int);
+GLvoid Update(int);
 
 GLvoid drawScene()
 {
@@ -42,6 +43,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutKeyboardFunc(Keyboard);
 	glutMouseFunc(Mouse);
 	glutSpecialFunc(Special);
+	glutTimerFunc(50, Update, 3);
 	glutTimerFunc(100, Timerfunc, 1);
 	glutTimerFunc(1000, Timer2, 2);
 	glutMainLoop();
@@ -87,9 +89,17 @@ GLvoid Mouse(int button, int state, int mx, int my)
 	glutPostRedisplay();
 }
 
-GLvoid Timerfunc(int value)
+GLvoid Update(int value)
 {
 	scene.Update();
+
+	glutPostRedisplay();
+	glutTimerFunc(50, Update, 3);
+}
+
+GLvoid Timerfunc(int value)
+{
+	scene.Update2();
 
 	glutPostRedisplay();
 	glutTimerFunc(50, Timerfunc, 1);
@@ -97,8 +107,8 @@ GLvoid Timerfunc(int value)
 
 GLvoid Timer2(int value)
 {
-	scene.Update2();
+	scene.Update3();
 
 	glutPostRedisplay();
-	glutTimerFunc(100, Timer2, 2);
+	glutTimerFunc(2000, Timer2, 2);
 }

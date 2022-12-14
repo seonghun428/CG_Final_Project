@@ -17,6 +17,7 @@ GoldZombie::GoldZombie(int line, int num)
 
 	this->line = line;
 	this->num = num;
+	this->hp = 7;
 }
 
 GoldZombie::~GoldZombie()

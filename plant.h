@@ -6,6 +6,7 @@ class Plant : public Model
 {
 protected:
 	int x, y;
+	int cost = 0;
 
 public:
 	virtual void Move() = 0;
@@ -17,5 +18,5 @@ public:
 
 	virtual glm::vec3 Get_Max() = 0;
 	virtual glm::vec3 Get_Min() = 0;
-	virtual void Get_Collide(Model* other, string group) {}
+	virtual void Get_Collide(Model* other, string group);
 };
