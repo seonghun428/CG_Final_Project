@@ -16,10 +16,10 @@ public:
 	Model() {}
 	virtual ~Model() {}
 
-	virtual void Move() = 0;
-	virtual void Attack() = 0;
-	virtual void Move_Update() = 0;
-	virtual void Attack_Update() = 0;
+	virtual void Move() {}
+	virtual void Attack() {}
+	virtual void Move_Update() {}
+	virtual void Attack_Update() {}
 
 	virtual void Get_Collide(Model* other, string group) {}
 	virtual void set_state(int) {}
@@ -29,11 +29,14 @@ public:
 	virtual void InitTexture();
 	virtual void Render();
 
-	virtual glm::vec3 Get_Max() = 0;
-	virtual glm::vec3 Get_Min() = 0;
+	virtual glm::vec3 Get_Max() { return glm::vec3(0.0f); }
+	virtual glm::vec3 Get_Min() { return glm::vec3(0.0f); }
 
 	virtual int Get_Hp() { return hp; }
 
 	virtual bool Attacking() { return false; }
 	virtual bool Get_Crash() { return false; }
+
+	virtual GLfloat Get_z_rot() { return 0; }
+	virtual void Set_z_rot(GLfloat) {}
 };

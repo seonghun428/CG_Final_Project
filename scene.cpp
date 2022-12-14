@@ -17,6 +17,7 @@ void CScene::Init_Textures()
 	mower4->InitTexture();
 	mower5->InitTexture();
 	plane->InitTexture();
+	sun->InitTexture();
 }
 
 void CScene::Init_Begin()
@@ -34,11 +35,6 @@ void CScene::Init_Begin()
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
 	world.setting(glm::vec3(0.0f, 0.0f, 1.5f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(-300.0, -400.0, 500.0));
-}
-
-void CScene::Init_Select()
-{
-
 }
 
 void CScene::Init_Main()
@@ -94,6 +90,8 @@ void CScene::Init_Main()
 
 	world.add_collision_group("mower:zombie", make_tuple(mowers, zombies));
 	world.add_collision_group("mower:wall", front_wall, mowers);
+
+	world.add_object(sun);
 }
 
 void CScene::Init_Win()
@@ -151,7 +149,7 @@ void CScene::Render()
 			projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
 			glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-			world.setting(glm::vec3(0.0f, 9.9f, 3.0f), glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0, 100.0, 0.0));
+			world.setting(glm::vec3(0.0f, 9.9f, 3.0f), glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, -1.0f), lightpos);
 		}
 		else
 		{
@@ -161,7 +159,7 @@ void CScene::Render()
 			projectionLocation = glGetUniformLocation(shader.Get_ShaderID(), "projectionTransform");
 			glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
 
-			world.setting(glm::vec3(0.0f, 7.0f, 20.0f), glm::vec3(0.0f, -4.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(-20.0, 100.0, 0.0));
+			world.setting(glm::vec3(0.0f, 7.0f, 20.0f), glm::vec3(0.0f, -4.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), lightpos);
 		}
 	}
 
@@ -226,6 +224,18 @@ void CScene::Update2()
 
 		if (object == dynamic_cast<Zombie*>(object))
 			object->Attack();
+	}
+
+	lightpos = glm::vec3(-21.0, 0.0, 0.0);
+	glm::mat4 rt = glm::mat4(1.0f);
+
+	rt = glm::rotate(rt, glm::radians(sun->Get_z_rot()), glm::vec3(0.0, 0.0, 1.0));
+	lightpos = rt * glm::vec4(lightpos, 1.0);
+
+	if (sun->Get_z_rot() <= -180.0f)
+	{
+		sun->Set_z_rot(0.0f);
+		Init_Win();
 	}
 }
 

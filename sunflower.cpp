@@ -17,6 +17,16 @@ Sunflower::~Sunflower()
 	delete stem;
 }
 
+void Sunflower::Move()
+{
+	rot -= 0.1f;
+}
+
+void Sunflower::Move_Update()
+{
+	head->Update_YRotate_Matrix(rot);
+}
+
 glm::vec3 Sunflower::Get_Max()
 {
 	glm::vec3 MAX = head->Get_Max_O();
@@ -29,8 +39,8 @@ glm::vec3 Sunflower::Get_Max()
 		if (MAX.z < element->Get_Max_O().z)
 			MAX.z = element->Get_Max_O().z;
 	}
-	MAX.x += (x - 4) * 1.85 - 0.7f;
-	MAX.z += (y - 3) * 1.9;
+	MAX.x += (x - 4) * 1.85f - 0.7f;
+	MAX.z += (y - 3) * 1.9f;
 	return MAX;
 }
 
@@ -46,7 +56,7 @@ glm::vec3 Sunflower::Get_Min()
 		if (MIN.z > element->Get_Min_O().z)
 			MIN.z = element->Get_Min_O().z;
 	}
-	MIN.x += (x - 4) * 1.85 - 0.7f;
-	MIN.z += (y - 3) * 1.9;
+	MIN.x += (x - 4) * 1.85f - 0.7f;
+	MIN.z += (y - 3) * 1.9f;
 	return MIN;
 }

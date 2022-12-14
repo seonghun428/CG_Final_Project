@@ -17,6 +17,7 @@
 #include "plane.h"
 #include "display.h"
 #include "wall.h"
+#include "sun.h"
 
 #include "world.h"
 
@@ -43,9 +44,13 @@ private:
 
 	Model* plane = new Plane();
 
+	Model* sun = new Sun();
+
 	list<Model*> mowers;
 	list<Model*> plants;
 	list<Model*> zombies;
+
+	glm::vec3 lightpos = glm::vec3(-21.0, 0.0, 0.0);
 
 	GLenum polymod = GL_FILL;
 
@@ -71,7 +76,6 @@ public:
 	void Init_Textures();
 
 	void Init_Begin();
-	void Init_Select();
 	void Init_Main();
 	void Init_Win();
 	void Init_Lose();

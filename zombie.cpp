@@ -79,7 +79,7 @@ glm::vec3 Zombie::Get_Max()
 			MAX.z = element->Get_Max_O().z;
 	}
 
-	MAX.x += go_front + num * 3.0 + 7.0f;
+	MAX.x += go_front + num * 3.0f + 7.0f;
 	MAX.z += (line - 3) * 1.9f;
 
 	return MAX;
@@ -98,7 +98,7 @@ glm::vec3 Zombie::Get_Min()
 			MIN.z = element->Get_Min_O().z;
 	}
 
-	MIN.x += go_front + num * 3.0 + 7.0f;
+	MIN.x += go_front + num * 3.0f + 7.0f;
 	MIN.z += (line - 3) * 1.9f;
 
 	return MIN;

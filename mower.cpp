@@ -41,7 +41,7 @@ glm::vec3 Mower::Get_Max()
 {
 	glm::vec3 MAX = body->Get_Max_O();
 	MAX.x += go_front - 8.5f;
-	MAX.z += (line - 3) * 1.9;
+	MAX.z += (line - 3) * 1.9f;
 	return MAX;
 }
 
@@ -49,7 +49,7 @@ glm::vec3 Mower::Get_Min()
 {
 	glm::vec3 MIN = body->Get_Min_O();
 	MIN.x += go_front - 8.5f;
-	MIN.z += (line - 3) * 1.9;
+	MIN.z += (line - 3) * 1.9f;
 	return MIN;
 }
 

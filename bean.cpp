@@ -40,8 +40,8 @@ glm::vec3 Bean::Get_Max()
 {
 	if (body == nullptr) return glm::vec3(-10000.0, -10000.0, -10000.0);
 	glm::vec3 MAX = body->Get_Max_O();
-	MAX.x += go_front + (x - 4) * 1.85 - 0.7f;
-	MAX.z += (y - 3) * 1.9;
+	MAX.x += go_front + (x - 4) * 1.85f - 0.7f;
+	MAX.z += (y - 3) * 1.9f;
 	return MAX;
 }
 
@@ -49,8 +49,8 @@ glm::vec3 Bean::Get_Min()
 {
 	if (body == nullptr) return glm::vec3(-10000.0, -10000.0, -10000.0);
 	glm::vec3 MIN = body->Get_Min_O();
-	MIN.x += go_front + (x - 4) * 1.85 - 0.7f;
-	MIN.z += (y - 3) * 1.9;
+	MIN.x += go_front + (x - 4) * 1.85f - 0.7f;
+	MIN.z += (y - 3) * 1.9f;
 	return MIN;
 }
 

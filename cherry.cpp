@@ -57,8 +57,8 @@ glm::vec3 Cherry::Get_Max()
 	MAX.y *= 3.0f;
 	MAX.z *= 3.0f;
 
-	MAX.x += (x - 4) * 1.85 - 0.7f;
-	MAX.z += (y - 3) * 1.9;
+	MAX.x += (x - 4) * 1.85f - 0.7f;
+	MAX.z += (y - 3) * 1.9f;
 	return MAX;
 }
 
@@ -70,7 +70,7 @@ glm::vec3 Cherry::Get_Min()
 	MIN.y *= 3.0f;
 	MIN.z *= 3.0f;
 
-	MIN.x += (x - 4) * 1.85 - 0.7f;
-	MIN.z += (y - 3) * 1.9;
+	MIN.x += (x - 4) * 1.85f - 0.7f;
+	MIN.z += (y - 3) * 1.9f;
 	return MIN;
 }

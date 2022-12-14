@@ -35,8 +35,8 @@ glm::vec3 S_Modapi::Get_Max()
 			MAX.z = element->Get_Max_O().z;
 	}
 
-	MAX.x += (x - 4) * 1.85 - 0.7f;
-	MAX.z += (y - 3) * 1.9;
+	MAX.x += (x - 4) * 1.85f - 0.7f;
+	MAX.z += (y - 3) * 1.9f;
 	return MAX;
 }
 
@@ -53,8 +53,8 @@ glm::vec3 S_Modapi::Get_Min()
 			MIN.z = element->Get_Min_O().z;
 	}
 
-	MIN.x += (x - 4) * 1.85 - 0.7f;
-	MIN.z += (y - 3) * 1.9;
+	MIN.x += (x - 4) * 1.85f - 0.7f;
+	MIN.z += (y - 3) * 1.9f;
 	return MIN;
 }
 
